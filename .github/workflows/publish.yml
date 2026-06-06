@@ -37,6 +37,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-r-
 
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libuv1-dev
+
       - name: Install R packages needed for rendering
         run: |
           install.packages(c("knitr", "rmarkdown", "jsonlite"),
