@@ -1,9 +1,43 @@
+# ==============================================================================
 # .github/workflows/publish.yml
+# QUARTO PUBLISH — UNIVERSAL TEMPLATE  (choose Strategy A or B below)
+# ==============================================================================
+#
+# ┌─────────────────────────────────────────────────────────────────────────┐
+# │  STRATEGY A  — freeze (recommended for blogs, books, static sites)      │
+# │                                                                         │
+# │  Prerequisites (run once locally):                                      │
+# │    1. Add to _quarto.yml:   execute:                                    │
+# │                               freeze: auto                              │
+# │    2. quarto render                                                      │
+# │    3. git add _freeze && git commit -m "Add frozen outputs"             │
+# │    4. renv::init() + renv::snapshot()  → commit renv.lock               │
+# │       (renv is still useful for local reproducibility even in Strat. A) │
+# │                                                                         │
+# │  How it works: CI publishes pre-rendered output. No R execution in CI.  │
+# │  Speed: ~10 seconds per run.                                            │
+# └─────────────────────────────────────────────────────────────────────────┘
+#
+# ┌─────────────────────────────────────────────────────────────────────────┐
+# │  STRATEGY B  — renv (for projects where CI must execute R code)         │
+# │                                                                         │
+# │  Prerequisites (run once locally):                                      │
+# │    1. renv::init() + renv::snapshot()  → commit renv.lock + renv/       │
+# │    2. Remove  freeze: auto  from _quarto.yml  (or keep selectively)     │
+# │    3. Delete or .gitignore the _freeze/ directory                       │
+# │                                                                         │
+# │  How it works: CI installs R + all packages from renv.lock, then        │
+# │  renders and publishes. First run is slow; subsequent runs use cache.   │
+# │  Speed: ~30 s (cached) / 3–10 min (cold start).                        │
+# └─────────────────────────────────────────────────────────────────────────┘
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:     # manual trigger from the Actions tab
   push:
-    branches: main
+    branches: main       # auto-trigger on every push to main
+  # Uncomment the block below for STRATEGY B with scheduled data refresh:
+  # schedule:
+  #   - cron: "0 6 * * 1"   # every Monday at 06:00 UTC
 
 name: Quarto Publish
 
@@ -11,46 +45,72 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: write    # required to push to the gh-pages branch
 
     steps:
+
+      # ── STEP 1  Check out the full git history ───────────────────────────
+      # fetch-depth: 0 gives Quarto access to commit dates (used for
+      # "last modified" metadata on pages). Safe to use with both strategies.
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
+      # ── STEP 2  Install Quarto ───────────────────────────────────────────
+      # Used by both strategies. Pin a version for strict reproducibility.
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
+        # with:
+        #   version: "1.5.57"   # optional: pin to a specific Quarto version
 
-      - name: Install R
-        uses: r-lib/actions/setup-r@v2
-        with:
-          r-version: "release"
-          use-public-rspm: true
+      # ══════════════════════════════════════════════════════════════════════
+      # STEPS 3–4  STRATEGY B ONLY — comment out for Strategy A
+      # ══════════════════════════════════════════════════════════════════════
 
-      # Explicitly cache R packages based on a hash of all DESCRIPTION /
-      # renv.lock / NAMESPACE files found in the repo. The cache is
-      # invalidated automatically whenever dependencies change.
-      - name: Cache R packages
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-r-${{ hashFiles('**/DESCRIPTION', '**/renv.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-r-
+      # ── STEP 3B  Install R ───────────────────────────────────────────────
+      # `use-public-rspm: true` uses Posit Package Manager, which serves
+      # pre-compiled Linux binaries. This eliminates virtually all system-
+      # library errors (the root cause of your original 10 failures).
+      # Pin r-version to match your local version exactly.
+      #
+      # - name: Install R
+      #   uses: r-lib/actions/setup-r@v2
+      #   with:
+      #     r-version: "4.4.2"      # ← replace with YOUR R version
+      #     use-public-rspm: true   # binary packages = no apt-get needed
 
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libuv1-dev libcurl4-openssl-dev libfontconfig1-dev libharfbuzz-dev libfribidi-dev
+      # ── STEP 4B  Restore renv cache and install packages ─────────────────
+      # Reads renv.lock, installs every package at its locked version, and
+      # manages the GitHub Actions cache automatically.
+      # On cache hit (subsequent pushes): this step takes ~10 seconds.
+      # On cache miss (first run or after renv.lock changes): 3–10 minutes.
+      # Bump cache-version to an integer (e.g. 2) to force a full rebuild.
+      #
+      # - name: Restore renv cache and install R packages
+      #   uses: r-lib/actions/setup-renv@v2
+      #   with:
+      #     cache-version: 1
 
-      - name: Install R packages needed for rendering
-        run: |
-          install.packages(c("knitr", "rmarkdown", "jsonlite", "glossary"),
-          repos = "https://packagemanager.posit.co/cran/latest")
-        shell: Rscript {0}
-
+      # ══════════════════════════════════════════════════════════════════════
+      # STEP 5  Render and Publish (used by BOTH strategies)
+      # ══════════════════════════════════════════════════════════════════════
+      #
+      # The `render:` input is the single switch between strategies:
+      #
+      #   render: "false"   → STRATEGY A: runs `quarto publish --no-render`
+      #                       CI only copies _freeze/ output to gh-pages.
+      #                       R is not needed. This is fast and safe.
+      #
+      #   render: "true"    → STRATEGY B: runs `quarto render` then publishes.
+      #                       Requires Steps 3B and 4B above to be active.
+      #
+      # The GITHUB_TOKEN is automatically provided by GitHub — no secrets
+      # configuration required.
       - name: Render and Publish
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages
+          render: "false"   # ← STRATEGY A: change to "true" for Strategy B
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
