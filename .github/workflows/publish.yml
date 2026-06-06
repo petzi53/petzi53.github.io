@@ -37,10 +37,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-r-
 
-      - name: Install R packages needed for rendering
-        run: |
-          install.packages(c("knitr", "rmarkdown", "jsonlite"))
-        shell: Rscript {0}
+      # - name: Install R packages needed for rendering
+      #   run: |
+      #     install.packages(c("knitr", "rmarkdown", "jsonlite"))
+      #   shell: Rscript {0}
 
       - name: Render and Publish
         uses: quarto-dev/quarto-actions/publish@v2
