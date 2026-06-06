@@ -1,24 +1,143 @@
 project:
   type: website
-
-execute:
-  freeze: auto
+  output-dir: docs
 
 website:
-  title: "petzi53.github.io"
+  title: "Thought Splinters"
+  favicon: favicon.ico
+  site-url: https://www.peter-baumgartner.net
+  description: "Peter’s Learning-Journal"
+  repo-url: https://github.com/petzi53/petzi53.github.io
+  issue-url: https://github.com/petzi53/petzi53.github.io/issues/new/choose
+  repo-actions: [edit, issue]
+  cookie-consent: true
+  #  type: express
+  page-navigation: true
+  back-to-top-navigation: true
+  google-analytics: G-CLE95GVN04
+  twitter-card: true
+  search:
+    location: navbar
+    type: textbox
   navbar:
+    right:
+      - text: "About"
+        href: about.qmd
+      - text: "Contact"
+        href: contact.qmd
+      - text: Tutorials
+        menu:
+          - text: Create a Quarto Blog
+            href: quarto-blog.qmd
+          - text: Zotero-Obsidian Annotations
+            href: zotero-obsidian-annotations.qmd
+      - text: Links
+        menu:
+          - text: Posit Open Source
+            href: https://opensource.posit.co/
+          - text: Posit Open Source Blog
+            href: https://opensource.posit.co/blog
+          - text: Posit Quarto Blog
+            href: https://opensource.posit.co/blog/?q=source%3Aquarto
+          - text: Posit Packages
+            href: https://opensource.posit.co/software
+          - text: R Weekly
+            href: https://rweekly.org/
+          - text: R Bloggers
+            href: https://www.r-bloggers.com/
+      - text: Archive
+        href: archive.qmd
+      - text: "{{< iconify fa6-brands github size=lg title='My GitHub account'  >}}"
+        href: "https://github.com/petzi53"
+        aria-label: "GitHub"
+      - text: "{{< iconify fa6-brands mastodon size=lg title='My Mastodon account' >}}"
+        href: "https://social.anoxinon.de/@pbaumgartner"
+        aria-label: "Mastodon"
+        rel: me
+      - text: "{{< iconify fa6-brands bluesky size=lg title='My Bluesky account' >}}"
+        href: "https://pbaumgartner.bsky.social"
+        aria-label: "Bluesky"
+      - text: "{{< iconify fa6-brands wordpress size=lg  title='Gedankensplitter: My German WordPress blog'>}}"
+        href: "https://peter.baumgartner.name"
+        aria-label: "German WordPress blog Gedankensplitter"
+      - text: "{{< iconify fa6-brands google-scholar size=lg  title='My Google Scholar account'>}}"
+        href: "https://scholar.google.com/citations?user=mKCNn9kAAAAJ&hl=de"
+        aria-label: "Google Scholar"
+      - text: "{{< iconify fa6-brands orcid size=lg  title='My ORCID account: 0000-0003-4526-8791'>}}"
+        href: "https://orcid.org/0000-0003-4526-8791"
+        aria-label: "ORCID"
+      - icon: rss
+        href: index.xml
+        aria-label: "RSS Feed"
+
+  page-footer:
+    border: true
+  # Theme default
+    background: rgb(81, 118, 153)
+    foreground: rgb(221, 228, 235)
+    center:
+      - text: "About"
+        href: about.qmd
+      - text: "Privacy"
+        href: privacy.qmd
+      - text: "Disclaimer"
+        href: disclaimer.qmd
     left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
+      - text: <a href=https://www.peter-baumgartner.net>Thought Splinters</a> © 2023-2026 by <a href=https://www.peter-baumgartner.net/about>Peter Baumgartner</a> is licensed under <a href=https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1>CC BY 4.0</a>
+    right:
+      - text: Proudly powered by <a href=https://quarto.org/>Quarto</a>
+
+  comments:
+    hypothesis:
+      theme: classic
+      openSidebar: false
+      showHighlights: whenSidebarOpen
+      enableExperimentalNewNoteButton: true
+      branding:
+          appBackgroundColor: white
+          # theme: default
+          ctaBackgroundColor: rgb(81, 118, 153)
+          ctaTextColor: rgb(221, 228, 235)
+          selectionFontFamily: 'helvetica, arial, sans serif'
+
+crossref:
+  custom:
+    - kind: float
+      reference-prefix: Definition
+      key: def
 
 format:
   html:
-    theme:
-      - cosmo
-      - brand
-    css: styles.css
+    theme: default
+    css:
+      - styles.css
+      - glossary.css
     toc: true
+    toc-depth: 5
+    toc-expand: 4
+    citation: true
+#   include-after-body: _post-footer.html
 
-editor: visual
+editor: source
+
+margin-header: |
+  ![Peter Baumgartner](/portrait-peter.png)
+
+language:
+   crossref-lem-title: "Resource"    # replaces "Lemma"
+   crossref-cnj-title: "R Code"      # replaces "Conjecture"
+   crossref-exm-title: "Example"     # remains  "Example"
+   crossref-prp-title: "Procedure"   # replaces "Proposition"
+
+lst-cap-location: bottom
+
+extensions:
+  iconify:
+    set: "octicon"
+    size: "Huge"
+    width: "1em"
+    height: "1em"
+    inline: true
+    mode: "svg"
+
 

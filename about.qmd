@@ -1,9 +1,35 @@
 ---
-title: "About"
+title: "About Peter Baumgartner"
+author: "Peter Baumgartner"
+date: "2026-05-30"
+image: portrait-peter.png
+about:
+  template: trestles
+  links:
+    - text: "{{< fa brands wordpress >}} WordPress"
+      href: https://peter.baumgartner.name
+      aria-label: "WordPress"
+    - icon: github
+      text: Github
+      aria-label: "GitHub"
+      href: https://github.com/petzi53/quarto-blog
+    - icon: bluesky
+      text: Bluesky
+      aria-label: "Bluesky"
+      href: https://pbaumgartner.bsky.social
+    - icon: orcid
+      text: "{{< ai orcid >}} ORCID"
+      aria-label: "ORCID"
+      href: https://orcid.org/0000-0003-4526-8791
+    - text: "{{< iconify fa6-brands google-scholar size=lg  title='My Google Scholar account'>}} Google Scholar"
+      aria-label: "Google Scholar"
+      href: https://scholar.google.com/citations?user=mKCNn9kAAAAJ&hl=de
 ---
 
-About this site
+I am a retired professor of Education Technology. As head of the [Department of Interactive Media and Educational Technologies](https://www.donau-uni.ac.at/en/university/faculties/education-arts-architecture/departments/continuing-education-research-educational-technologies.html) at the [University for Continuing Education Krems (UWK)](https://www.donau-uni.ac.at/en) (Austria), I researched how to apply technology in settings of Life Long Learning. 
 
-```{r}
-1 + 1
-```
+I had held positions as a professor at several universities in Austria and Germany (Klagenfurt, Münster, Innsbruck, Hagen) before I accepted the nomination to Krems. I published 25 books (10 monographs and 15 edited volumes) and [over 200 articles](https://portfolio.peter-baumgartner.net/publication/).
+
+Today, I remain interested in technology-enhanced learning (TEL), now focusing on workflows and tools for Open Science research (e.g., [Obsidian](https://obsidian.md/ "A note-taking app as extensible knowledge base"), [Hypothes.is](https://web.hypothes.is/ "Annotate anything online"), [Zotero](https://www.zotero.org/)). These subjects are covered predominantly in my [German weblog "Gedankensplitter"](https://peter.baumgartner.name).
+
+However, I have also developed a new interest in statistical data processing and data science. My focus is on investigating social inequality and the decline of democratic structures. I am learning to apply Bayesian statistics using [R](https://www.r-project.org/) to these (for me) new research subjects. But in this area, I am still a learner, not an expert.

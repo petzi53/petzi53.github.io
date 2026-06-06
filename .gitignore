@@ -1,11 +1,48 @@
-.Rproj.user
-.Rhistory
+# --- Quarto Output & Cache (build artefacts) ---
+# Ignore the entire output directory
+_site/
+docs/
+_freeze/
+
+# Ignore the Quarto cache directory (contains R execution caches, figures, etc.)
+.quarto/
+
+# Keep this if you ever mix in Jupyter Notebooks, otherwise optional for pure R
+**/*.quarto_ipynb
+
+# --- RStudio & R Artifacts ---
+# Workspace images and history
 .RData
+.Rhistory
 .Ruserdata
-.httr-oauth
+
+# RStudio Project user-specific settings (not shared)
+*.Rproj
+.Rproj.user/
+
+# Positron settings
+.positron/
+
+# --- macOS System Files ---
+# Hidden system files created by Finder
 .DS_Store
-.quarto
 
-/.quarto/
-/_site/
+# --- renv files
+renv/
+renv.lock
 
+# --- Temporary Work Folders ---
+# Your personal scratch space for drafts and interim results
+_archive/
+
+# --- Sensitive Data & Credentials ---
+# OAuth tokens from httr/gmailr/google packages
+.httr-oauth
+
+# Posit AI local configuration
+.positai/
+
+# --- General Project Safety ---
+# Optional: Ignore all .csv files if you want to ensure raw data is never committed
+# (Uncomment if you prefer to keep raw data strictly local)
+# *.csv

@@ -1,0 +1,22 @@
+# options specified here will apply to all posts in this folder
+
+# freeze computational output
+# (see https://quarto.org/docs/projects/code-execution.html#freeze)
+freeze: auto
+
+# Disable banner style title blocks
+title-block-banner: true
+
+# my personal metadata for blog posts
+
+comments:
+  utterances:
+    repo: petzi53/blog-comments
+
+lightbox:
+  match: auto
+  effect: zoom # default
+  desc-position: bottom # default
+  loop: true # default
+
+

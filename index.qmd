@@ -1,11 +1,15 @@
 ---
-title: "petzi53.github.io"
+title: "Thought Splinters"
+listing:
+  contents: posts/**/*.qmd
+  date-format: iso
+  sort: "date desc"
+  type: default
+  categories: true
+  sort-ui: false
+  filter-ui: false
+  fields: [image, date, title, author, categories, description, file-modified, reading-time]
+  feed: true
+page-layout: full
+title-block-banner: false
 ---
-
-This is a Quarto website.
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
-
-```{r}
-1 + 1
-```

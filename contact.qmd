@@ -1,0 +1,28 @@
+---
+title: "Contact"
+---
+
+Send me a message!
+
+```{=html}
+
+<form method="POST" action="https://formspree.io/f/xeedqbrq">
+  <p>
+  <label for="name">Your Name:&nbsp;</label>
+  <input id="name" type="text" name="name" class="myform" required />
+  </p>
+
+  <p>
+  <label for="email">Your Email:&nbsp;&nbsp;</label>
+  <input id="email" type="email" name="email" class="myform" required />
+  </p>
+
+  <p>
+  <label for="message">Message:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<textarea id=message name="message" rows="10" class="myform" ></textarea></label>
+  </p>
+
+  <p>
+  <button type="submit">Send Message</button>
+  </p>
+</form>
+```
