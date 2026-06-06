@@ -44,7 +44,7 @@ jobs:
 
       - name: Install R packages needed for rendering
         run: |
-          install.packages(c("knitr", "rmarkdown", "jsonlite"),
+          install.packages(c("knitr", "rmarkdown", "jsonlite", "glossary"),
           repos = "https://packagemanager.posit.co/cran/latest")
         shell: Rscript {0}
 
