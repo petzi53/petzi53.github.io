@@ -2,6 +2,9 @@ project:
   type: website
   output-dir: docs
 
+execute:
+  freeze: auto
+
 website:
   title: "Thought Splinters"
   favicon: favicon.ico
@@ -99,9 +102,6 @@ website:
           ctaBackgroundColor: rgb(81, 118, 153)
           ctaTextColor: rgb(221, 228, 235)
           selectionFontFamily: 'helvetica, arial, sans serif'
-
-execute:
-  freeze: auto
 
 crossref:
   custom:
