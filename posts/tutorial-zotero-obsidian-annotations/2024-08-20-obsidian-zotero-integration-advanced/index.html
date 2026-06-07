@@ -188,7 +188,7 @@ cookieconsent.run({
 <link rel="stylesheet" href="../../../glossary.css">
 <meta name="twitter:title" content="Annotation Tutorial 3: Zotero - Obsidian Integration Advanced – Thought Splinters">
 <meta name="twitter:description" content="Here, I explain an advanced feature of the Obsidian Zotero Integration Plugin: How can annotation from Zotero documents be scraped and imported programmatically as a note into Obisidan?">
-<meta name="twitter:image" content="https://www.peter-baumgartner.net/posts/tutorial-zotero-obsidian-annotations/2024-08-20-obsidian-zotero-integration-advanced/nunjucks-zotero-obsidian-skitch-logo2-min.png">
+<meta name="twitter:image" content="https://peter-baumgartner.net/posts/tutorial-zotero-obsidian-annotations/2024-08-20-obsidian-zotero-integration-advanced/nunjucks-zotero-obsidian-skitch-logo2-min.png">
 <meta name="twitter:image-height" content="628">
 <meta name="twitter:image-width" content="808">
 <meta name="twitter:image:alt" content="The Zotero application icon is on the left, and the Obsidian icon is on the right of the image. Below both app icons is the Nunjucks icon. There are two arrows, one from Zotero to Nunjunck and the other from Nunkunck to Obsidian.">
@@ -271,8 +271,8 @@ cookieconsent.run({
 <span class="menu-text">Archive</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://github.com/petzi53"> 
-<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:github" style="font-size: 1.25em;" aria-label="Icon github from fa6-brands Iconify.design set." title="My GitHub account" mode="svg"></iconify-icon></span></a>
+    <a class="nav-link" href="https://github.com/petzi53/petzi53.github.io/"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:github" style="font-size: 1.25em;" aria-label="Icon github from fa6-brands Iconify.design set." title="GitHub repo of this site" mode="svg"></iconify-icon></span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="https://social.anoxinon.de/@pbaumgartner" rel="me"> 
@@ -419,7 +419,7 @@ cookieconsent.run({
 <li><strong>Prompt for Selection</strong>: It displays a dialog window to choose your library and Zotero item you want to import. Please be patient — Obsidian may take seconds to open the dialog window.</li>
 <li><strong>Preview Import Format</strong>: This is the default value of this menu (button). It will display all the variable’s names and values for the Zotero item. However, you can also select one of your templates defined in the Zotero Integration plugin to see the result. The “Data Explorer” is an important tool for creating and improving Obsidian-Zotero Integration templates.</li>
 </ol>
-<div id="fig-zotero-integration-data-explorer" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The screenshot shows the top two buttons, 'Prompt for Selection' and Preview Import Format'. What follows is the internal structure of the Zotero annotation. It starts with 'Template Data {} 45 keys' with an opened triangle on the left. The next intended line starts gray with 'abstractNote' followed by the text of the abstract in yellow. Another intended line in gray says 'alltags' followed by yellow 'inequality' in double parenthesis. And so on. There are many different intended lines with closed triangles on the left, except for an open triangle saying 'creators' in gray followed by '[] 3 items' in white. The following three lines display the values for 'creators' with separate lines for 'creatorType author'; 'firstName Amary'; 'lastName Gethin'. There are many more lines with different values but similar structures." data-fig-align="center" data-group="zotero-integration">
+<div id="fig-zotero-integration-data-explorer" class="quarto-float quarto-figure quarto-figure-center anchored" data-group="zotero-integration" data-fig-align="center" alt="The screenshot shows the top two buttons, 'Prompt for Selection' and Preview Import Format'. What follows is the internal structure of the Zotero annotation. It starts with 'Template Data {} 45 keys' with an opened triangle on the left. The next intended line starts gray with 'abstractNote' followed by the text of the abstract in yellow. Another intended line in gray says 'alltags' followed by yellow 'inequality' in double parenthesis. And so on. There are many different intended lines with closed triangles on the left, except for an open triangle saying 'creators' in gray followed by '[] 3 items' in white. The following three lines display the values for 'creators' with separate lines for 'creatorType author'; 'firstName Amary'; 'lastName Gethin'. There are many more lines with different values but similar structures.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-zotero-integration-data-explorer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <a href="advanced-zotero-integration-data-explorer-min.png" class="lightbox" data-gallery="zotero-integration" title="Figure&nbsp;1: Part of the Data Explorer for the Zotero Integration plugin. You can open/close hierarchical values by clicking on the small triangle as is shown in the middle of the screenshot with “creators”."><img src="advanced-zotero-integration-data-explorer-min.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="The screenshot shows the top two buttons, 'Prompt for Selection' and Preview Import Format'. What follows is the internal structure of the Zotero annotation. It starts with 'Template Data {} 45 keys' with an opened triangle on the left. The next intended line starts gray with 'abstractNote' followed by the text of the abstract in yellow. Another intended line in gray says 'alltags' followed by yellow 'inequality' in double parenthesis. And so on. There are many different intended lines with closed triangles on the left, except for an open triangle saying 'creators' in gray followed by '[] 3 items' in white. The following three lines display the values for 'creators' with separate lines for 'creatorType author'; 'firstName Amary'; 'lastName Gethin'. There are many more lines with different values but similar structures."></a>
@@ -680,7 +680,7 @@ My CSS Code to Copy
 </section>
 <section id="result-of-my-template" class="level3">
 <h3 class="anchored" data-anchor-id="result-of-my-template">Result of my template</h3>
-<div id="fig-zotero-template-example" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The screenshot shows a part of an Obsidian document in dark mode with a colored header. It starts with two yellow title headers, 'Highlights by Sequence…' and 'Sorted by Colors,' followed by three smaller green headers, 'Running text (Yellow) …', 'Concept, Definition Important (Red)&nbsp;…', and 'ToDo (Orange)'. What follows are quote admonitions (callouts) titled 'Highlight' in orange with a blue text paragraph and a red link to the page of the annotated document. The third of the four 'highlights' has the cursor in it and shows, therefore, the markdown code of this part of the Obsidian file." data-fig-align="center" data-group="zotero-integration">
+<div id="fig-zotero-template-example" class="quarto-float quarto-figure quarto-figure-center anchored" data-group="zotero-integration" data-fig-align="center" alt="The screenshot shows a part of an Obsidian document in dark mode with a colored header. It starts with two yellow title headers, 'Highlights by Sequence…' and 'Sorted by Colors,' followed by three smaller green headers, 'Running text (Yellow) …', 'Concept, Definition Important (Red)&nbsp;…', and 'ToDo (Orange)'. What follows are quote admonitions (callouts) titled 'Highlight' in orange with a blue text paragraph and a red link to the page of the annotated document. The third of the four 'highlights' has the cursor in it and shows, therefore, the markdown code of this part of the Obsidian file.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-zotero-template-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <a href="advanced-zotero-integration-template-example-min.png" class="lightbox" data-gallery="zotero-integration" title="Figure&nbsp;2: Part of my Zotero Integration template for creating literature notes."><img src="advanced-zotero-integration-template-example-min.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="The screenshot shows a part of an Obsidian document in dark mode with a colored header. It starts with two yellow title headers, 'Highlights by Sequence…' and 'Sorted by Colors,' followed by three smaller green headers, 'Running text (Yellow) …', 'Concept, Definition Important (Red)&nbsp;…', and 'ToDo (Orange)'. What follows are quote admonitions (callouts) titled 'Highlight' in orange with a blue text paragraph and a red link to the page of the annotated document. The third of the four 'highlights' has the cursor in it and shows, therefore, the markdown code of this part of the Obsidian file."></a>
@@ -774,12 +774,12 @@ Razglova, Elena. 2023. <em>01 Notetaking for Historians - Doing History with Zot
   title = {Annotation {Tutorial} 3: {Zotero} - {Obsidian} {Integration}
     {Advanced}},
   date = {2024-08-20},
-  url = {https://www.peter-baumgartner.net/posts/tutorial-zotero-obsidian-annotations/2024-08-20-obsidian-zotero-integration-advanced/},
+  url = {https://peter-baumgartner.net/posts/tutorial-zotero-obsidian-annotations/2024-08-20-obsidian-zotero-integration-advanced/},
   langid = {en}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-baumgartner2024" class="csl-entry quarto-appendix-citeas" role="listitem">
 Baumgartner, Peter. 2024. <span>“Annotation Tutorial 3: Zotero -
-Obsidian Integration Advanced.”</span> August 20. <a href="https://www.peter-baumgartner.net/posts/tutorial-zotero-obsidian-annotations/2024-08-20-obsidian-zotero-integration-advanced/">https://www.peter-baumgartner.net/posts/tutorial-zotero-obsidian-annotations/2024-08-20-obsidian-zotero-integration-advanced/</a>.
+Obsidian Integration Advanced.”</span> August 20. <a href="https://peter-baumgartner.net/posts/tutorial-zotero-obsidian-annotations/2024-08-20-obsidian-zotero-integration-advanced/">https://peter-baumgartner.net/posts/tutorial-zotero-obsidian-annotations/2024-08-20-obsidian-zotero-integration-advanced/</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -854,7 +854,7 @@ Obsidian Integration Advanced.”</span> August 20. <a href="https://www.peter-b
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/www\.peter-baumgartner\.net");
+        var filterRegex = new RegExp("https:\/\/peter-baumgartner\.net");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

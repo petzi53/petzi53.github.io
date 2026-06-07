@@ -1,1 +1,1 @@
-Sitemap: https://www.peter-baumgartner.net/sitemap.xml
+Sitemap: https://peter-baumgartner.net/sitemap.xml
