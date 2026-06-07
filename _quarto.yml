@@ -1,6 +1,8 @@
 project:
   type: website
   output-dir: docs
+  resources:
+    - CNAME
 
 execute:
   freeze: auto
@@ -8,7 +10,7 @@ execute:
 website:
   title: "Thought Splinters"
   favicon: favicon.ico
-  site-url: https://www.peter-baumgartner.net
+  site-url: https://peter-baumgartner.net
   description: "Peter’s Learning-Journal"
   repo-url: https://github.com/petzi53/petzi53.github.io
   issue-url: https://github.com/petzi53/petzi53.github.io/issues/new/choose
@@ -50,8 +52,8 @@ website:
             href: https://www.r-bloggers.com/
       - text: Archive
         href: archive.qmd
-      - text: "{{< iconify fa6-brands github size=lg title='My GitHub account'  >}}"
-        href: "https://github.com/petzi53"
+      - text: "{{< iconify fa6-brands github size=lg title='GitHub repo of this site'  >}}"
+        href: "https://github.com/petzi53/petzi53.github.io/"
         aria-label: "GitHub"
       - text: "{{< iconify fa6-brands mastodon size=lg title='My Mastodon account' >}}"
         href: "https://social.anoxinon.de/@pbaumgartner"
