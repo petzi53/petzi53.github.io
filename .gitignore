@@ -1,7 +1,7 @@
 # --- Quarto Output & Cache (build artefacts) ---
 # Ignore the entire output directory
 _site/
-docs/
+# docs/ # removed because stragey A needs it
 
 # Ignore the Quarto cache directory (contains R execution caches, figures, etc.)
 .quarto/
