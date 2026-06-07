@@ -1,6 +1,7 @@
 # --- Quarto Output & Cache (build artefacts) ---
 # Ignore the entire output directory
 _site/
+docs/
 
 # Ignore the Quarto cache directory (contains R execution caches, figures, etc.)
 .quarto/
