@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://peter-baumgartner.net/disclaimer.html</loc>
-    <lastmod>2026-06-06T13:18:03.000Z</lastmod>
+    <lastmod>2026-06-11T18:47:31.270Z</lastmod>
   </url>
   <url>
     <loc>https://peter-baumgartner.net/archive.html</loc>
@@ -25,31 +25,7 @@
     <lastmod>2026-06-06T13:18:03.000Z</lastmod>
   </url>
   <url>
-    <loc>https://peter-baumgartner.net/posts/2024-07-21-writing-blog-posts--new-attempt/index.html</loc>
-    <lastmod>2026-06-06T13:18:03.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://peter-baumgartner.net/posts/tutorial-quarto-blog/2024-07-24-default-blog-source-code/index.html</loc>
-    <lastmod>2026-06-06T13:18:03.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://peter-baumgartner.net/posts/tutorial-quarto-blog/2024-07-22-creating-a-quarto-blog-from-scratch-using-rstudio/index.html</loc>
-    <lastmod>2026-06-06T13:18:03.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://peter-baumgartner.net/posts/2023-04-23-welcome-quarto/index.html</loc>
-    <lastmod>2026-06-06T13:18:03.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://peter-baumgartner.net/posts/2023-05-05-how-to-delete-git-branches/index.html</loc>
-    <lastmod>2026-06-06T13:18:03.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://peter-baumgartner.net/contact.html</loc>
-    <lastmod>2026-06-06T13:18:03.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://peter-baumgartner.net/posts/2024-07-27-how-to-use-the-world-inequality-database-wid/index.html</loc>
+    <loc>https://peter-baumgartner.net/posts/tutorial-quarto-blog/2024-07-23-from-git-to-github-using-rstudio/index.html</loc>
     <lastmod>2026-06-06T13:18:03.000Z</lastmod>
   </url>
   <url>
@@ -57,7 +33,31 @@
     <lastmod>2026-06-06T13:18:03.000Z</lastmod>
   </url>
   <url>
-    <loc>https://peter-baumgartner.net/posts/tutorial-quarto-blog/2024-07-23-from-git-to-github-using-rstudio/index.html</loc>
+    <loc>https://peter-baumgartner.net/posts/2024-07-27-how-to-use-the-world-inequality-database-wid/index.html</loc>
+    <lastmod>2026-06-06T13:18:03.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://peter-baumgartner.net/contact.html</loc>
+    <lastmod>2026-06-06T13:18:03.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://peter-baumgartner.net/posts/2023-05-05-how-to-delete-git-branches/index.html</loc>
+    <lastmod>2026-06-06T13:18:03.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://peter-baumgartner.net/posts/2023-04-23-welcome-quarto/index.html</loc>
+    <lastmod>2026-08-12T10:55:12.429Z</lastmod>
+  </url>
+  <url>
+    <loc>https://peter-baumgartner.net/posts/tutorial-quarto-blog/2024-07-22-creating-a-quarto-blog-from-scratch-using-rstudio/index.html</loc>
+    <lastmod>2026-06-06T13:18:03.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://peter-baumgartner.net/posts/tutorial-quarto-blog/2024-07-24-default-blog-source-code/index.html</loc>
+    <lastmod>2026-06-06T13:18:03.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://peter-baumgartner.net/posts/2024-07-21-writing-blog-posts--new-attempt/index.html</loc>
     <lastmod>2026-06-06T13:18:03.000Z</lastmod>
   </url>
   <url>
@@ -79,5 +79,9 @@
   <url>
     <loc>https://peter-baumgartner.net/privacy.html</loc>
     <lastmod>2026-06-06T13:18:03.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://peter-baumgartner.net/posts/2026-08-12-encoding-resilience/index.html</loc>
+    <lastmod>2026-08-17T13:16:09.450Z</lastmod>
   </url>
 </urlset>

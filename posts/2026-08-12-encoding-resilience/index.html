@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Peter Baumgartner">
+<meta name="dcterms.date" content="2026-08-14">
+<meta name="description" content="Why binary downloads with per-file encoding detection prevent silent failures: A practical guide to building resilient data pipelines.">
+<title>Encoding Resilience – Thought Splinters</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.ico" rel="icon">
+<script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-c4aff173bdb29f86b01cc55e5a32ba7d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/iconify-3.0.0/iconify-icon.min.js"></script>
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-CLE95GVN04"></script><script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-CLE95GVN04', { 'anonymize_ip': true});
+</script><script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"express",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  ,
+"language":"en"
+  });
+});
+</script><script type="application/json" class="js-hypothesis-config">
+{
+  "theme": "classic",
+  "openSidebar": false,
+  "showHighlights": "whenSidebarOpen",
+  "enableExperimentalNewNoteButton": true,
+  "branding": {
+    "appBackgroundColor": "white",
+    "ctaBackgroundColor": "rgb(81, 118, 153)",
+    "ctaTextColor": "rgb(221, 228, 235)",
+    "selectionFontFamily": "helvetica, arial, sans serif"
+  }
+}
+</script><script async="" src="https://hypothes.is/embed.js"></script><script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script><link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../../glossary.css">
+<meta name="twitter:title" content="Encoding Resilience – Thought Splinters">
+<meta name="twitter:description" content="Why binary downloads with per-file encoding detection prevent silent failures: A practical guide to building resilient data pipelines.">
+<meta name="twitter:image" content="https://peter-baumgartner.net/posts/2026-08-12-encoding-resilience/encoding-problem.webp">
+<meta name="twitter:image:alt" content="The image features the repair of a digital 'glitch' effect. On the left side, you see a chaotic stream of glowing hexadecimal code, binary digits, and corrupted UTF-8 characters. As it moves to the right, the chaotic stream integrates into the word 'DATA', written in clean, minimalist white sans-serif typography. ">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Thought Splinters</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../contact.html"> 
+<span class="menu-text">Contact</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">
+<li>
+    <a class="dropdown-item" href="../../quarto-blog.html">
+ <span class="dropdown-text">Create a Quarto Blog</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../zotero-obsidian-annotations.html">
+ <span class="dropdown-text">Zotero-Obsidian Annotations</span></a>
+  </li>  
+    </ul>
+</li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-links" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Links</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-links">
+<li>
+    <a class="dropdown-item" href="https://opensource.posit.co/">
+ <span class="dropdown-text">Posit Open Source</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://opensource.posit.co/blog">
+ <span class="dropdown-text">Posit Open Source Blog</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://opensource.posit.co/blog/?q=source%3Aquarto">
+ <span class="dropdown-text">Posit Quarto Blog</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://opensource.posit.co/software">
+ <span class="dropdown-text">Posit Packages</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://rweekly.org/">
+ <span class="dropdown-text">R Weekly</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://www.r-bloggers.com/">
+ <span class="dropdown-text">R Bloggers</span></a>
+  </li>  
+    </ul>
+</li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../archive.html"> 
+<span class="menu-text">Archive</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/petzi53/petzi53.github.io/"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:github" style="font-size: 1.25em;" aria-label="Icon github from fa6-brands Iconify.design set." title="GitHub repo of this site" mode="svg"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://social.anoxinon.de/@pbaumgartner" rel="me"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:mastodon" style="font-size: 1.25em;" aria-label="Icon mastodon from fa6-brands Iconify.design set." title="My Mastodon account" mode="svg"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://pbaumgartner.bsky.social"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:bluesky" style="font-size: 1.25em;" aria-label="Icon bluesky from fa6-brands Iconify.design set." title="My Bluesky account" mode="svg"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://peter.baumgartner.name"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:wordpress" style="font-size: 1.25em;" aria-label="Icon wordpress from fa6-brands Iconify.design set." title="Gedankensplitter: My German WordPress blog" mode="svg"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://scholar.google.com/citations?user=mKCNn9kAAAAJ&amp;hl=de"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:google-scholar" style="font-size: 1.25em;" aria-label="Icon google-scholar from fa6-brands Iconify.design set." title="My Google Scholar account" mode="svg"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://orcid.org/0000-0003-4526-8791"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:orcid" style="font-size: 1.25em;" aria-label="Icon orcid from fa6-brands Iconify.design set." title="My ORCID account: 0000-0003-4526-8791" mode="svg"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img" aria-label="RSS Feed">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+</div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Encoding Resilience</h1>
+            <p class="subtitle lead">Why Per-File Detection Beats Heuristics</p>
+                  <div>
+        <div class="description">
+          <p>Why binary downloads with per-file encoding detection prevent silent failures: A practical guide to building resilient data pipelines.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">how-to</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Peter Baumgartner </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">August 14, 2026</p>
+      </div>
+    </div>
+    
+      <div>
+      <div class="quarto-title-meta-heading">Modified</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">August 17, 2026</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="../../portrait-peter.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Peter Baumgartner"><img src="../../portrait-peter.png" class="img-fluid figure-img" alt="Peter Baumgartner"></a></p>
+<figcaption>Peter Baumgartner</figcaption></figure>
+</div>
+</div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="4"><h2 id="toc-title">On this page</h2>
+   
+  <ul>
+<li><a href="#years-of-press-freedom-index-data" id="toc-years-of-press-freedom-index-data" class="nav-link active" data-scroll-target="#years-of-press-freedom-index-data">25 Years of Press Freedom Index Data</a></li>
+  <li><a href="#three-different-methodological-approaches" id="toc-three-different-methodological-approaches" class="nav-link" data-scroll-target="#three-different-methodological-approaches">Three different methodological approaches</a></li>
+  <li><a href="#my-wrong-assumption" id="toc-my-wrong-assumption" class="nav-link" data-scroll-target="#my-wrong-assumption">My wrong assumption</a></li>
+  <li><a href="#first-part-of-the-solution" id="toc-first-part-of-the-solution" class="nav-link" data-scroll-target="#first-part-of-the-solution">First part of the solution</a></li>
+  <li><a href="#sec-solution-2" id="toc-sec-solution-2" class="nav-link" data-scroll-target="#sec-solution-2">Second part of the solution</a></li>
+  <li>
+<a href="#demonstration-testing-the-detector-on-real-files" id="toc-demonstration-testing-the-detector-on-real-files" class="nav-link" data-scroll-target="#demonstration-testing-the-detector-on-real-files">Demonstration: Testing the detector on real files</a>
+  <ul>
+<li><a href="#readrguess_encoding" id="toc-readrguess_encoding" class="nav-link" data-scroll-target="#readrguess_encoding"><code>readr::guess_encoding()</code></a></li>
+  <li><a href="#detect_csv_encoding" id="toc-detect_csv_encoding" class="nav-link" data-scroll-target="#detect_csv_encoding"><code>detect_csv_encoding()</code></a></li>
+  </ul>
+</li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/petzi53/petzi53.github.io/edit/main/posts/2026-08-12-encoding-resilience/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/petzi53/petzi53.github.io/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="years-of-press-freedom-index-data" class="level2"><h2 class="anchored" data-anchor-id="years-of-press-freedom-index-data">25 Years of Press Freedom Index Data</h2>
+<p>Because I had to update the data annually in my pressfreedom. While developing <a href="https://github.com/petzi53/pressfreedom.data">pressfreedom.data</a>, an R data package, I learned that writing error-free code is not enough to meet current challenges. While building a pipeline for 24 years of press freedom data, I discovered that even the most evidence-based assumptions can fail if they don’t account for the uncertainty of what comes next.</p>
+<p>The data I relied on came from <a href="https://rsf.org/en/index">Reporters Without Borders</a> (RSF). Unfortunately, I couldn’t download one clean dataset, but had to stitch together press freedom index data from 2002 to 2026</p>
+<p>Starting in spring 2025 with {<strong>pressfreedom.data</strong>}, I had to stitch together press freedom index data from 2002 to 2024. The data are from Reporters Without Borders (RSF).</p>
+<blockquote class="blockquote">
+<p>The World Press Freedom Index (WPFI) is an annual ranking of 180 countries compiled and published by Reporters Without Borders (RSF) since 2002 based upon the assessment of the non-governmental organization as well as surveys of professionals around the world, of the countries’ press freedom records in the previous year. It intends to reflect the degree of freedom that journalists, news organizations, and netizens have in each country, and the efforts made by authorities to respect this freedom. <a href="https://en.wikipedia.org/w/index.php?title=World_Press_Freedom_Index&amp;oldid=1352761010">Wikipedia</a></p>
+</blockquote>
+</section><section id="three-different-methodological-approaches" class="level2"><h2 class="anchored" data-anchor-id="three-different-methodological-approaches">Three different methodological approaches</h2>
+<p>My first difficulty was that I couldn’t take the data as a single consolidated file, but had to download it year by year. After some spot tests, it was evident that the data structures had changed over the years.</p>
+<ul>
+<li>
+<strong>Period 1 – From 2002-2012 (2011 is missing)</strong>: The index focused primarily on physical violence, censorship, and media control, including threats against journalists and restrictions on internet access (see <a href="https://rsf.org/sites/default/files/medias/file/2022/04/RSF_Questionnaire_2010_EN.pdf">Questionnaire for compiling the 2010 Press Freedom Index</a>). The scoring scale was neither reproducible nor metric. The higher the score, the worse the press freedom, with 0 representing the best possible score but no upper limit for the worst situation.</li>
+<li>
+<strong>Period 2 – From 2013-2021</strong>: The methodology shifted toward measuring pluralism, media independence, and the legislative and infrastructural environments (see <a href="https://rsf.org/sites/default/files/medias/file/2022/04/RSF_Index_Questionnaire_2016_EN.pdf">RSF SURVEY 2016</a>). This era introduced a scoring scale, in which 100 represents the ideal country and 0 the worst possible scenario.</li>
+<li>
+<strong>Period 3 – From 2022 onwards</strong>: A major overhaul occurred, moving to a much more granular 118-question questionnaire. This modern approach also evaluates five key contextual components: political, legal, economic, sociocultural, and safety, with each component receiving a score from 0 to 100 (see <a href="https://rsf.org/sites/default/files/medias/file/2022/04/RSF_Index_Questionnaire_2022_EN.pdf">World Press Freedom Index: Questionnaire 2022</a> and <a href="https://rsf.org/en/methodology-used-compiling-world-press-freedom-index-2025?year=2025&amp;data_type=general">Methodology used for compiling the World Press Freedom Index 2025</a>.</li>
+</ul></section><section id="my-wrong-assumption" class="level2"><h2 class="anchored" data-anchor-id="my-wrong-assumption">My wrong assumption</h2>
+<p>My first download function was based on careful spot-checking I’d done years before, when 2024 was still the latest year. I’d taken random samples from different periods — some early years for period 1, like 2002 and 2012; some middle years for period 2, like 2013 and 2021; and some recent years, like 2022 and 2024 — and checked their actual encoding with <code><a href="https://readr.tidyverse.org/reference/encoding.html">readr::guess_encoding()</a></code>. Every example I tested came back as UTF-8. So I hardcoded UTF-8 as the default and moved on.</p>
+<hr>
+<div class="cell">
+<div id="lst-wrong-solution" class="r cell-code listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure"><div aria-describedby="lst-wrong-solution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">download_rwb_data</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">years</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">year</span> <span class="kw">in</span> <span class="va">years</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">url</span> <span class="op">&lt;-</span> <span class="fu">rsf_url_for</span><span class="op">(</span><span class="va">year</span><span class="op">)</span></span>
+<span>    </span>
+<span>    <span class="va">raw</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_delim</a></span><span class="op">(</span></span>
+<span>      <span class="va">url</span>,</span>
+<span>      delim <span class="op">=</span> <span class="st">";"</span>,</span>
+<span>      locale <span class="op">=</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/locale.html">locale</a></span><span class="op">(</span>encoding <span class="op">=</span> <span class="st">"UTF-8"</span>, decimal_mark <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span></span>
+<span>    <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_delim</a></span><span class="op">(</span><span class="va">raw</span>, <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html">here</a></span><span class="op">(</span><span class="st">"inst/extdata"</span>, <span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html">glue</a></span><span class="op">(</span><span class="st">"rwb{year}.csv"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-lst" id="lst-wrong-solution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;1: <strong>My frist (wrong) approach</strong>
+</figcaption></figure>
+</div>
+</div>
+<hr>
+<div id="nte-wrong-solution-rsf-url" class="callout callout-style-default callout-note callout-titled" style="color: blue;">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note&nbsp;1: Where does the URL for every year come from?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The RSF Press Freedom Index files are hosted at a predictable URL pattern. For example, the 2025 data is at <code>https://rsf.org/sites/default/files/import_classement/2025.csv</code>. <code>rsf_url_for(year)</code> below stands in for the (trivial) helper that builds this URL from a given year: <code>https://rsf.org/sites/default/files/import_classement/{year}.csv</code>.</p>
+</div>
+</div>
+<p>This felt justified: I had tested multiple years across the full span of the dataset, found them all to be UTF-8, and made a decision based on the evidence. One encoding for all years. Done.</p>
+<p>I knew that <a href="https://datatracker.ietf.org/doc/html/rfc3629">UTF-8</a> has become the de facto standard for the web and modern software development, whereas other decoding schemes, like ISO-8859-1 (also known as Latin-1), are largely restricted to legacy systems. It therefore seemed natural to me that RSF uses UTF-8 for all files.</p>
+<p>It worked fine until it didn’t. Years later, in summer 2026, I resumed the work. Two new years (2025 and 2026) were published in the meantime. The moment I opened the raw CSV files, I found garbled text. There’s even a term for this: <strong>mojibake</strong> (文字化け) — Japanese for “corrupted characters.” It’s what you get when text encoded in one character set gets decoded as if it were a different one.</p>
+<p>But when I checked my spot-sample years again, they were all still UTF-8. That’s when it hit me: I had tested 2002, 2013, 2022, and 2024. But I’d never tested 2025 and 2026. Those years didn’t exist when I did my encoding check. And RSF, without any announcement, had suddenly changed their export encoding from UTF-8 to ISO 8859-1 (Latin-1) after 22 years. The assumption I’d made by checking the data was correct — but only for the data I’d actually checked.</p>
+<p>The error occurred silently and was very difficult to detect: the garbled text appeared only in the last two files and, in my case, because I had chosen only the column with English country names, only in some (remaining French) zone names.</p>
+</section><section id="first-part-of-the-solution" class="level2"><h2 class="anchored" data-anchor-id="first-part-of-the-solution">First part of the solution</h2>
+<p>I realized that it was very important for reproducibility not to fiddle with the original files and to save them really as raw files. This required stopping guessing at download time entirely. What I came up with was the following code chunk:</p>
+<div class="cell">
+<div id="lst-solution1" class="r cell-code listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure"><div aria-describedby="lst-solution1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span></span>
+<span>  <span class="va">url</span>,</span>
+<span>  destfile <span class="op">=</span> <span class="va">filename</span>,</span>
+<span>  mode <span class="op">=</span> <span class="st">"wb"</span>,   <span class="co"># write binary -- the whole point</span></span>
+<span>  quiet <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-lst" id="lst-solution1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;2: The first part of the solution
+</figcaption></figure>
+</div>
+</div>
+<div id="nte-solution1-url-filename" class="callout callout-style-default callout-note callout-titled" style="color: blue;">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note&nbsp;2: Where do URL and filename come from?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>URL and filename come from the same for-loop-over-years structure as <code>download_rwb_data()</code> above, e.g.&nbsp;<code>url &lt;- rsf_url_for(year)</code> and <code>filename &lt;- here::here("inst/extdata", glue::glue("rwb{year}.csv"))</code>.</p>
+</div>
+</div>
+<p>The essential difference from my first approach was to avoid any file conversion during the download. This meant not using any function of the {<strong>readr</strong>} package, as it forces you to make a decision by using <code>locale()</code> as a parameter. The coercion to choose a locale reflects the Tidyverse philosophy of explicitness over implicitness and is normally a good thing. I will need this feature anyway when I work with the data (see: <a href="#sec-solution-2"> Second part of the solution</a>). But here was the goal: Download the files without any intervention whatsoever.</p>
+<p><code>mode = "wb"</code> copies bytes with no text-mode translation at all — no <code>read_delim()</code>, no locale, no decision. Whatever RSF’s server sends is exactly what lands on disk. The encoding guess moves downstream, to the moment the file is actually parsed using {<strong>readr</strong>}.</p>
+<p>In my previous design, I baked a fixed encoding guess into the download function that wrote the silent conversion back to disk as fact. By the time I went looking at the “raw” file, it wasn’t raw anymore. Under the new design, the raw file is always, permanently, exactly what RSF sent. I can re-run, fix, or improve the detection logic forever because the ground truth was never overwritten in the first place.</p>
+</section><section id="sec-solution-2" class="level2"><h2 class="anchored" data-anchor-id="sec-solution-2">Second part of the solution</h2>
+<p>I found the following second part of the solution to my encoding problem using LLMs via Posit Assistant. I have to confess that at first I didn’t fully comprehend the code chunk. I felt it introduced unnecessary complexity. But after I understood the read::guess_encoding() I appreciated the following few code lines</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">detect_csv_encoding</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">filepath</span><span class="op">)</span> <span class="op">{</span>                    <span class="co"># (1)</span></span>
+<span>  <span class="va">guesses</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/encoding.html">guess_encoding</a></span><span class="op">(</span><span class="va">filepath</span><span class="op">)</span>                   <span class="co"># (2)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">guesses</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span>                                    <span class="co"># (3)</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"Could not detect encoding for: "</span>, <span class="va">filepath</span><span class="op">)</span>          <span class="co"># (3)</span></span>
+<span>  <span class="op">}</span></span>
+<span></span>
+<span>  <span class="va">top_guess</span> <span class="op">&lt;-</span> <span class="va">guesses</span><span class="op">$</span><span class="va">encoding</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>                             <span class="co"># (4)</span></span>
+<span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"^(UTF-8|US-ASCII|ASCII)$"</span>,                        <span class="co"># (5)</span></span>
+<span>            <span class="va">top_guess</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>                  <span class="co"># (5)</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="st">"UTF-8"</span><span class="op">)</span>                                            <span class="co"># (5)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"^(ISO-8859-1|windows-1252|latin1)$"</span>,              <span class="co"># (6)</span></span>
+<span>            <span class="va">top_guess</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>                  <span class="co"># (6)</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="st">"ISO-8859-1"</span><span class="op">)</span>                                       <span class="co"># (6)</span></span>
+<span>  <span class="op">}</span></span>
+<span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span>                                                        <span class="co"># (7)</span></span>
+<span>    <span class="st">"Unexpected encoding '"</span>, <span class="va">top_guess</span>, <span class="st">"' detected for: "</span>,    <span class="co"># (7)</span></span>
+<span>    <span class="va">filepath</span>, <span class="st">". Expected UTF-8 or ISO-8859-1 family."</span>         <span class="co"># (7)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol type="1">
+<li>With the help of AI (Claude Sonnet 5), I designed a new function named <code>detect_csv_encoding()</code>. It takes one argument, filepath, which should be a string representing the path to the file you want to inspect.</li>
+<li>Then the function guesses the encoding with <code>guesses &lt;- readr::guess_encoding(filepath)</code>. The <code>guess_encoding()</code> function is from the {<strong>readr</strong>} package (part of the Tidyverse). It reads the file’s raw bytes and compares them against known patterns to determine which encoding was used. It returns a data frame (specifically a tibble) containing columns for the encoding name and the confidence level (0 to 1).</li>
+<li>
+<code>if (nrow(guesses) == 0) stop(...)</code> is a safety check. If {<strong>readr</strong>} cannot find any recognizable pattern at all and returns an empty data frame, the function stops with an informative error instead of silently guessing.</li>
+<li>Since <code><a href="https://readr.tidyverse.org/reference/encoding.html">readr::guess_encoding()</a></code> returns multiple possibilities sorted by confidence, we only care about the most likely one. <code>top_guess &lt;- guesses$encoding[1]</code> extracts the string from the encoding column of the first row (the one with the highest confidence, the best guess).</li>
+<li>The first <code><a href="https://rdrr.io/r/base/grep.html">grepl()</a></code> explicitly checks whether the top guess is <code>UTF-8</code>, <code>US-ASCII</code>, or <code>ASCII</code> (all strict subsets of UTF-8; readr sometimes detects pure-ASCII text as <code>ASCII</code>). If so, the function returns <code>"UTF-8"</code>.</li>
+<li>The second <code><a href="https://rdrr.io/r/base/grep.html">grepl()</a></code> checks whether the top guess belongs to the Western European Latin-1 family: <code>ISO-8859-1</code>, <code>windows-1252</code>, or <code>latin1</code>. (More details on the regex at the end of this listing.) Even though these three are slightly different, they are often interchangeable for basic Western text. By forcing them all to <code>"ISO-8859-1"</code>, the rest of the code can rely on a single, predictable string.</li>
+<li>If neither branch matched, the function <code><a href="https://rdrr.io/r/base/stop.html">stop()</a></code>s with the actual detected encoding name. This is a deliberate design choice: earlier versions of this function fell through to a silent <code>return("UTF-8")</code> default here, which would have hidden the very problem this whole post is about. See the callout below for why this matters.</li>
+</ol>
+<hr>
+<p><strong>Explanation of the Regex lines</strong></p>
+<ul>
+<li>
+<code>grepl(…)</code>: A function that returns TRUE if a pattern is found in a string.</li>
+<li>
+<code>^</code>: Matches the start of the string.</li>
+<li>
+<code>(ISO-8859-1|windows-1252|latin1)</code>: The pipe <code>|</code> acts as an OR operator. It checks whether the string is exactly <code>ISO-8859-1</code>, <code>windows-1252</code>, or <code>latin1</code>.</li>
+<li>
+<code>$</code>: Matches the end of the string (ensuring no extra characters are present).</li>
+<li>
+<code>ignore.case = TRUE</code>: Makes the check case-insensitive (e.g., “LATIN1” would match “latin1”).</li>
+</ul>
+<div id="nte-encoding-resilience-scope" class="callout callout-style-default callout-note callout-titled" style="color: blue;">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note&nbsp;3: Why only two encodings — and why fail instead of guess?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It’s tempting to think this detector should be extended to recognize <em>every</em> possible encoding. But <code><a href="https://readr.tidyverse.org/reference/encoding.html">readr::guess_encoding()</a></code> (built on stringi/ICU) already returns a <em>ranked, probabilistic</em> guess across many candidate encodings — it’s not a hard classifier, and widening the regex to match more encoding names wouldn’t make the underlying guess any more certain. It would just add complexity without addressing the actual risk.</p>
+<p>Restricting the detector’s <em>known-good</em> outcomes to UTF-8 and ISO-8859-1 is instead a deliberate, evidence-based decision: RSF’s files have only ever used these two encodings across more than two decades of data. Encoding that as domain knowledge is reasonable.</p>
+<p>The part that actually mattered was the <em>fallback</em>. My original version treated “not confidently Latin-1” as “must be UTF-8” — silently defaulting instead of checking. That’s precisely the assumption that broke earlier in this post. The fixed version above checks for UTF-8 and ISO-8859-1 explicitly and <code><a href="https://rdrr.io/r/base/stop.html">stop()</a></code>s on anything else (including an empty guess). If RSF ever introduces a third encoding, or ships a corrupted file, the function now fails loudly at the moment of detection — instead of mislabeling it and letting bad data slip downstream.</p>
+</div>
+</div>
+<p>The main idea behind this code snippet is to decide the encoding scheme per file instead of assuming a fixed encoding.</p>
+</section><section id="demonstration-testing-the-detector-on-real-files" class="level2"><h2 class="anchored" data-anchor-id="demonstration-testing-the-detector-on-real-files">Demonstration: Testing the detector on real files</h2>
+<p>To see this in action, here’s a working example using actual RSF data files. The files <code>rwb2024.csv</code> (UTF-8) and <code>rwb2025.csv</code> (ISO-8859-1) demonstrate how the detector automatically identifies the encoding of each file.</p>
+<section id="readrguess_encoding" class="level3"><h3 class="anchored" data-anchor-id="readrguess_encoding"><code>readr::guess_encoding()</code></h3>
+<p>The first demonstration shows how ´readr::guess_encoding()` works:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">file_path_24</span> <span class="op">&lt;-</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html">here</a></span><span class="op">(</span><span class="st">"posts/2026-08-12-encoding-resilience/rwb2024.csv"</span><span class="op">)</span></span>
+<span><span class="va">file_path_25</span> <span class="op">&lt;-</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html">here</a></span><span class="op">(</span><span class="st">"posts/2026-08-12-encoding-resilience/rwb2025.csv"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/encoding.html">guess_encoding</a></span><span class="op">(</span><span class="va">file_path_24</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/encoding.html">guess_encoding</a></span><span class="op">(</span><span class="va">file_path_25</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="tbl-encoding-demo-1" class="quarto-layout-panel anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-encoding-demo-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: <strong>Guessing the type of encoding</strong>
+</figcaption><div aria-describedby="tbl-encoding-demo-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="tbl-encoding-demo-1" style="flex-basis: 50.0%;justify-content: center;">
+<div id="tbl-encoding-demo-1-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-tbl figure"><figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-tbl" id="tbl-encoding-demo-1-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) rwb2024.csv (UTF-8)
+</figcaption><div aria-describedby="tbl-encoding-demo-1-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table id="tbl-encoding-demo-1-1" class="caption-top table">
+<thead><tr class="header">
+<th style="text-align: left;">encoding</th>
+<th style="text-align: right;">confidence</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">UTF-8</td>
+<td style="text-align: right;">1.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">windows-1252</td>
+<td style="text-align: right;">0.31</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="tbl-encoding-demo-1" style="flex-basis: 50.0%;justify-content: center;">
+<div id="tbl-encoding-demo-1-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-tbl figure"><figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-tbl" id="tbl-encoding-demo-1-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) rwb2025.csv (ISO-8859-1)
+</figcaption><div aria-describedby="tbl-encoding-demo-1-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table id="tbl-encoding-demo-1-2" class="caption-top table">
+<thead><tr class="header">
+<th style="text-align: left;">encoding</th>
+<th style="text-align: right;">confidence</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ISO-8859-1</td>
+<td style="text-align: right;">0.39</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ISO-8859-2</td>
+<td style="text-align: right;">0.22</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</figure>
+</div>
+</section><section id="detect_csv_encoding" class="level3"><h3 class="anchored" data-anchor-id="detect_csv_encoding"><code>detect_csv_encoding()</code></h3>
+<p>The second demonstrations puts <code><a href="https://readr.tidyverse.org/reference/encoding.html">readr::guess_encoding()</a></code> in the context of <code>detect_csv_encoding()</code> function.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">detect_csv_encoding</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">filepath</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">guesses</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/encoding.html">guess_encoding</a></span><span class="op">(</span><span class="va">filepath</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">guesses</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"Could not detect encoding for: "</span>, <span class="va">filepath</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span></span>
+<span>  <span class="va">top_guess</span> <span class="op">&lt;-</span> <span class="va">guesses</span><span class="op">$</span><span class="va">encoding</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"^(UTF-8|US-ASCII|ASCII)$"</span>, <span class="va">top_guess</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="st">"UTF-8"</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"^(ISO-8859-1|windows-1252|latin1)$"</span>, <span class="va">top_guess</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="st">"ISO-8859-1"</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span></span>
+<span>    <span class="st">"Unexpected encoding '"</span>, <span class="va">top_guess</span>, <span class="st">"' detected for: "</span>, <span class="va">filepath</span>,</span>
+<span>    <span class="st">". Expected UTF-8 or ISO-8859-1 family."</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu">detect_csv_encoding</span><span class="op">(</span><span class="va">file_path_24</span><span class="op">)</span></span>
+<span><span class="fu">detect_csv_encoding</span><span class="op">(</span><span class="va">file_path_25</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "UTF-8"
+[1] "ISO-8859-1"</code></pre>
+</div>
+</div>
+<p>The results of <code>detect_csv_encoding()</code> demonstrates the key benefit: the same function, applied to files with different encodings, correctly identifies each one without needing to hard-code a single assumption. RSF changed their encoding between 2024 and 2025 (from UTF-8 to ISO-8859-1), and the detector handled it automatically.</p>
+</section></section><section id="conclusion" class="level2"><h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Testing what you have is not the same as testing what might arrive in the future. Evidence-based assumptions are solid when they’re checked against current data, but they’re incomplete when that data is constantly growing. My spot-check approach had worked perfectly for every year I tested, but RSF changed their encoding after I’d finished testing, so the assumption remained incomplete. That was the moment I realized: design for re-checkability, not just correctness. Keep ground truth sacred by avoiding encoding decisions at download time, push detection to the parsing stage, and make every decision verifiable per file, not assumed once and trusted forever.</p>
+<!-- COinS metadata for Zotero compatibility (auto-generated) -->
+<p><span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3aofi%2ffmt%3akev%3amtx%3adc&amp;rft.type=blogPost&amp;rft.title=Encoding%20Resilience%3a%20Why%20Per-File%20Detection%20Beats%20Heuristics&amp;rft.date=2026&amp;rft.source=Thought%20Splinters&amp;rft_id=https://peter-baumgartner.net/posts%2f2026-08-12-encoding-resilience%2findex&amp;rft.language=en&amp;rft.rights=CC%20BY%204.0&amp;rft.description=Why%20binary%20downloads%20with%20per-file%20encoding%20detection%20prevent%20silent%20failures%3a%20A%20practical%20guide%20to%20building%20resilient%20data%20pipelines.%0a&amp;rft.au=Baumgartner%2c%20Peter"></span></p>
+
+
+</section><a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{baumgartner2026,
+  author = {Baumgartner, Peter},
+  title = {Encoding {Resilience}},
+  date = {2026-08-14},
+  url = {https://peter-baumgartner.net/posts/2026-08-12-encoding-resilience/},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-baumgartner2026" class="csl-entry quarto-appendix-citeas" role="listitem">
+Baumgartner, Peter. 2026. <span>“Encoding Resilience.”</span> August 14.
+<a href="https://peter-baumgartner.net/posts/2026-08-12-encoding-resilience/">https://peter-baumgartner.net/posts/2026-08-12-encoding-resilience/</a>.
+</div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/peter-baumgartner\.net");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><script src="https://utteranc.es/client.js" repo="petzi53/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+      <ul class="footer-items list-unstyled">
+<li class="nav-item">
+ <a href="https://www.peter-baumgartner.net">Thought Splinters</a> © 2023-2026 by <a href="https://www.peter-baumgartner.net/about">Peter Baumgartner</a> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1">CC BY 4.0</a>
+  </li>  
+</ul>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+<li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+<p>About</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../../privacy.html">
+<p>Privacy</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../../disclaimer.html">
+<p>Disclaimer</p>
+</a>
+  </li>  
+</ul>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/petzi53/petzi53.github.io/edit/main/posts/2026-08-12-encoding-resilience/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/petzi53/petzi53.github.io/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+<li class="nav-item">
+ Proudly powered by <a href="https://quarto.org/">Quarto</a>
+  </li>  
+</ul>
+</div>
+  </div>
+</footer><script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":true,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+</body></html>
