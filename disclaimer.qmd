@@ -3,7 +3,7 @@ title: "Disclaimer"
 
 date: 2023-05-01
 draft: false
-date-modified: 2024-07-19
+date-modified: 2026-06-11
 ---
 
 ## Media owner
@@ -18,13 +18,13 @@ Peter Baumgartner<br /> Herzogstraße 1<br /> 3500 Krems an der Donau
 
 ## Declaration about the editorial policy
 
-*Life Long Learning Lab (L3Lab)* is a personal blog by me ([Peter
+*Thought Splinters* is a personal blog by me ([Peter
 Baumgartner](/about.qmd)). It focuses on news and comments about the
 research and teaching on Technology Enhanced Learning (TEL) and Data
 Science Education with a special focus on
 [R](https://www.r-project.org/ "A free software environment for statistical computing and graphics")
 subjects. Using R as an tool for data analysis and interpretation
-'L3Lab' covers other subjects as well.
+'Thought Splinters' covers other subjects as well.
 
 The content of this website is my personal opinion. The purpose of this
 website is not commercial and is, therefore, no professional service
@@ -40,15 +40,15 @@ an open-source scientific and technical publishing system
 
 <hr />
 
-<p>The information contained on <https://l3lab.net> website (the
+<p>The information contained on <https://peter-baumgartner.net> website (the
 "Service") is for general information purposes only.</p>
 
-<p>'L3Lab' assumes no responsibility for errors or omissions in the
+<p>'Thought Splinters' assumes no responsibility for errors or omissions in the
 contents on the Service.</p>
 
 <p>
 
-In no event shall 'L3Lab' be liable for any special, direct, indirect,
+In no event shall 'Thought Splinters' be liable for any special, direct, indirect,
 consequential, or incidental damages or any damages whatsoever, whether
 in an action of contract, negligence or other torts, arising out of or
 in connection with the use of the Service or the contents of the
@@ -62,5 +62,5 @@ TermsFeed</a>
 
 </p>
 
-<p>'L3Lab' does not warrant that the website is free of viruses or other
+<p>'Thought Splinters' does not warrant that the website is free of viruses or other
 harmful components.</p>
