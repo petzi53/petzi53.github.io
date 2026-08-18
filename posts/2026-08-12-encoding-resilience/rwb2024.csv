@@ -1,0 +1,181 @@
+ISO;Score;Rank;Political Context;Rank_Pol;Economic Context;Rank_Eco;Legal Context;Rank_Leg;Social Context;Rank_Soc;Safety;Rank_Saf;Situation;Zone;Country_FR;Country_EN;Country_ES;Country_PT;Country_AR;Country_FA;Year (N);Rank N-1;Rank evolution;Score N-1;Score evolution
+NOR;9189;1;9487;1;8984;1;895;2;9048;1;9474;7;Bonne situation;UE Balkans;Norvège;Norway;Noruega;Noruega ;النرويج;نروژ;2024;1;0;9518;-3,29
+DNK;896;2;9411;2;8307;4;8882;3;869;5;9509;5;Bonne situation;UE Balkans;Danemark;Denmark;Dinamarca;Dinamarca ;الدنمارك;دانمارک;2024;3;1;8948;0,12
+SWE;8832;3;9103;4;855;2;9016;1;8278;20;9212;22;Bonne situation;UE Balkans;Suède;Sweden;Suecia;Suécia ;السويد;سوئد;2024;4;1;8815;0,17
+NLD;8773;4;8841;7;8409;3;8759;4;8734;4;9123;28;Bonne situation;UE Balkans;Pays-Bas;Netherlands;Países Bajos;Países Baixos ;هولندا;هلند;2024;6;2;87;0,73
+FIN;8655;5;8905;6;809;5;8616;6;8452;14;9213;21;Bonne situation;UE Balkans;Finlande;Finland;Finlandia;Finlândia ;فنلندا;فنلاند;2024;5;0;8794;-1,39
+EST;8644;6;8688;10;7677;8;8365;12;90;2;9488;6;Bonne situation;UE Balkans;Estonie;Estonia;Estonia;Estônia ;إستونيا;استونی;2024;8;2;8531;1,13
+PRT;859;7;9151;3;7292;10;8379;10;8827;3;9303;15;Bonne situation;UE Balkans;Portugal;Portugal;Portugal;Portugal ;البرتغال;پرتغال;2024;9;2;846;1,3
+IRL;8559;8;8986;5;77;7;8045;18;8661;6;9405;9;Bonne situation;UE Balkans;Irlande;Ireland;Irlanda;Irlanda ;أيرلندا;ایرلند;2024;2;-6;8991;-4,32
+CHE;8401;9;8778;8;7232;11;7885;27;852;11;9592;4;Situation plutôt bonne;UE Balkans;Suisse;Switzerland;Suiza;Suíça ;سويسرا;سويیس;2024;12;3;844;-0,39
+DEU;8384;10;8522;14;7763;6;8469;8;8238;22;8929;40;Situation plutôt bonne;UE Balkans;Allemagne;Germany;Alemania;Alemanha ;ألمانيا;آلمان;2024;21;11;8191;1,93
+LUX;838;11;8774;9;7153;13;7756;34;8532;10;9683;1;Situation plutôt bonne;UE Balkans;Luxembourg;Luxembourg;Luxemburgo;Luxemburgo ;لوكسمبورغ;لوکزامبورگ;2024;20;9;8198;1,82
+LVA;829;12;8442;15;7469;9;8029;19;8321;17;919;26;Situation plutôt bonne;UE Balkans;Lettonie;Latvia;Letonia;Letônia ;لاتفيا;لتوانی;2024;16;4;8327;-0,37
+LTU;8173;13;8084;17;7072;15;8141;15;836;15;921;23;Situation plutôt bonne;UE Balkans;Lituanie;Lithuania;Lituania;Lituânia ;ليتوانيا;لیتوانی;2024;7;-6;8679;-5,06
+CAN;817;14;8623;11;6635;21;8375;11;8238;22;8976;36;Situation plutôt bonne;Amériques;Canada;Canada;Canadá;Canadá ;كندا;کانادا;2024;15;1;8353;-1,83
+LIE;8152;15;8555;12;6235;31;8484;7;7872;32;9616;2;Situation plutôt bonne;UE Balkans;Liechtenstein;Liechtenstein;Liechtenstein;Liechtenstein ;ليختنشتاين;لیختن‌اشتاین;2024;11;-4;8447;-2,95
+BEL;8149;16;8196;16;7141;14;7949;24;8651;7;881;52;Situation plutôt bonne;UE Balkans;Belgique;Belgium;Bélgica;Bélgica ;بلجيكا;بلژیک;2024;31;15;7647;5,02
+CZE;8014;17;8021;18;6258;30;8018;21;8516;12;9258;19;Situation plutôt bonne;UE Balkans;Tchéquie;Czechia;Chequia;Chéquia;التشيك; چک;2024;14;-3;8358;-3,44
+ISL;8013;18;7994;20;651;24;7911;25;8328;16;9324;12;Situation plutôt bonne;UE Balkans;Islande;Iceland;Islandia;Islândia ;أيسلندا;ایسلند;2024;18;0;8319;-3,06
+NZL;7972;19;8536;13;7208;12;7115;54;7976;29;9024;32;Situation plutôt bonne;Asie-Pacifique;Nouvelle-Zélande;New Zealand;Nueva Zelanda;Nova Zelândia ;نيوزيلاندا;زلاند نو;2024;13;-6;8423;-4,51
+TLS;7892;20;7609;22;6536;23;7308;45;8571;9;9435;8;Situation plutôt bonne;Asie-Pacifique;Timor oriental;East Timor;Timor Oriental;Timor Leste ;تيمور الشرقية;تیمور شرقی;2024;10;-10;8449;-5,57
+FRA;7865;21;7893;21;6627;22;7818;31;815;26;8838;49;Situation plutôt bonne;UE Balkans;France;France;Francia;França ;فرنسا;فرانسه;2024;24;3;7872;-0,07
+WSM;7841;22;749;23;6898;19;6911;62;8303;18;9603;3;Situation plutôt bonne;Asie-Pacifique;Samoa;Samoa;Samoa;Samoa ;ساموا;ساموآ;2024;19;-3;8215;-3,74
+GBR;7751;23;8012;19;6942;18;7435;42;7538;40;8829;50;Situation plutôt bonne;UE Balkans;Royaume-Uni;United Kingdom;Reino Unido;Reino Unido;المملكة المتحدة;بریتانیا;2024;26;3;7851;-1
+JAM;773;24;6639;43;7031;17;726;49;8497;13;9225;20;Situation plutôt bonne;Amériques;Jamaïque;Jamaica;Jamaica; Jamaica ;جامايكا;جامائیکا;2024;32;8;7589;1,41
+TTO;7669;25;6697;39;6676;20;7126;53;8641;8;9206;24;Situation plutôt bonne;Amériques;Trinité-et-Tobago;Trinidad and Tobago;Trinidad y Tobago;Trinidad e Tobago ;ترينيداد وتوباغو;ترنتی و توبوگو;2024;30;5;7654;0,15
+CRI;7613;26;5741;58;6389;28;8397;9;828;19;9259;18;Situation plutôt bonne;Amériques;Costa Rica;Costa Rica;Costa Rica;Costa Rica ;كوستاريكا;کاستاریکا;2024;23;-3;802;-4,07
+TWN;7613;27;747;24;5677;41;8005;23;7639;38;9276;16;Situation plutôt bonne;Asie-Pacifique;Taïwan;Taiwan;Taiwán;Taiwan ;تايوان;تایوان;2024;35;8;7554;0,59
+SUR;7611;28;6667;40;7066;16;7179;51;7956;30;9187;27;Situation plutôt bonne;Amériques;Surinam;Suriname;Surinam;Suriname ;سورينام;سورینام;2024;48;20;7062;5,49
+SVK;7603;29;6552;44;6484;25;8053;17;8085;27;8839;48;Situation plutôt bonne;UE Balkans;Slovaquie;Slovakia;Eslovaquia;Eslováquia ;سلوفاكيا;اسلواکی;2024;17;-12;8322;-7,19
+ESP;7601;30;6896;31;5972;36;8173;14;7956;30;9008;33;Situation plutôt bonne;UE Balkans;Espagne;Spain;España;Espanha ;إسبانيا;اسپانیا;2024;36;6;7537;0,64
+MDA;7486;31;6651;42;5648;42;8013;22;8267;21;8849;46;Situation plutôt bonne;EEAC;Moldavie;Moldova;Moldavia;Moldávia ;مولدوفا;مولداوی;2024;28;-3;7762;-2,76
+AUT;7469;32;6899;30;602;34;7845;29;753;41;9053;30;Situation plutôt bonne;UE Balkans;Autriche;Austria;Austria;Áustria ;النمسا;اتریش;2024;29;-3;773;-2,61
+MRT;742;33;6723;35;5405;50;7906;26;7698;36;9365;10;Situation plutôt bonne;Afrique;Mauritanie;Mauritania;Mauritania;Mauritânia ;موريتانيا;موریتانی;2024;86;53;5945;14,75
+NAM;7416;34;6546;45;6337;29;7708;35;75;43;8988;34;Situation plutôt bonne;Afrique;Namibie;Namibia;Namibia;Namíbia ;ناميبيا;نامیبیا;2024;22;-12;8091;-6,75
+DOM;7389;35;7261;26;5354;51;8692;5;8214;24;7424;95;Situation plutôt bonne;Amériques;République dominicaine;Dominican Republic;República Dominicana;República Dominicana ;جمهورية الدومينيكان;جمهوری دومینیک;2024;43;8;7188;2,01
+MKD;7378;36;6698;38;5417;49;8317;13;7515;42;8943;39;Situation plutôt bonne;UE Balkans;Macédoine;North Macedonia;República de Macedonia del Norte;Macedônia do Norte ;مقدونيا الشمالية;مقدونیه شمالی ;2024;38;2;7435;-0,57
+SYC;7375;37;671;37;5979;35;7423;43;75;43;9262;17;Situation plutôt bonne;Afrique;Seychelles;Seychelles;Seychelles;Seychelles ;سيشيل;سی‌شل;2024;34;-3;7571;-1,96
+ZAF;7373;38;7257;27;5878;38;8029;19;8206;25;7495;94;Situation plutôt bonne;Afrique;Afrique du Sud;South Africa;Sudáfrica;África do Sul ;جنوب أفريقيا;آفریقای جنوبی;2024;25;-13;786;-4,87
+AUS;7342;39;7443;25;6458;27;6923;60;7041;59;8844;47;Situation plutôt bonne;Asie-Pacifique;Australie;Australia;Australia;Austrália ;أستراليا;استرالیا;2024;27;-12;7824;-4,82
+MNE;7321;40;6831;33;5606;43;7815;32;7305;52;9048;31;Situation plutôt bonne;UE Balkans;Monténégro;Montenegro;Montenegro;Montenegro ;الجبل الأسود;مونته‌نگرو;2024;39;-1;7428;-1,07
+CPV;7277;41;6951;28;5425;48;747;39;7335;50;9203;25;Situation plutôt bonne;Afrique;Cap-Vert;Cabo Verde;Cabo Verde;Cabo Verde ;الرأس الأخضر;کیپورد;2024;33;-8;7572;-2,95
+SVN;726;42;6785;34;4981;59;8103;16;737;47;9058;29;Situation plutôt bonne;UE Balkans;Slovénie;Slovenia;Eslovenia;Eslovênia ;سلوفينيا;اسلوانی;2024;50;8;7059;2,01
+ARM;716;43;6313;47;4818;70;7825;30;7857;33;8988;34;Situation plutôt bonne;EEAC;Arménie;Armenia;Armenia;Armênia ;أرمينيا;ارمنستان;2024;49;6;7061;0,99
+FJI;7123;44;5926;52;6466;26;6904;63;7435;45;8886;43;Situation plutôt bonne;Asie-Pacifique;Fidji;Fiji;Fiyi;Ilhas Fiji ;فيجي;فیجی;2024;89;45;5927;11,96
+TON;7011;45;6652;41;5792;40;6135;90;7143;55;9333;11;Situation plutôt bonne;Asie-Pacifique;Tonga;Tonga;Tonga;Tonga ;تونغا;تونگا;2024;44;-1;7129;-1,18
+ITA;698;46;6444;46;5275;53;7294;47;6998;60;8886;44;Situation problématique;UE Balkans;Italie;Italy;Italia;Itália ;إيطاليا;ایتالیا;2024;41;-5;7205;-2,25
+POL;6917;47;5163;75;5946;37;7019;57;7738;35;872;54;Situation problématique;UE Balkans;Pologne;Poland;Polonia;Polônia ;بولندا;لهستان;2024;57;10;6766;1,51
+HRV;6879;48;5781;56;4942;63;781;33;6892;64;8968;37;Situation problématique;UE Balkans;Croatie;Croatia;Croacia;Croácia ;كرواتيا;کرواسی;2024;42;-6;7195;-3,16
+ROU;6845;49;6192;48;482;69;7054;55;7338;49;882;51;Situation problématique;UE Balkans;Roumanie;Romania;Rumania;Romênia ;رومانيا;رومانی;2024;53;4;6904;-0,59
+GHA;6771;50;595;51;4792;72;7479;38;7341;48;8294;72;Situation problématique;Afrique;Ghana;Ghana;Ghana;Gana ;غانا;غنا;2024;62;12;6593;1,78
+URY;677;51;5362;71;4836;67;7665;36;7058;58;8929;40;Situation problématique;Amériques;Uruguay;Uruguay;Uruguay;Uruguai ;أوروغواي;اروگويه;2024;52;1;7033;-2,63
+CHL;6732;52;6884;32;4698;76;6875;64;6845;65;8357;68;Situation problématique;Amériques;Chili;Chile;Chile;Chile ;تشيلي;شیلی;2024;83;31;6009;7,23
+CIV;6689;53;6143;49;5505;45;7463;40;7308;51;7028;99;Situation problématique;Afrique;Côte d'Ivoire;Côte d'Ivoire;Costa de Marfil;Costa do Marfim ;ساحل العاج;ساحل عاج;2024;54;1;6883;-1,94
+BLZ;6685;54;5157;76;4948;62;6218;86;7798;34;9306;14;Situation problématique;Amériques;Bélize;Belize;Belice;Belize ;بليز;بلیز;2024;51;-3;7049;-3,64
+USA;6659;55;6903;29;6107;33;7449;41;7206;54;5631;118;Situation problématique;Amériques;États-Unis;United States;Estados Unidos;Estados Unidos ;الولايات المتحدة;ایالات متحده امریکا;2024;45;-10;7122;-4,63
+GAB;6583;56;5851;54;4974;60;7019;57;7109;57;7959;82;Situation problématique;Afrique;Gabon;Gabon;República Gabonesa;Gabão ;الغابون;گابون;2024;94;38;5812;7,71
+MUS;6555;57;5043;79;474;74;6288;83;8012;28;869;56;Situation problématique;Afrique;Maurice;Mauritius;Mauricio;Maurício ;موريشيوس;موریس;2024;63;6;6556;-0,01
+GMB;6553;58;5756;57;4851;66;6071;93;7687;37;8401;65;Situation problématique;Afrique;Gambie;Gambia;Gambia;Gâmbia ;غامبيا;گامبیا;2024;46;-12;7106;-5,53
+BGR;6532;59;6063;50;416;105;7224;50;6706;70;8508;61;Situation problématique;UE Balkans;Bulgarie;Bulgaria;Bulgaria;Bulgária ;بلغاريا;بلغارستان;2024;71;12;6298;2,34
+LBR;6513;60;5487;64;4598;80;7308;45;7143;55;8027;78;Situation problématique;Afrique;Libéria;Liberia;Liberia;Libéria ;ليبيريا;لیبریا;2024;66;6;6434;0,79
+UKR;65;61;6715;36;6224;32;7861;28;7589;39;4111;142;Situation problématique;EEAC;Ukraine;Ukraine;Ucrania;Ucrânia ;أوكرانيا;اوکراين;2024;79;18;6119;3,81
+KOR;6487;62;5111;77;549;46;6951;59;6177;89;8704;55;Situation problématique;Asie-Pacifique;Corée du Sud;South Korea;Corea del Sur;Coreia do Sul ;كوريا الجنوبية;کره جنوبی;2024;47;-15;7083;-5,96
+MWI;6446;63;5878;53;4606;79;6496;75;6812;66;8439;64;Situation problématique;Afrique;Malawi;Malawi;Malaui;Malaui ;مالاوي;مالاوی;2024;82;19;6034;4,12
+SLE;6427;64;5455;67;4356;92;6923;60;7262;53;8139;77;Situation problématique;Afrique;Sierra Leone;Sierra Leone;Sierra Leona;Serra Leoa ;سيراليون;سئیرالئون;2024;74;10;6255;1,72
+CYP;6314;65;558;61;4744;73;679;66;554;111;8919;42;Situation problématique;UE Balkans;Chypre;Cyprus;Chipre;Chipre ;قبرص;قبرس;2024;55;-10;6862;-5,48
+ARG;6313;66;5483;65;3845;119;7612;37;6389;80;8234;75;Situation problématique;Amériques;Argentine;Argentina;Argentina;Argentina ;الأرجنتين;آرژانتین;2024;40;-26;7336;-10,23
+HUN;6298;67;3855;124;4823;68;6788;67;7429;46;8597;58;Situation problématique;UE Balkans;Hongrie;Hungary;Hungría;Hungria ;المجر;مجارستان;2024;72;5;6296;0,02
+CSS;6283;68;5463;66;504;56;5701;105;6528;75;8682;57;Situation problématique;Amériques;OÉCO;OECS;OECO;OECO;الكاريبي;جزایر کارائیب شرقی;2024;93;25;5836;4,47
+COG;6257;69;5428;70;4292;95;6327;82;6714;69;8524;60;Situation problématique;Afrique;Congo-Brazzaville;Congo-Brazzaville; Congo-Brazzaville;Congo-Brazzaville ;الكونغو–برازافيل;کنگو برازاویل;2024;81;12;6042;2,15
+JPN;6212;70;5307;73;5583;44;6435;80;5438;113;8295;71;Situation problématique;Asie-Pacifique;Japon;Japan;Japón;Japão ;اليابان;ژاپن;2024;68;-2;6395;-1,83
+COM;6147;71;4884;85;5219;54;6202;87;6571;74;7857;86;Situation problématique;Afrique;Comores;Comoros;Comoras;Comores ;جزر القمر;کومور;2024;75;4;6225;-0,78
+AND;6144;72;5507;63;3646;130;6538;74;5714;105;9315;13;Situation problématique;UE Balkans;Andorre;Andorra;Andorra;Andorra ;أندورا;آندور;2024;37;-35;7505;-13,61
+MLT;6096;73;4535;99;4957;61;601;95;619;88;879;53;Situation problématique;UE Balkans;Malte;Malta;Malta;Malta ;مالطا;مالت;2024;84;11;5976;1,2
+NPL;6052;74;5546;62;5292;52;7141;52;6143;90;6141;109;Situation problématique;Asie-Pacifique;Népal;Nepal;Nepal;Nepal ;نيبال;نپال;2024;95;21;5789;2,63
+XKX;6019;75;5661;59;4805;71;7392;44;6756;67;5481;121;Situation problématique;UE Balkans;Kosovo;Kosovo;Kosovo;Kosovo ;كوسوفو;کوسووو;2024;56;-19;6838;-8,19
+CAF;6012;76;4855;87;4497;84;6442;78;629;86;7976;80;Situation problématique;Afrique;République centrafricaine;Central African Republic;República Centroafricana;República Centro-Africana ;جمهورية أفريقيا الوسطى;جمهوری آفریقای مرکزی;2024;98;22;5756;2,56
+GUY;601;77;4493;103;4661;77;6046;94;6518;76;8333;69;Situation problématique;Amériques;Guyana;Guyana;Guyana;Guiana ;غويانا;گیانا;2024;60;-17;675;-7,4
+GIN;5997;78;4928;83;50;57;6458;77;6905;62;6695;103;Situation problématique;Afrique;Guinée;Guinea;Guinea;Guiné ;غينيا;گینه;2024;85;7;5951;0,46
+BWA;5978;79;499;80;4256;97;5728;103;6956;61;7959;82;Situation problématique;Afrique;Botswana;Botswana;Botsuana;Botsuana ;بوتسوانا;بوستاوانا;2024;65;-14;6461;-4,83
+NER;5971;80;5435;68;4458;87;6769;68;675;68;6442;107;Situation problématique;Afrique;Niger;Niger;Niger;Níger ;النيجر;نیجر;2024;61;-19;6684;-7,13
+BIH;5885;81;4453;104;4034;112;674;71;5887;100;8312;70;Situation problématique;UE Balkans;Bosnie-Herzégovine;Bosnia-Herzegovina;Bosnia-Herzegovina;Bósnia-Herzegóvina ;البوسنة والهرسك;بوسنی هرزوگوین;2024;64;-17;6543;-6,58
+BRA;5859;82;5789;55;4468;86;6688;73;5714;105;6637;104;Situation problématique;Amériques;Brésil;Brazil;Brasil;Brasil ;البرازيل;برزیل;2024;92;10;5867;-0,08
+PAN;5855;83;4118;113;4983;58;5513;110;6468;77;8194;76;Situation problématique;Amériques;Panama;Panama;Panamá;Panamá ;بنما;پاناما;2024;69;-14;6367;-5,12
+QAT;5848;84;5056;78;5139;55;419;140;599;95;8866;45;Situation problématique;MENA;Qatar;Qatar;Catar;Catar ;قطر;قطر;2024;105;21;5528;3,2
+SWZ;5831;85;4913;84;4125;106;4731;131;6429;78;8958;38;Situation problématique;Afrique;Swaziland;Eswatini;Esuatini;Eswatini ;إسواتيني;اسواتینی ;2024;111;26;5266;5,65
+BFA;5824;86;4794;92;5489;47;628;84;6392;79;6164;108;Situation problématique;Afrique;Burkina Faso;Burkina Faso;Burkina Faso;Burkina Faso ;بوركينا فاسو;بورکینافاسو;2024;58;-28;6764;-9,4
+THA;5812;87;5435;68;4854;65;5058;121;5452;112;8262;74;Situation problématique;Asie-Pacifique;Thaïlande;Thailand;Tailandia;Tailândia ;تايلاند;تایلند;2024;106;19;5524;2,88
+GRC;5715;88;4525;101;3761;123;6468;76;5244;120;8578;59;Situation problématique;UE Balkans;Grèce;Greece;Grecia;Grécia ;اليونان;یونان;2024;107;19;552;1,95
+BEN;5673;89;4768;93;3948;115;5731;102;6333;83;7583;93;Situation problématique;Afrique;Bénin;Benin;Benín;Benim ;بنين;بنین;2024;112;23;5244;4,29
+CTU;5672;90;469;96;4261;96;5612;108;5325;116;8474;63;Situation problématique;UE Balkans;Chypre du Nord;Northern Cyprus;Chipre del Norte;Chipre do Norte ;قبرص الشمالية;قبرس شمالی;2024;76;-14;6173;-5,01
+PNG;5602;91;4217;111;4708;75;5154;117;5643;109;8286;73;Situation problématique;Asie-Pacifique;Papouasie-Nouvelle-Guinée;Papua New Guinea;Papúa Nueva Guinea;Papua-Nova Guiné ;بابوا غينيا الجديدة;پاپوآ گینه نو;2024;59;-32;6762;-11,6
+GNB;5595;92;4826;88;3938;116;6192;88;5405;114;7613;92;Situation problématique;Afrique;Guinée-Bissau;Guinea-Bissau;Guinea-Bisáu;Guiné-Bissau ;غينيا بيساو;گینه بیسائو;2024;78;-14;6157;-5,62
+HTI;5592;93;5338;72;4444;88;6747;69;6905;62;4526;131;Situation problématique;Amériques;Haïti;Haiti;Haití;Haiti ;هايتي;هايیتی;2024;99;6;5738;-1,46
+SEN;5544;94;529;74;4421;90;625;85;6587;72;5171;124;Situation problématique;Afrique;Sénégal;Senegal;Senegal;Senegal ;السنغال;سنگال;2024;104;10;5582;-0,38
+ZMB;5538;95;4366;108;3542;137;5793;99;5595;110;8393;66;Situation problématique;Afrique;Zambie;Zambia;Zambia;Zâmbia ;زامبيا;زامبیا;2024;87;-8;5941;-4,03
+TCD;5481;96;4873;86;4349;93;6106;91;631;84;5767;114;Situation difficile;Afrique;Tchad;Chad;Chad;Chade ;تشاد;چاد;2024;109;13;5373;1,08
+TZA;548;97;4741;94;4107;108;5069;120;6344;82;7142;98;Situation difficile;Afrique;Tanzanie;Tanzania;Tanzania;Tanzânia ;تنزانيا;تانزانیا;2024;143;46;4402;10,78
+SRB;5448;98;3307;140;3646;130;7032;56;5357;115;7897;85;Situation difficile;UE Balkans;Serbie;Serbia;Serbia;Sérvia ;صربيا;صربستان;2024;91;-7;5916;-4,68
+ALB;541;99;4227;110;3464;142;6747;69;6696;71;5916;112;Situation difficile;UE Balkans;Albanie;Albania;Albania;Albânia ;ألبانيا;آلبانی;2024;96;-3;5786;-3,76
+MDG;5407;100;4191;112;3403;145;5673;106;6071;92;7698;90;Situation difficile;Afrique;Madagascar;Madagascar;Madagascar;Madagascar ;مدغشقر;ماداگاسکار;2024;101;1;5666;-2,59
+ISR;5323;101;5634;60;5833;39;4904;127;6042;94;4202;137;Situation difficile;MENA;Israël;Israel;Israel;Israel ;إسرائيل;اسرائیل;2024;97;-4;5757;-4,34
+KEN;5322;102;3897;122;3704;127;594;96;586;101;7209;96;Situation difficile;Afrique;Kenya;Kenya;Kenia;Quênia ;كينيا;کنیا;2024;116;14;5115;2,07
+GEO;5305;103;3623;127;3993;114;6731;72;6045;93;6135;110;Situation difficile;EEAC;Géorgie;Georgia;Georgia;Geórgia ;جورجيا;گرجستان;2024;77;-26;6169;-8,64
+AGO;5244;104;4082;115;3681;128;5598;109;5833;102;7025;100;Situation difficile;Afrique;Angola;Angola;Angola;Angola ;أنغولا;آنگولا;2024;125;21;483;4,14
+MOZ;5242;105;4076;116;4618;78;6418;81;623;87;4868;129;Situation difficile;Afrique;Mozambique;Mozambique;Mozambique;Moçambique ;موزمبيق;موزامبیک;2024;102;-3;5613;-3,71
+MDV;5236;106;4348;109;3604;133;5442;111;481;131;7976;80;Situation difficile;Asie-Pacifique;Maldives;Maldives;Maldivas;Maldivas ;المالديف;مالدیو;2024;100;-6;5693;-4,57
+MYS;5207;107;4435;106;4563;82;3404;156;5262;119;8372;67;Situation difficile;Asie-Pacifique;Malaisie;Malaysia;Malasia;Malásia ;ماليزيا;مالزی;2024;73;-34;6283;-10,76
+BDI;5178;108;4532;100;4489;85;5332;113;5801;103;5737;115;Situation difficile;Afrique;Burundi;Burundi;Burundi;Burundi ;بوروندي;بروندی;2024;114;6;5214;-0,36
+MNG;5134;109;4035;118;3275;151;5631;107;6131;91;6596;105;Situation difficile;Asie-Pacifique;Mongolie;Mongolia;Mongolia;Mongólia ;منغوليا;مغولستان;2024;88;-21;5933;-7,99
+ECU;513;110;3957;120;4333;94;6077;92;4738;136;6548;106;Situation difficile;Amériques;Équateur;Ecuador;Ecuador;Equador ;الإكوادور;اکواتور;2024;80;-30;6051;-9,21
+IDN;5115;111;3895;123;3346;150;5757;101;4777;133;7798;87;Situation difficile;Asie-Pacifique;Indonésie;Indonesia;Indonesia;Indonésia ;أندونيسيا;اندونزی;2024;108;-3;5483;-3,68
+NGA;5103;112;4726;95;419;104;6165;89;6296;85;414;141;Situation difficile;Afrique;Nigeria;Nigeria;Nigeria;Nigéria ;نيجيريا;نیجریه;2024;123;11;4956;1,47
+TGO;5089;113;4438;105;4227;100;512;119;5982;96;5676;116;Situation difficile;Afrique;Togo;Togo;Togo;Togo ;توغو;توگو;2024;70;-43;6306;-12,17
+MLI;5056;114;4812;89;4441;89;5927;97;6353;81;3747;149;Situation difficile;Afrique;Mali;Mali;Malí;Mali ;مالي;مالی;2024;113;-1;5229;-1,73
+PRY;5048;115;409;114;3495;139;6442;78;5688;108;5527;119;Situation difficile;Amériques;Paraguay;Paraguay;Paraguay;Paraguai ;باراغواي;پاراگوئه;2024;103;-12;5596;-5,48
+ZWE;5031;116;3696;126;4063;110;5276;114;5268;118;685;101;Situation difficile;Afrique;Zimbabwe;Zimbabwe;Zimbabue;Zimbábue ;زيمبابوي;زیمبابوه;2024;126;10;4817;2,14
+BRN;5009;117;4942;82;4516;83;4108;141;3783;146;7699;89;Situation difficile;Asie-Pacifique;Brunei;Brunei;Brunéi;Brunei ;بروناي;برونی;2024;142;25;442;5,89
+TUN;4997;118;4804;91;4094;109;5019;123;5976;98;5092;126;Situation difficile;MENA;Tunisie;Tunisia;Túnez;Tunísia ;تونس;تونس;2024;121;3;5011;-0,14
+COL;4963;119;4805;90;3758;124;7271;48;4808;132;4175;139;Situation difficile;Amériques;Colombie;Colombia;Colombia;Colômbia ;كولومبيا;کلمبیا;2024;139;20;4523;4,4
+KGZ;4911;120;3019;149;4873;64;484;129;5066;124;6759;102;Situation difficile;EEAC;Kirghizistan;Kyrgyzstan;Kirguistán;Quirguistão ;قرغيزستان;قرقیزستان;2024;122;2;4991;-0,8
+MEX;4901;121;4969;81;4211;102;6799;65;5799;104;2728;165;Situation difficile;Amériques;Mexique;Mexico;México;México ;المكسيك;مکزیک;2024;128;7;4798;1,03
+LSO;4892;122;4551;98;3667;129;4538;135;569;107;6016;111;Situation difficile;Afrique;Lesotho;Lesotho;Lesoto;Lesoto ;ليسوتو;لسو‌تو;2024;67;-55;6429;-15,37
+COD;4891;123;4652;97;4229;99;5154;117;6583;73;3834;147;Situation difficile;Afrique;RD Congo;DR Congo;RD Congo;RD Congo;جمهورية الكونغو الديمقراطية;جمهوری دمکراتیک کنگو;2024;124;1;4855;0,36
+BOL;4888;124;3124;145;3808;121;5759;100;5979;97;577;113;Situation difficile;Amériques;Bolivie;Bolivia;Bolivia;Bolívia ;بوليفيا;بلیوی;2024;117;-7;5109;-2,21
+PER;4776;125;3944;121;3929;118;581;98;5323;117;4873;128;Situation difficile;Amériques;Pérou;Peru;Peru;Peru ;بيرو;پرو;2024;110;-15;5274;-4,98
+SGP;4719;126;3529;133;3594;134;3058;162;494;127;8476;62;Situation difficile;Asie-Pacifique;Singapour;Singapore;Singapur;Cingapura ;سنغافورة;سنگاپور;2024;129;3;4788;-0,69
+GNQ;4649;127;3362;137;3146;161;4096;142;4905;129;7738;88;Situation difficile;Afrique;Guinée Équatoriale;Equatorial Guinea;Guinea Ecuatorial;Guiné Equatorial ;غينيا الاستوائية;گینه اکوادور;2024;120;-7;5035;-3,86
+UGA;46;128;3348;139;3938;116;50;125;5214;121;55;120;Situation difficile;Afrique;Ouganda;Uganda;Uganda;Uganda ;أوغندا;اوگاندا;2024;133;5;4608;-0,08
+MAR;4597;129;4031;119;3568;135;4892;128;503;125;5463;123;Situation difficile;MENA;Maroc / Sahara occidental;Morocco / Western Sahara ;Marruecos / Sáhara Occidental;Marrocos / Saara Ocidental ;المغرب/الصحراء الغربية;مراکش/صحرای غربی;2024;144;15;4369;2,28
+CMR;4495;130;4368;107;3409;144;5271;115;5931;99;3497;153;Situation difficile;Afrique;Cameroun;Cameroon;Camerún;Camarões ;الكاميرون;کامرون;2024;138;8;4558;-0,63
+KWT;4466;131;3742;125;3213;155;4596;132;2785;170;7996;79;Situation difficile;MENA;Koweït;Kuwait;Kuwait;Kuwait ;الكويت;کویت;2024;154;23;3884;5,82
+JOR;443;132;317;143;3568;135;3606;153;3869;143;7937;84;Situation difficile;MENA;Jordanie;Jordan;Jordania;Jordânia ;الأردن;اردن;2024;146;14;4279;1,51
+SLV;4401;133;2921;150;4223;101;503;122;4927;128;4904;127;Situation difficile;Amériques;Salvador;El Salvador;El Salvador;El Salvador ;السلفادور;ال‌سالوادور;2024;115;-18;5136;-7,35
+PHL;4336;134;3614;128;3711;126;4748;130;5164;122;4444;132;Situation difficile;Asie-Pacifique;Philippines;Philippines;Filipinas;Filipinas ;الفلبين;فلیپین;2024;132;-2;4621;-2,85
+HKG;4306;135;3468;134;4588;81;3933;145;4773;134;4767;130;Situation difficile;Asie-Pacifique;Hong Kong;Hong Kong;Hong Kong;Hong Kong ;هونغ كونغ;هنگ کنگ;2024;140;5;4486;-1,8
+SSD;4257;136;3134;144;4375;91;5204;116;4821;130;3752;148;Situation difficile;Afrique;Soudan du Sud;South Sudan;Sudán del Sur;Sudão do Sul ;جمهورية جنوب السودان;سودان جنوبی;2024;118;-18;5062;-8,05
+OMN;4252;137;3588;130;3774;122;2678;168;357;154;7651;91;Situation difficile;MENA;Oman;Oman;Omán;Omã ;عمان;عمان;2024;155;18;3787;4,65
+GTM;4228;138;3357;138;3813;120;5724;104;4667;137;3578;151;Situation difficile;Amériques;Guatemala;Guatemala;Guatemala;Guatemala ;غواتيمالا;گواتمالا;2024;127;-11;4812;-5,84
+DZA;4198;139;3216;142;3255;153;4543;134;4301;140;5675;117;Situation difficile;MENA;Algérie;Algeria;Argelia;Argélia ;الجزائر;الجزایر;2024;136;-3;4574;-3,76
+LBN;4191;140;4503;102;3482;141;456;133;4218;141;4192;138;Situation difficile;MENA;Liban;Lebanon;Líbano;Líbano ;لبنان;لبنان;2024;119;-21;5046;-8,55
+ETH;4137;141;339;136;412;107;50;124;4762;135;3413;156;Situation difficile;Afrique;Éthiopie;Ethiopia;Etiopía;Etiópia ;أثيوبيا;اتیوپی;2024;130;-11;477;-6,33
+KAZ;4111;142;3033;148;3542;137;3791;148;5085;123;5102;125;Situation difficile;EEAC;Kazakhstan;Kazakhstan;Kazajistán;Cazaquistão ;كازاخستان;قزاقستان;2024;134;-8;4587;-4,76
+LBY;4059;143;405;117;3727;125;4423;136;3677;151;4416;133;Situation difficile;MENA;Libye;Libya;Libia;Líbia ;ليبيا;لیبی;2024;149;6;4022;0,37
+RWA;4054;144;3565;131;3208;156;5442;111;50;126;3056;160;Situation difficile;Afrique;Rwanda;Rwanda;Ruanda;Ruanda ;رواندا;روندا;2024;131;-13;4658;-6,04
+SOM;394;145;3599;129;4201;103;3558;155;4484;139;3856;146;Situation très grave;Afrique;Somalie;Somalia;Somalia;Somália ;الصومال;سومالی;2024;141;-4;4424;-4,84
+HND;3818;146;3536;132;3489;140;4917;126;3595;153;3551;152;Situation très grave;Amériques;Honduras;Honduras;Honduras;Honduras ;هندوراس;هندوراس;2024;169;23;3265;5,53
+BTN;3729;147;258;154;3104;162;2962;165;2857;169;7143;97;Situation très grave;Asie-Pacifique;Bhoutan;Bhutan;Bután;Butão ;بوتان;بوتان;2024;90;-57;5925;-21,96
+UZB;3727;148;2802;152;3449;143;4359;137;3796;145;4228;136;Situation très grave;EEAC;Ouzbékistan;Uzbekistan;Uzbekistán;Uzbequistão ;أوزبكستان;اوزبکستان;2024;137;-11;4573;-8,46
+SDN;3573;149;3287;141;3266;152;3764;149;4609;138;2939;161;Situation très grave;Afrique;Soudan;Sudan;Sudán;Sudão ;السودان;سودان;2024;148;-1;4083;-5,1
+LKA;3521;150;3043;147;3216;154;4219;139;2961;165;4168;140;Situation très grave;Asie-Pacifique;Sri Lanka;Sri Lanka;Sri Lanka;Sri Lanka ;سري لانكا;سریلانکا;2024;135;-15;4585;-10,64
+KHM;3428;151;2021;163;2755;168;3632;152;3254;158;548;122;Situation très grave;Asie-Pacifique;Cambodge;Cambodia;Camboya;Cambodja ;كمبوديا;کامبوج;2024;147;-4;4202;-7,74
+PAK;339;152;2917;151;3373;147;4297;138;3773;148;2588;169;Situation très grave;Asie-Pacifique;Pakistan;Pakistan;Pakistán;Paquistão ;باكستان;پاکستان;2024;150;-2;3995;-6,05
+LAO;3376;153;25;155;401;113;3101;159;3036;160;4233;135;Situation très grave;Asie-Pacifique;Laos;Laos;Laos;Laos ;لاوس;لائوس;2024;160;7;3666;-2,9
+YEM;3367;154;3391;135;2833;166;40;144;3143;159;3467;154;Situation très grave;MENA;Yémen;Yemen;Yemen;Iêmen ;اليمن;یمن;2024;168;14;3278;0,89
+TJK;3331;155;2726;153;3164;159;3834;147;3021;161;391;145;Situation très grave;EEAC;Tadjikistan;Tajikistan;Tayikistán;Tajiquistão ;طاجيكستان;تاجیکستان;2024;153;-2;3906;-5,75
+VEN;3306;156;1768;170;3163;160;3733;151;3874;142;3991;144;Situation très grave;Amériques;Venezuela;Venezuela;Venezuela;Venezuela ;فنزويلا;ونزوئلا;2024;159;3;3699;-3,93
+PSE;3192;157;3104;146;3351;149;391;146;3552;155;2044;175;Situation très grave;MENA;Palestine;Palestine;Palestina;Palestina ;فلسطين;فلسطین;2024;156;-1;3786;-5,94
+TUR;316;158;2002;165;2891;165;3738;150;3705;150;3463;155;Situation très grave;EEAC;Turquie;Türkiye;Turquía;Turquia ;تركيا;ترکیه;2024;165;7;3397;-2,37
+IND;3128;159;2158;159;3167;157;4087;143;3333;156;2897;162;Situation très grave;Asie-Pacifique;Inde;India;India;Índia ;الهند;هند;2024;161;2;3662;-5,34
+ARE;3062;160;2116;160;425;98;2654;169;2952;166;3339;157;Situation très grave;MENA;Émirats arabes unis;United Arab Emirates;Emiratos Árabes Unidos;Emirados Árabes Unidos ;الإمارات العربية المتحدة;امارات متحده عربی;2024;145;-15;4299;-12,37
+DJI;3014;161;2412;156;2674;169;3063;161;2908;168;4013;143;Situation très grave;Afrique;Djibouti;Djibouti;Yibuti;Djibuti ;جيبوتي;جیبوتی;2024;162;1;3587;-5,73
+RUS;2986;162;1988;166;3372;148;3143;157;3728;149;27;168;Situation très grave;EEAC;Russie;Russia;Rusia;Rússia ;روسيا;روسیه;2024;164;2;3477;-4,91
+NIC;292;163;1723;172;3403;145;3034;163;3664;152;2777;164;Situation très grave;Amériques;Nicaragua;Nicaragua;Nicaragua;Nicarágua ;نيكاراغوا;نیکاراگوئه;2024;158;-5;3709;-7,89
+AZE;2799;164;1708;173;1801;179;3585;154;3776;147;3127;159;Situation très grave;EEAC;Azerbaïdjan;Azerbaijan;Azerbaiyán;Azerbaijão ;أذربيجان;آذربایجان;2024;151;-13;3993;-11,94
+BGD;2764;165;1936;167;2783;167;3132;158;3265;157;2703;167;Situation très grave;Asie-Pacifique;Bangladesh;Bangladesh;Bangladés;Bangladesh ;بنغلاديش;بنگلادش;2024;163;-2;3531;-7,67
+SAU;2714;166;2101;161;4036;111;2043;173;3006;163;2384;173;Situation très grave;MENA;Arabie Saoudite;Saudi Arabia;Arabia Saudita;Arábia Saudita ;المملكة العربية السعودية;عربستان سعودی;2024;170;4;3243;-5,29
+BLR;268;167;1594;175;3634;132;188;176;3869;143;2421;171;Situation très grave;EEAC;Bélarus;Belarus;Belarús;Bielorrússia ;روسيا البيضاء;روسیه سفید;2024;157;-10;3717;-10,37
+CUB;2563;168;1486;176;2448;171;1563;180;3016;162;4305;134;Situation très grave;Amériques;Cuba;Cuba;Cuba;Cuba ;كوبا;کوبا;2024;172;4;29;-3,37
+IRQ;2548;169;2065;162;2214;173;2644;170;2946;167;2869;163;Situation très grave;MENA;Irak;Iraq;Irak;Iraque ;العراق;عراق;2024;167;-2;3294;-7,46
+EGY;251;170;161;174;2469;170;2981;164;2762;171;2727;166;Situation très grave;MENA;Égypte;Egypt;Egipto;Egito ;مصر;مصر;2024;166;-4;3337;-8,27
+MMR;2441;171;2217;158;3167;157;1875;177;30;164;1948;177;Situation très grave;Asie-Pacifique;Birmanie;Myanmar;Birmania;Birmânia ;بورما;برمه;2024;173;2;2826;-3,85
+CHN;2336;172;1914;168;2965;163;2228;172;2179;173;2393;172;Situation très grave;Asie-Pacifique;Chine;China;China;China ;الصين;چین;2024;179;7;2297;0,39
+BHR;2321;173;1746;171;2092;174;1981;175;207;175;3715;150;Situation très grave;MENA;Bahreïn;Bahrain;Baréin;Bahrein ;البحرين;بحرین;2024;171;-2;3059;-7,38
+VNM;2231;174;1322;178;2057;176;2837;166;2351;172;2586;170;Situation très grave;Asie-Pacifique;Vietnam;Vietnam;Vietnam;Vietnã ;فيتنام;ویتنام;2024;178;4;2458;-2,27
+TKM;2201;175;1322;178;1788;180;3093;160;1567;180;3232;158;Situation très grave;EEAC;Turkménistan;Turkmenistan;Turkmenistán;Turcomenistão ;تركمانستان;ترکمنستان;2024;176;1;2582;-3,81
+IRN;213;176;2319;157;2344;172;2003;174;1984;176;2002;176;Situation très grave;MENA;Iran;Iran;Irán;Irã ;إيران;ایران;2024;177;1;2481;-3,51
+PRK;2066;177;1804;169;2059;175;2682;167;1727;178;2057;174;Situation très grave;Asie-Pacifique;Corée du Nord;North Korea;Corea del Norte;Coreia do Norte ;كوريا الشمالية;کره شمالی;2024;180;3;2172;-1,06
+AFG;1909;178;2007;164;2906;164;1635;179;1607;179;139;179;Situation très grave;Asie-Pacifique;Afghanistan;Afghanistan;Afganistán;Afeganistão ;أفغانستان;افغانستان;2024;152;-26;3975;-20,66
+SYR;1741;179;1435;177;1969;177;2375;171;1772;177;1155;180;Situation très grave;MENA;Syrie;Syria;Siria;Síria ;سوريا;سوریه;2024;175;-4;2722;-9,81
+ERI;1664;180;1275;180;1854;178;1692;178;2071;174;1426;178;Situation très grave;Afrique;Érythrée;Eritrea;Eritrea;Eritreia ;إريتريا;اریتره;2024;174;-6;2786;-11,22
