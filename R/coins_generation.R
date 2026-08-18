@@ -363,11 +363,34 @@ generate_and_append_coins <- function(file_path, backup = TRUE) {
 }
 
 
-# ── 9. Run ────────────────────────────────────────────────────────────────────
-## Open the target post in the RStudio editor, then run these three lines
-## in the console:
+# ── 9. Convenience wrapper ────────────────────────────────────────────────────
+#' Generate and append COinS metadata for the file open in the RStudio editor.
+#'
+#' Requires RStudio (uses rstudioapi to detect the active file).
+#' With this file sourced in .Rprofile, usage collapses to a single call:
+#'
+#'   coins()
+#'
+#' @param backup Logical. Create a .bak copy before modifying the file (default TRUE).
 
-# source(here::here("R/coins_generation.R"))
-# target_file <- rstudioapi::getSourceEditorContext()$path
-# generate_and_append_coins(target_file)
+coins <- function(backup = TRUE) {
+    if (!rstudioapi::isAvailable()) {
+        stop(
+            "coins() requires RStudio. ",
+            "Call generate_and_append_coins(file_path) directly.",
+            call. = FALSE
+        )
+    }
+
+    target_file <- rstudioapi::getSourceEditorContext()$path
+
+    if (!nzchar(target_file)) {
+        stop(
+            "No active file detected. Open the target .qmd in the editor first.",
+            call. = FALSE
+        )
+    }
+
+    generate_and_append_coins(target_file, backup = backup)
+}
 
