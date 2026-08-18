@@ -9,7 +9,7 @@ execute:
 
 website:
   title: "Thought Splinters"
-  favicon: favicon.ico
+  favicon: "favicon.ico"
   site-url: https://peter-baumgartner.net
   description: "Peter’s Learning-Journal"
   repo-url: https://github.com/petzi53/petzi53.github.io
@@ -121,9 +121,12 @@ format:
     toc-depth: 5
     toc-expand: 4
     citation: true
+    code-link: true
 #   include-after-body: _post-footer.html
 
-editor: source
+editor:
+  source: true
+#  render-on-save: true (use: quarto_preview() )
 
 margin-header: |
   ![Peter Baumgartner](/portrait-peter.png)
@@ -145,4 +148,5 @@ extensions:
     inline: true
     mode: "svg"
 
-
+filters:
+  - nameref
