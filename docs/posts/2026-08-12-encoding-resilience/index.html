@@ -275,6 +275,7 @@ cookieconsent.run({
       </div>
                           <div class="quarto-categories">
                 <div class="quarto-category">how-to</div>
+                <div class="quarto-category">encoding</div>
               </div>
                   </div>
   </div>
@@ -299,7 +300,7 @@ cookieconsent.run({
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">August 17, 2026</p>
+        <p class="date-modified">August 18, 2026</p>
       </div>
     </div>
       
@@ -335,12 +336,10 @@ cookieconsent.run({
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content"><section id="years-of-press-freedom-index-data" class="level2"><h2 class="anchored" data-anchor-id="years-of-press-freedom-index-data">25 Years of Press Freedom Index Data</h2>
-<p>Because I had to update the data annually in my pressfreedom. While developing <a href="https://github.com/petzi53/pressfreedom.data">pressfreedom.data</a>, an R data package, I learned that writing error-free code is not enough to meet current challenges. While building a pipeline for 24 years of press freedom data, I discovered that even the most evidence-based assumptions can fail if they don’t account for the uncertainty of what comes next.</p>
+<p>Because I had to update the data annually in my pressfreedom while developing <a href="https://github.com/petzi53/pressfreedom.data">pressfreedom.data</a>, an R data package, I learned that writing error-free code is not enough to meet current challenges. While building a pipeline for 24 years of press freedom data, I discovered that even the most evidence-based assumptions can fail if they don’t account for the uncertainty of what comes next.</p>
 <p>The data I relied on came from <a href="https://rsf.org/en/index">Reporters Without Borders</a> (RSF). Unfortunately, I couldn’t download one clean dataset, but had to stitch together press freedom index data from 2002 to 2026</p>
 <p>Starting in spring 2025 with {<strong>pressfreedom.data</strong>}, I had to stitch together press freedom index data from 2002 to 2024. The data are from Reporters Without Borders (RSF).</p>
-<blockquote class="blockquote">
-<p>The World Press Freedom Index (WPFI) is an annual ranking of 180 countries compiled and published by Reporters Without Borders (RSF) since 2002 based upon the assessment of the non-governmental organization as well as surveys of professionals around the world, of the countries’ press freedom records in the previous year. It intends to reflect the degree of freedom that journalists, news organizations, and netizens have in each country, and the efforts made by authorities to respect this freedom. <a href="https://en.wikipedia.org/w/index.php?title=World_Press_Freedom_Index&amp;oldid=1352761010">Wikipedia</a></p>
-</blockquote>
+<p>&lt; “The World Press Freedom Index (WPFI) is an annual ranking of 180 countries compiled and published by Reporters Without Borders (RSF) since 2002 based upon the assessment of the non-governmental organization as well as surveys of professionals around the world, of the countries’ press freedom records in the previous year. It intends to reflect the degree of freedom that journalists, news organizations, and netizens have in each country, and the efforts made by authorities to respect this freedom. <a href="https://en.wikipedia.org/w/index.php?title=World_Press_Freedom_Index&amp;oldid=1352761010">Wikipedia</a>”</p>
 </section><section id="three-different-methodological-approaches" class="level2"><h2 class="anchored" data-anchor-id="three-different-methodological-approaches">Three different methodological approaches</h2>
 <p>My first difficulty was that I couldn’t take the data as a single consolidated file, but had to download it year by year. After some spot tests, it was evident that the data structures had changed over the years.</p>
 <ul>
@@ -390,7 +389,7 @@ Note&nbsp;1: Where does the URL for every year come from?
 </div>
 </div>
 <p>This felt justified: I had tested multiple years across the full span of the dataset, found them all to be UTF-8, and made a decision based on the evidence. One encoding for all years. Done.</p>
-<p>I knew that <a href="https://datatracker.ietf.org/doc/html/rfc3629">UTF-8</a> has become the de facto standard for the web and modern software development, whereas other decoding schemes, like ISO-8859-1 (also known as Latin-1), are largely restricted to legacy systems. It therefore seemed natural to me that RSF uses UTF-8 for all files.</p>
+<p>I knew that <a href="https://datatracker.ietf.org/doc/html/rfc3629">UTF-8</a> has become the de facto standard for the web and modern software development. In contrast, other encoding schemes, such as ISO-8859-1 (also known as Latin-1), are largely restricted to legacy systems. It therefore seemed natural to me that RSF uses UTF-8 for all files.</p>
 <p>It worked fine until it didn’t. Years later, in summer 2026, I resumed the work. Two new years (2025 and 2026) were published in the meantime. The moment I opened the raw CSV files, I found garbled text. There’s even a term for this: <strong>mojibake</strong> (文字化け) — Japanese for “corrupted characters.” It’s what you get when text encoded in one character set gets decoded as if it were a different one.</p>
 <p>But when I checked my spot-sample years again, they were all still UTF-8. That’s when it hit me: I had tested 2002, 2013, 2022, and 2024. But I’d never tested 2025 and 2026. Those years didn’t exist when I did my encoding check. And RSF, without any announcement, had suddenly changed their export encoding from UTF-8 to ISO 8859-1 (Latin-1) after 22 years. The assumption I’d made by checking the data was correct — but only for the data I’d actually checked.</p>
 <p>The error occurred silently and was very difficult to detect: the garbled text appeared only in the last two files and, in my case, because I had chosen only the column with English country names, only in some (remaining French) zone names.</p>
@@ -424,11 +423,11 @@ Note&nbsp;2: Where do URL and filename come from?
 <p>URL and filename come from the same for-loop-over-years structure as <code>download_rwb_data()</code> above, e.g.&nbsp;<code>url &lt;- rsf_url_for(year)</code> and <code>filename &lt;- here::here("inst/extdata", glue::glue("rwb{year}.csv"))</code>.</p>
 </div>
 </div>
-<p>The essential difference from my first approach was to avoid any file conversion during the download. This meant not using any function of the {<strong>readr</strong>} package, as it forces you to make a decision by using <code>locale()</code> as a parameter. The coercion to choose a locale reflects the Tidyverse philosophy of explicitness over implicitness and is normally a good thing. I will need this feature anyway when I work with the data (see: <a href="#sec-solution-2"> Second part of the solution</a>). But here was the goal: Download the files without any intervention whatsoever.</p>
+<p>The essential difference from my first approach was to avoid any file conversion during the download. This meant not using any function of the {<strong>readr</strong>} package, as it forces you to make a decision by using <code>locale()</code> as a parameter. The coercion to choose a locale reflects the Tidyverse philosophy of explicitness over implicitness and is normally a good thing. I will need this feature anyway when working with the data (see <a href="#sec-solution-2"> Second part of the solution</a>). But here was the goal: Download the files without any intervention whatsoever.</p>
 <p><code>mode = "wb"</code> copies bytes with no text-mode translation at all — no <code>read_delim()</code>, no locale, no decision. Whatever RSF’s server sends is exactly what lands on disk. The encoding guess moves downstream, to the moment the file is actually parsed using {<strong>readr</strong>}.</p>
 <p>In my previous design, I baked a fixed encoding guess into the download function that wrote the silent conversion back to disk as fact. By the time I went looking at the “raw” file, it wasn’t raw anymore. Under the new design, the raw file is always, permanently, exactly what RSF sent. I can re-run, fix, or improve the detection logic forever because the ground truth was never overwritten in the first place.</p>
 </section><section id="sec-solution-2" class="level2"><h2 class="anchored" data-anchor-id="sec-solution-2">Second part of the solution</h2>
-<p>I found the following second part of the solution to my encoding problem using LLMs via Posit Assistant. I have to confess that at first I didn’t fully comprehend the code chunk. I felt it introduced unnecessary complexity. But after I understood the read::guess_encoding() I appreciated the following few code lines</p>
+<p>I found the following second part of the solution to my encoding problem using LLMs via Posit Assistant. I have to confess that at first I didn’t fully comprehend the code chunk. I felt it introduced unnecessary complexity. But after I understood read::guess_encoding(), I appreciated the following few code lines:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">detect_csv_encoding</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">filepath</span><span class="op">)</span> <span class="op">{</span>                    <span class="co"># (1)</span></span>
 <span>  <span class="va">guesses</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/encoding.html">guess_encoding</a></span><span class="op">(</span><span class="va">filepath</span><span class="op">)</span>                   <span class="co"># (2)</span></span>
@@ -492,7 +491,7 @@ Note&nbsp;3: Why only two encodings — and why fail instead of guess?
 <p>The part that actually mattered was the <em>fallback</em>. My original version treated “not confidently Latin-1” as “must be UTF-8” — silently defaulting instead of checking. That’s precisely the assumption that broke earlier in this post. The fixed version above checks for UTF-8 and ISO-8859-1 explicitly and <code><a href="https://rdrr.io/r/base/stop.html">stop()</a></code>s on anything else (including an empty guess). If RSF ever introduces a third encoding, or ships a corrupted file, the function now fails loudly at the moment of detection — instead of mislabeling it and letting bad data slip downstream.</p>
 </div>
 </div>
-<p>The main idea behind this code snippet is to decide the encoding scheme per file instead of assuming a fixed encoding.</p>
+<p>The main idea behind this code snippet is to determine the encoding scheme for each file rather than assuming a fixed one.</p>
 </section><section id="demonstration-testing-the-detector-on-real-files" class="level2"><h2 class="anchored" data-anchor-id="demonstration-testing-the-detector-on-real-files">Demonstration: Testing the detector on real files</h2>
 <p>To see this in action, here’s a working example using actual RSF data files. The files <code>rwb2024.csv</code> (UTF-8) and <code>rwb2025.csv</code> (ISO-8859-1) demonstrate how the detector automatically identifies the encoding of each file.</p>
 <section id="readrguess_encoding" class="level3"><h3 class="anchored" data-anchor-id="readrguess_encoding"><code>readr::guess_encoding()</code></h3>
@@ -592,7 +591,7 @@ Table&nbsp;1: <strong>Guessing the type of encoding</strong>
 [1] "ISO-8859-1"</code></pre>
 </div>
 </div>
-<p>The results of <code>detect_csv_encoding()</code> demonstrates the key benefit: the same function, applied to files with different encodings, correctly identifies each one without needing to hard-code a single assumption. RSF changed their encoding between 2024 and 2025 (from UTF-8 to ISO-8859-1), and the detector handled it automatically.</p>
+<p>The results of <code>detect_csv_encoding()</code> demonstrate the key benefit: the same function, applied to files with different encodings, correctly identifies each one without needing to hard-code a single assumption. RSF changed their encoding between 2024 and 2025 (from UTF-8 to ISO-8859-1), and the detector handled it automatically.</p>
 </section></section><section id="conclusion" class="level2"><h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 <p>Testing what you have is not the same as testing what might arrive in the future. Evidence-based assumptions are solid when they’re checked against current data, but they’re incomplete when that data is constantly growing. My spot-check approach had worked perfectly for every year I tested, but RSF changed their encoding after I’d finished testing, so the assumption remained incomplete. That was the moment I realized: design for re-checkability, not just correctness. Keep ground truth sacred by avoiding encoding decisions at download time, push detection to the parsing stage, and make every decision verifiable per file, not assumed once and trusted forever.</p>
 <!-- COinS metadata for Zotero compatibility (auto-generated) -->
