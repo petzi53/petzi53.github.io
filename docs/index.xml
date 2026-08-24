@@ -10,7 +10,284 @@
 <atom:link href="https://peter-baumgartner.net/index.xml" rel="self" type="application/rss+xml"/>
 <description>Peter’s Learning-Journal</description>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Thu, 13 Aug 2026 22:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 22 Aug 2026 22:00:00 GMT</lastBuildDate>
+<item>
+  <title>When LLMs Fall Into a Rabbit Hole</title>
+  <dc:creator>Peter Baumgartner</dc:creator>
+  <link>https://peter-baumgartner.net/posts/2026-08-23-llm-rabbit-hole/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="the-problem" class="level2">
+<h2 class="anchored" data-anchor-id="the-problem">The Problem</h2>
+<p>Last week I asked a simple question: if all 81 tests passed when I ran <code>devtools::test()</code>, why did <code>covr::package_coverage()</code> show 0% coverage for my R package <code>qpost</code>?</p>
+<p>I asked Claude—using Posit Assistant—to assist me with debugging. I believed it would only take ten minutes, but it ended up taking two hours of ever more complicated troubleshooting before Claude managed to identify the actual problem.</p>
+<p>What’s the actual answer? A single missing file: <code>tests/testthat.R</code>.</p>
+<p>But here’s the embarrassing part: the real problem started much earlier. I didn’t notice that when Claude created the test files one by one instead of using <code>usethis::use_testthat()</code> to set up the infrastructure correctly. If I had caught that mistake then, I could have avoided this whole debugging session.</p>
+<p>Even during the debugging, there were several times when I could have paused Claude and said, “Wait, let me check the basics first.” But I didn’t.</p>
+<p>In this post, I want to go through what went wrong and what I could have done differently. I’m still figuring out how to use LLMs properly, and this experience was a humbling lesson in what I overlooked.</p>
+</section>
+<section id="the-escalation-pattern" class="level2">
+<h2 class="anchored" data-anchor-id="the-escalation-pattern">The Escalation Pattern</h2>
+<p>Here’s how the session went. Each attempt got more complex, but the output always stayed the same.</p>
+<table class="caption-top table">
+<caption>Escalation sequence</caption>
+<colgroup>
+<col style="width: 5%">
+<col style="width: 70%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Attempt</th>
+<th>Proposed Solution</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>“The tests use <code>:::</code> to call internal functions. Maybe covr can’t instrument those. Let’s add <code>@export</code> and roxygen comments to export them as internal functions.”</td>
+<td>Still 0% coverage.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>“Maybe the dependencies aren’t declared. Let’s add <code>covr</code> and <code>withr</code> to the Suggests field.”</td>
+<td>Still 0% coverage.</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>“The tests are calling internal functions with <code>:::</code>. Let’s rewrite all test files to use the proper syntax.”</td>
+<td>Still 0% coverage.</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>“Maybe covr’s test runner isn’t firing. Let’s try setting environment variables like <code>RENV_CONFIG_AUTOLOADER_ENABLED = FALSE</code>.”</td>
+<td>Still 0% coverage.</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>“Let’s try <code>R_PROFILE_USER</code> to bypass the <code>.Rprofile</code> file.”</td>
+<td>Still 0% coverage.</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>“Let’s read the actual covr source code and find the test execution function.”</td>
+<td>Still 0% coverage.</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>“Wait—let me preserve the temp files from covr and check what actually ran in the subprocess.”</td>
+<td>Found the subprocess log</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>The subprocess log showed <code>library('qpost')</code> and then… nothing. No test commands at all. This finally led to the question: “Does qpost have a <code>tests/testthat.R</code> file?” Answer: No.</td>
+<td>Create <code>tests/testthat.R</code> file and covr finally showed the coverage.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="where-it-went-wrong-two-critical-mistakes" class="level2">
+<h2 class="anchored" data-anchor-id="where-it-went-wrong-two-critical-mistakes">Where It Went Wrong: Two Critical Mistakes</h2>
+<section id="mistake-1-i-didnt-notice-the-setup-was-wrong-weeks-earlier" class="level3">
+<h3 class="anchored" data-anchor-id="mistake-1-i-didnt-notice-the-setup-was-wrong-weeks-earlier">Mistake 1: I Didn’t Notice the Setup Was Wrong (Weeks Earlier)</h3>
+<p>When Claude first created the test infrastructure for <code>qpost</code>, it wrote the test files manually—creating <code>tests/testthat/</code> folder and writing <code>test-*.R</code> files by hand. <strong>It never ran <code>usethis::use_testthat()</code> to generate the proper structure.</strong></p>
+<p>I didn’t flag this. I should have. If I had insisted from the beginning that Claude use <code>usethis::use_testthat()</code>, it would have automatically generated a file called <code>tests/testthat.R</code>, and this whole debugging session would then have been avoided.</p>
+<p>It is my fault for not having scrutinized what Claude was doing carefully.</p>
+</section>
+<section id="mistake-2-i-missed-the-rabbit-hole-pattern-during-debugging" class="level3">
+<h3 class="anchored" data-anchor-id="mistake-2-i-missed-the-rabbit-hole-pattern-during-debugging">Mistake 2: I Missed the Rabbit Hole Pattern During Debugging</h3>
+<p>In the debugging session there were several signals which I ought to have picked up.</p>
+<p>Every attempt was <strong>more complicated than the previous one</strong>, but the result was <strong>always the same</strong>: 0% coverage and no error messages. That is a clear indication of a rabbit hole.</p>
+<p><strong>Here’s the pattern I missed:</strong></p>
+<ul>
+<li><strong>Attempt 1 to 3:</strong> Claude tries reasonable guesses: It checked exports, dependencies, and syntax, which could have been helpful.</li>
+<li><strong>Attempt 4 to 5:</strong> Claude switches to environment variables (<code>RENV_CONFIG_AUTOLOADER_ENABLED</code>, <code>R_PROFILE_USER</code>). No new information from the failures, but I kept going along. – <strong>Attempt 6:</strong> Claude decides to have a look at covr’s source code in order to get an understanding of its internal workings. <strong>At this point I should have stopped.</strong> When simple fixes don’t work and there is no change in the output, investigating the source code of a library is a distraction.</li>
+<li><strong>Attempt 7:</strong> Only when I changed the model (from <a href="https://www.anthropic.com/news/claude-haiku-4-5">Claude HAIKU 4.5</a> to <a href="https://www.anthropic.com/news/claude-sonnet-4-6">Claude Sonnet 4.6</a>) and asked to start the debugging process from scratch the LLM investigated in different directions and did finally discover the missing file.</li>
+</ul>
+<p><strong>Here’s what made it worse:</strong></p>
+<p>I knew that pressfreedom.data (another package I am working on) displayed the test coverage percentage using covr perfectly. The difference should have been obvious at once:</p>
+<pre><code>ls tests/           # in both qpost and glossary2
+ls tests/testthat/  # in both</code></pre>
+<p>If I had asked Claude to display every file and directory in the test folders of both packages side by side, we would have noticed the missing <code>tests/testthat.R</code> file within thirty seconds. Instead, Claude only looked one level deeper into the <code>tests/testthat/</code> directory, and thus failed to find the file which should have been one level higher (at the <code>tests/testthat.R</code> level).</p>
+<p>This was again my default: I didn’t push back. I didn’t insist on the structural comparison. I let the model escalate.</p>
+</section>
+</section>
+<section id="what-i-should-have-done-two-interventions-i-missed" class="level2">
+<h2 class="anchored" data-anchor-id="what-i-should-have-done-two-interventions-i-missed">What I Should Have Done: Two Interventions I Missed</h2>
+<section id="intervention-1-demand-a-proper-structural-comparison" class="level3">
+<h3 class="anchored" data-anchor-id="intervention-1-demand-a-proper-structural-comparison">Intervention 1: Demand a Proper Structural Comparison</h3>
+<p>When comparing a working system (glossary2) with a broken one (qpost), there’s a natural order:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Step</th>
+<th>Question</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. <strong>Structure</strong></td>
+<td>Does the directory structure match?</td>
+</tr>
+<tr class="even">
+<td>2. <strong>Configuration</strong></td>
+<td>Do the key configuration files match?</td>
+</tr>
+<tr class="odd">
+<td>3. <strong>Dependencies</strong></td>
+<td>Do the declared dependencies match?</td>
+</tr>
+<tr class="even">
+<td>4. <strong>Environment</strong></td>
+<td>Is the runtime environment different?</td>
+</tr>
+</tbody>
+</table>
+<p>I ought to have clearly asked: “List each and every file and directory in pressfreedom.data/tests/ and qpost/tests/ together and show me the differences.”</p>
+<p>Just one command, thirty seconds, and the problem would have been solved.</p>
+<p>Rather, Claude only looked inside <code>tests/testthat/</code> (comparing the R scripts) and thus failed to notice that glossary2 has <code>tests/testthat.R</code> and that qpost doesn’t.</p>
+</section>
+<section id="intervention-2-notice-and-stop-the-escalation" class="level3">
+<h3 class="anchored" data-anchor-id="intervention-2-notice-and-stop-the-escalation">Intervention 2: Notice and Stop the Escalation</h3>
+<p>Already at the fourth attempt, I ought to have spotted the pattern and remarked, “This isn’t working because each solution becomes more complicated yet nothing changes–Go back to the fundamentals.”</p>
+<p>The question I should have forced Claude to answer earlier: <strong>“What is the simplest structural thing we haven’t checked?”</strong></p>
+</section>
+<section id="bonus-lesson-learned-use-usethis-from-the-start" class="level3">
+<h3 class="anchored" data-anchor-id="bonus-lesson-learned-use-usethis-from-the-start">Bonus Lesson Learned: Use <code>usethis</code> from the Start</h3>
+<p>That is the most important lesson: when I asked Claude to prepare the test, it performed the file writing manually, even though no infrastructure had been set up at that point. I ought to have insisted upon it by saying, “Don’t write the files manually. Use <code>usethis::use_testthat()</code> to set up the structure.”</p>
+<p>This is a lesson I’ll apply more broadly:</p>
+<div id="imp-rabbit-hole-1" class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important&nbsp;1: Whenever possible, make use of the <code>usethis::*()</code> functions.
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>They encode the structural knowledge and set the infrastructure. Using them not only prevents mistakes but also frees the mind so that one does not need to remember the nitty-gritty details.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="how-haiku-finally-found-it-when-i-switched-to-sonnet" class="level2">
+<h2 class="anchored" data-anchor-id="how-haiku-finally-found-it-when-i-switched-to-sonnet">How Haiku Finally Found It (When I Switched to Sonnet)</h2>
+<p>For most of the escalating trials, I had been using Claude Haiku 4.5. At a certain stage, I switched to Claude Sonnet 4.6, and then the quality of the reasoning changed noticeably.</p>
+<section id="step-1-isolate-the-problem" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-isolate-the-problem">Step 1: Isolate the Problem</h3>
+<p>Claude said: “Let me add a trivial test with zero dependencies to isolate the issue.”</p>
+<p>It created a minimal test file:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">test_that</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"1 + 1 equals 2"</span>, {</span>
+<span id="cb2-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">expect_equal</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb2-3">})</span></code></pre></div></div>
+<p>Even this basic arithmetic test produced 0% coverage. Claude’s insight: “This rules out everything test-related. The covr subprocess is running but the test runner itself is failing to launch.”</p>
+</section>
+<section id="step-2-follow-the-chain-of-execution" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-follow-the-chain-of-execution">Step 2: Follow the Chain of Execution</h3>
+<p>Claude then asked: “How does covr actually run tests?” Instead of guessing, it went to read covr’s source code—but this time with a specific question in mind.</p>
+<p>It found that <code>covr</code> uses <code>tools::testInstalledPackage()</code> internally, which in turn looks for <code>*.R</code> files in the <code>tests/</code> directory and runs them with <code>R CMD BATCH --vanilla</code>. The key insight: “covr writes a script with <code>library('qpost')</code> plus test commands to a file. Let me see what output file it creates — the output file will tell us exactly what’s failing.”</p>
+</section>
+<section id="step-3-look-at-the-actual-artifact" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-look-at-the-actual-artifact">Step 3: Look at the Actual Artifact</h3>
+<p>Claude thought: “There should be an <code>.Rout</code> file (R output file) from running that subprocess script. Let me find the most recent one.”</p>
+<p>When Claude looked at that <code>.Rout</code> file, it showed:</p>
+<pre><code>library('qpost')
+[... nothing else ...]</code></pre>
+<p>The tests were not carried out; the subprocess loaded the package and then stopped.</p>
+</section>
+<section id="step-4-connect-the-dots" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-connect-the-dots">Step 4: Connect the Dots</h3>
+<p>Claude realized: “If <code>tools::testInstalledPackage()</code> looks for <code>*.R</code> files in <code>tests/</code> to run, and there’s no output, then… what’s it finding? Let me check the structure.”</p>
+<p>The answer was obvious once it was visible: <code>tests/</code> contains only a <code>testthat/</code> subdirectory with test files. It’s missing <code>tests/testthat.R</code>—the runner script that tells <code>tools::testInstalledPackage()</code> where to find the actual tests.</p>
+</section>
+<section id="why-this-matters-different-test-runners" class="level3">
+<h3 class="anchored" data-anchor-id="why-this-matters-different-test-runners">Why This Matters: Different Test Runners</h3>
+<p>I then returned to my original question where the problem started: “But why did it work with <code>devtools::test()</code>?”</p>
+<p>The answer: <code>devtools::test()</code> bypasses <code>tools::testInstalledPackage()</code> entirely. It calls testthat directly, which automatically finds <code>tests/testthat/</code>. So <code>devtools::test()</code> worked fine the whole time. But <code>covr</code> (which uses <code>tools::testInstalledPackage()</code>) couldn’t find the tests without the runner script.</p>
+<hr>
+<p>The difference between Haiku’s and Sonnet’s approach is clear:</p>
+<ul>
+<li><strong>Before with Haiku 4.5:</strong> Try increasingly complex fixes, hope one works, give up and dig into source code</li>
+<li><strong>After with Sonnet 4.6:</strong> Form a hypothesis → follow the chain of execution → look at actual artifacts → ask what’s missing</li>
+</ul>
+<p>But to make it clear: The general solution is not to use a better (and more expensive) model. I had a similar problem with Sonnet 4.6 as well. The actual root cause was that I did not steer the model in the right direction.</p>
+<div id="imp-rabbit-hole-2" class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important&nbsp;2: Ask questions about the basic structure before going into the details.
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It is essential to monitor the LLM’s work closely and to intervene if it goes down a rabbit hole.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="what-ill-do-next-time-differently" class="level2">
+<h2 class="anchored" data-anchor-id="what-ill-do-next-time-differently">What I’ll Do Next Time Differently</h2>
+<p>I still have to learn how to use LLMs properly for code work. This session showed me I need to be more active and skeptical—less accepting of whatever the LLM suggests, more willing to intervene.</p>
+<div class="my-procedure">
+<div class="my-procedure-header">
+<p>The core takeaways</p>
+</div>
+<div class="my-procedure-container">
+<ol type="1">
+<li><p><strong>Make use of the usethis functions when carrying out any kind of infrastructure task — never accept the need to create files manually.</strong> Functions such as use_testthat(), use_vignette() and use_data() contain the structural knowledge which I don’t need to remember. I have already made this mistake two times (with testthat and vignettes), so I know it’s something I should be on the lookout for. Whenever I am working on package setup with an LLM I must insist on: “Don’t come up with a solution from scratch. Use the tool that was designed for the job.”</p></li>
+<li><p><strong>Before making any adjustments, compare similar systems (one working the other not) in terms of their structure.</strong> If the problem does not occur in a similar project that works, then start by carrying out a side-by-side comparison of the directory structures. A single <code>ls</code> command takes 30 seconds and usually resolves the issue right away. This step should be taken before making any changes to the code or fiddling with the environment.</p></li>
+<li><p><strong>Halt the LLM when the attempts worsen without leading to any progress.</strong> When the solutions become more complicated but the error remains unchanged, that is the sign on which to act and stop. Ask yourself “What is the simplest thing that we haven’t already checked?” and then bring the approach back to fundamentals, not push it any further into complexity.</p></li>
+<li><p><strong>Before sticking to the LLM’s method, question it.</strong> Whenever it moves on to reading the library’s internals or adopts any other complicated strategy, stop it and ask: “Have we checked the basic points? What are fundamental structural questions we haven’t asked yet?” Although this sounds a bit awkward, this strategy is better than spending two hours unnecessarily.</p></li>
+</ol>
+</div>
+</div>
+<p>The most difficult part is making sure I follow these steps when I’m in the middle of a debugging session. Because in these situations (chasing problems), the momentum is very strong. Often I end up getting carried away. But I’ll try to stop myself the next time.</p>
+<hr>
+<p><em>Have you had a similar experience? Did you miss obvious clues while working with an LLM? I’m curious what signals you noticed—or wish you’d noticed—and how you got unstuck.</em></p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{baumgartner2026,
+  author = {Baumgartner, Peter},
+  title = {When {LLMs} {Fall} {Into} a {Rabbit} {Hole}},
+  date = {2026-08-23},
+  url = {https://peter-baumgartner.net/posts/2026-08-23-llm-rabbit-hole/},
+  langid = {en}
+}
+</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-baumgartner2026" class="csl-entry quarto-appendix-citeas">
+Baumgartner, Peter. 2026. <span>“When LLMs Fall Into a Rabbit
+Hole.”</span> August 23. <a href="https://peter-baumgartner.net/posts/2026-08-23-llm-rabbit-hole/">https://peter-baumgartner.net/posts/2026-08-23-llm-rabbit-hole/</a>.
+</div></div></section></div> ]]></description>
+  <category>R</category>
+  <category>LLM</category>
+  <category>debugging</category>
+  <category>workflow</category>
+  <guid>https://peter-baumgartner.net/posts/2026-08-23-llm-rabbit-hole/</guid>
+  <pubDate>Sat, 22 Aug 2026 22:00:00 GMT</pubDate>
+  <media:content url="https://peter-baumgartner.net/posts/2026-08-23-llm-rabbit-hole/rabbit-hole.webp" medium="image" type="image/webp"/>
+</item>
 <item>
   <title>Encoding Resilience</title>
   <dc:creator>Peter Baumgartner</dc:creator>

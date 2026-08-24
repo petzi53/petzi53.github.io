@@ -1,0 +1,207 @@
+---
+title: "When LLMs Fall Into a Rabbit Hole"
+subtitle: "My First Big Lesson in Using AI for Debugging"
+author: "Peter Baumgartner"
+date: "2026-08-23"
+image: "rabbit-hole.webp"
+image-alt: "Split-screen illustration: Left side shows a person at a laptop surrounded by tangled red yarn/threads, documents scattered, confused expression. Right side shows a computer screen with checkmarks, and a clear logical flow. Over the computer screen float two light bulbs symbolizing the ideas that entagled the problem of the left side."
+categories: [R, LLM, debugging, workflow]
+description: "A debugging session grew more complicated until I switched models and asked better questions. I'll share what went wrong at each step, how Claude found the root cause, and what I learned about using LLMs effectively in R projects."
+---
+
+## The Problem
+
+Last week I asked a simple question: if all 81 tests passed when I ran `devtools::test()`, why did `covr::package_coverage()` show 0% coverage for my R package `qpost`?
+
+I asked Claude—using Posit Assistant—to assist me with debugging. I believed it would only take ten minutes, but it ended up taking two hours of ever more complicated troubleshooting before Claude managed to identify the actual problem.
+
+What's the actual answer? A single missing file: `tests/testthat.R`.
+
+But here's the embarrassing part: the real problem started much earlier. I didn't notice that when Claude created the test files one by one instead of using `usethis::use_testthat()` to set up the infrastructure correctly. If I had caught that mistake then, I could have avoided this whole debugging session.
+
+Even during the debugging, there were several times when I could have paused Claude and said, "Wait, let me check the basics first." But I didn't.
+
+In this post, I want to go through what went wrong and what I could have done differently. I'm still figuring out how to use LLMs properly, and this experience was a humbling lesson in what I overlooked.
+
+
+
+## The Escalation Pattern
+
+Here's how the session went. Each attempt got more complex, but the output always stayed the same.
+
+| Attempt | Proposed Solution | Result |
+|---------|-------------------|--------|
+| 1 | "The tests use `:::` to call internal functions. Maybe covr can't instrument those. Let's add `@export` and roxygen comments to export them as internal functions." | Still 0% coverage. |
+| 2 | "Maybe the dependencies aren't declared. Let's add `covr` and `withr` to the Suggests field." | Still 0% coverage. |
+| 3 | "The tests are calling internal functions with `:::`. Let's rewrite all test files to use the proper syntax." | Still 0% coverage. |
+| 4 | "Maybe covr's test runner isn't firing. Let's try setting environment variables like `RENV_CONFIG_AUTOLOADER_ENABLED = FALSE`." | Still 0% coverage. |
+| 5 | "Let's try `R_PROFILE_USER` to bypass the `.Rprofile` file." | Still 0% coverage. |
+| 6 | "Let's read the actual covr source code and find the test execution function." | Still 0% coverage. |
+| 7 | "Wait—let me preserve the temp files from covr and check what actually ran in the subprocess." | Found the subprocess log |
+| 8 | The subprocess log showed `library('qpost')` and then... nothing. No test commands at all. This finally led to the question: "Does qpost have a `tests/testthat.R` file?" Answer: No. | Create `tests/testthat.R` file and covr finally showed the coverage. |
+
+: Escalation sequence {tbl-colwidths="[5, 70, 25]"}
+
+## Where It Went Wrong: Two Critical Mistakes
+
+### Mistake 1: I Didn't Notice the Setup Was Wrong (Weeks Earlier)
+
+When Claude first created the test infrastructure for `qpost`, it wrote the test files manually—creating `tests/testthat/` folder and writing `test-*.R` files by hand. **It never ran `usethis::use_testthat()` to generate the proper structure.**
+
+I didn't flag this. I should have. If I had insisted from the beginning that Claude use `usethis::use_testthat()`, it would have automatically generated a file called `tests/testthat.R`, and this whole debugging session would then have been avoided.
+
+It is my fault for not having scrutinized what Claude was doing carefully.
+
+### Mistake 2: I Missed the Rabbit Hole Pattern During Debugging
+
+In the debugging session there were several signals which I ought to have picked up.
+
+Every attempt was **more complicated than the previous one**, but the result was **always the same**: 0% coverage and no error messages. That is a clear indication of a rabbit hole.
+
+**Here's the pattern I missed:**
+
+- **Attempt 1 to 3:** Claude tries reasonable guesses: It checked exports, dependencies, and syntax, which could have been helpful.
+- **Attempt 4 to 5:** Claude switches to environment variables (`RENV_CONFIG_AUTOLOADER_ENABLED`, `R_PROFILE_USER`). No new information from the failures, but I kept going along.
+– **Attempt 6:** Claude decides to have a look at covr's source code in order to get an understanding of its internal workings. **At this point I should have stopped.** When simple fixes don't work and there is no change in the output, investigating the source code of a library is a distraction.
+- **Attempt 7:** Only when I changed the model (from [Claude HAIKU 4.5](https://www.anthropic.com/news/claude-haiku-4-5) to [Claude Sonnet 4.6](https://www.anthropic.com/news/claude-sonnet-4-6)) and asked to start the debugging process from scratch the LLM investigated in different directions and did finally discover the missing file.
+
+**Here's what made it worse:** 
+
+I knew that pressfreedom.data (another package I am working on) displayed the test coverage percentage using covr perfectly. The difference should have been obvious at once:
+
+```
+ls tests/           # in both qpost and glossary2
+ls tests/testthat/  # in both
+```
+
+If I had asked Claude to display every file and directory in the test folders of both packages side by side, we would have noticed the missing `tests/testthat.R` file within thirty seconds. Instead, Claude only looked one level deeper into the `tests/testthat/` directory, and thus failed to find the file which should have been one level higher (at the `tests/testthat.R` level).
+
+This was again my default: I didn't push back. I didn't insist on the structural comparison. I let the model escalate.
+
+## What I Should Have Done: Two Interventions I Missed
+
+### Intervention 1: Demand a Proper Structural Comparison
+
+When comparing a working system (glossary2) with a broken one (qpost), there's a natural order:
+
+| Step | Question |
+| --- | --- |
+| 1. **Structure** | Does the directory structure match? |
+| 2. **Configuration** | Do the key configuration files match? |
+| 3. **Dependencies** | Do the declared dependencies match? |
+| 4. **Environment** | Is the runtime environment different? |
+
+
+I ought to have clearly asked: "List each and every file and directory in pressfreedom.data/tests/ and qpost/tests/ together and show me the differences."
+
+Just one command, thirty seconds, and the problem would have been solved.
+
+Rather, Claude only looked inside `tests/testthat/` (comparing the R scripts) and thus failed to notice that glossary2 has `tests/testthat.R` and that qpost doesn't.
+
+### Intervention 2: Notice and Stop the Escalation
+
+Already at the fourth attempt, I ought to have spotted the pattern and remarked, "This isn't working because each solution becomes more complicated yet nothing changes--Go back to the fundamentals."
+
+The question I should have forced Claude to answer earlier: **"What is the simplest structural thing we haven't checked?"**
+
+### Bonus Lesson Learned: Use `usethis` from the Start
+
+That is the most important lesson: when I asked Claude to prepare the test, it performed the file writing manually, even though no infrastructure had been set up at that point. I ought to have insisted upon it by saying, "Don't write the files manually. Use `usethis::use_testthat()` to set up the structure."
+
+This is a lesson I'll apply more broadly: 
+
+::: {.callout-important #imp-rabbit-hole-1}
+##### Whenever possible, make use of the `usethis::*()` functions. 
+
+They encode the structural knowledge and set the infrastructure. Using them not only prevents mistakes but also frees the mind so that one does not need to remember the nitty-gritty details.
+:::
+
+
+## How Haiku Finally Found It (When I Switched to Sonnet)
+
+For most of the escalating trials, I had been using Claude Haiku 4.5. At a certain stage, I switched to Claude Sonnet 4.6, and then the quality of the reasoning changed noticeably.
+
+### Step 1: Isolate the Problem
+
+Claude said: "Let me add a trivial test with zero dependencies to isolate the issue."
+
+It created a minimal test file:
+```r
+test_that("1 + 1 equals 2", {
+  expect_equal(1 + 1, 2)
+})
+```
+
+Even this basic arithmetic test produced 0% coverage. Claude's insight: "This rules out everything test-related. The covr subprocess is running but the test runner itself is failing to launch."
+
+### Step 2: Follow the Chain of Execution
+
+Claude then asked: "How does covr actually run tests?" Instead of guessing, it went to read covr's source code—but this time with a specific question in mind.
+
+It found that `covr` uses `tools::testInstalledPackage()` internally, which in turn looks for `*.R` files in the `tests/` directory and runs them with `R CMD BATCH --vanilla`. The key insight: "covr writes a script with `library('qpost')` plus test commands to a file. Let me see what output file it creates — the output file will tell us exactly what's failing."
+
+### Step 3: Look at the Actual Artifact
+
+Claude thought: "There should be an `.Rout` file (R output file) from running that subprocess script. Let me find the most recent one."
+
+When Claude looked at that `.Rout` file, it showed:
+```
+library('qpost')
+[... nothing else ...]
+```
+
+The tests were not carried out; the subprocess loaded the package and then stopped.
+
+### Step 4: Connect the Dots
+
+Claude realized: "If `tools::testInstalledPackage()` looks for `*.R` files in `tests/` to run, and there's no output, then... what's it finding? Let me check the structure."
+
+The answer was obvious once it was visible: `tests/` contains only a `testthat/` subdirectory with test files. It's missing `tests/testthat.R`—the runner script that tells `tools::testInstalledPackage()` where to find the actual tests.
+
+### Why This Matters: Different Test Runners
+
+I then returned to my original question where the problem started: "But why did it work with `devtools::test()`?"
+
+The answer: `devtools::test()` bypasses `tools::testInstalledPackage()` entirely. It calls testthat directly, which automatically finds `tests/testthat/`. So `devtools::test()` worked fine the whole time. But `covr` (which uses `tools::testInstalledPackage()`) couldn't find the tests without the runner script.
+
+---
+
+The difference between Haiku's and Sonnet's approach is clear:
+
+- **Before with Haiku 4.5:** Try increasingly complex fixes, hope one works, give up and dig into source code
+- **After with Sonnet 4.6:** Form a hypothesis → follow the chain of execution → look at actual artifacts → ask what's missing
+
+But to make it clear: The general solution is not to use a better (and more expensive) model. I had a similar problem with Sonnet 4.6 as well. The actual root cause was that I did not steer the model in the right direction. 
+
+::: {.callout-important #imp-rabbit-hole-2}
+##### Ask questions about the basic structure before going into the details.
+
+It is essential to monitor the LLM's work closely and to intervene if it goes down a rabbit hole. 
+
+:::
+
+
+## What I'll Do Next Time Differently 
+
+I still have to learn how to use LLMs properly for code work. This session showed me I need to be more active and skeptical—less accepting of whatever the LLM suggests, more willing to intervene.
+
+:::::{.my-procedure}
+:::{.my-procedure-header}
+The core takeaways
+:::
+::::{.my-procedure-container}
+1. **Make use of the usethis functions when carrying out any kind of infrastructure task — never accept the need to create files manually.** Functions such as use_testthat(), use_vignette() and use_data() contain the structural knowledge which I don't need to remember. I have already made this mistake two times (with testthat and vignettes), so I know it's something I should be on the lookout for. Whenever I am working on package setup with an LLM I must insist on: "Don't come up with a solution from scratch. Use the tool that was designed for the job."
+
+2. **Before making any adjustments, compare similar systems (one working the other not) in terms of their structure.** If the problem does not occur in a similar project that works, then start by carrying out a side-by-side comparison of the directory structures. A single `ls` command takes 30 seconds and usually resolves the issue right away. This step should be taken before making any changes to the code or fiddling with the environment.
+
+3. **Halt the LLM when the attempts worsen without leading to any progress.** When the solutions become more complicated but the error remains unchanged, that is the sign on which to act and stop. Ask yourself "What is the simplest thing that we haven't already checked?" and then bring the approach back to fundamentals, not push it any further into complexity.
+
+4. **Before sticking to the LLM's method, question it.** Whenever it moves on to reading the library's internals or adopts any other complicated strategy, stop it and ask: "Have we checked the basic points? What are fundamental structural questions we haven't asked yet?" Although this sounds a bit awkward, this strategy is better than spending two hours unnecessarily. 
+::::
+:::::
+
+The most difficult part is making sure I follow these steps when I'm in the middle of a debugging session. Because in these situations (chasing problems), the momentum is very strong. Often I end up getting carried away. But I'll try to stop myself the next time.
+
+---
+
+*Have you had a similar experience? Did you miss obvious clues while working with an LLM? I'm curious what signals you noticed—or wish you'd noticed—and how you got unstuck.*

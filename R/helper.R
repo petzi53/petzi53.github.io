@@ -12,11 +12,9 @@
 ## - t_col: transparent colors
 ##########################################################
 
+library(glossary2)
 
-
-library(glossary)
-
-glossary::glossary_path(here::here("../glossary-pb/glossary.yml"))
+glossary_load_all("https://raw.githubusercontent.com/petzi53/glossary-pb/main/glossary.yml")
 glossary::glossary_popup("hover")
 
 
