@@ -10,7 +10,7 @@
 <atom:link href="https://peter-baumgartner.net/index.xml" rel="self" type="application/rss+xml"/>
 <description>Peter’s Learning-Journal</description>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Sat, 22 Aug 2026 22:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 23 Aug 2026 22:00:00 GMT</lastBuildDate>
 <item>
   <title>When LLMs Fall Into a Rabbit Hole</title>
   <dc:creator>Peter Baumgartner</dc:creator>
@@ -272,20 +272,20 @@ Important&nbsp;2: Ask questions about the basic structure before going into the 
 <a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{baumgartner2026,
   author = {Baumgartner, Peter},
   title = {When {LLMs} {Fall} {Into} a {Rabbit} {Hole}},
-  date = {2026-08-23},
+  date = {2026-08-24},
   url = {https://peter-baumgartner.net/posts/2026-08-23-llm-rabbit-hole/},
   langid = {en}
 }
 </code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-baumgartner2026" class="csl-entry quarto-appendix-citeas">
 Baumgartner, Peter. 2026. <span>“When LLMs Fall Into a Rabbit
-Hole.”</span> August 23. <a href="https://peter-baumgartner.net/posts/2026-08-23-llm-rabbit-hole/">https://peter-baumgartner.net/posts/2026-08-23-llm-rabbit-hole/</a>.
+Hole.”</span> August 24. <a href="https://peter-baumgartner.net/posts/2026-08-23-llm-rabbit-hole/">https://peter-baumgartner.net/posts/2026-08-23-llm-rabbit-hole/</a>.
 </div></div></section></div> ]]></description>
   <category>R</category>
   <category>LLM</category>
   <category>debugging</category>
   <category>workflow</category>
   <guid>https://peter-baumgartner.net/posts/2026-08-23-llm-rabbit-hole/</guid>
-  <pubDate>Sat, 22 Aug 2026 22:00:00 GMT</pubDate>
+  <pubDate>Sun, 23 Aug 2026 22:00:00 GMT</pubDate>
   <media:content url="https://peter-baumgartner.net/posts/2026-08-23-llm-rabbit-hole/rabbit-hole.webp" medium="image" type="image/webp"/>
 </item>
 <item>

@@ -1,12 +1,15 @@
 ---
 title: "When LLMs Fall Into a Rabbit Hole"
 subtitle: "My First Big Lesson in Using AI for Debugging"
+description: |
+    A debugging session grew more complicated until I switched models and asked better questions. I'll share what went wrong at each step, how Claude found the root cause, and what I learned about using LLMs effectively in R projects."
 author: "Peter Baumgartner"
-date: "2026-08-23"
+date: "2026-08-24"
+date-modified: last-modified
 image: "rabbit-hole.webp"
 image-alt: "Split-screen illustration: Left side shows a person at a laptop surrounded by tangled red yarn/threads, documents scattered, confused expression. Right side shows a computer screen with checkmarks, and a clear logical flow. Over the computer screen float two light bulbs symbolizing the ideas that entagled the problem of the left side."
 categories: [R, LLM, debugging, workflow]
-description: "A debugging session grew more complicated until I switched models and asked better questions. I'll share what went wrong at each step, how Claude found the root cause, and what I learned about using LLMs effectively in R projects."
+draft: false
 ---
 
 ## The Problem
