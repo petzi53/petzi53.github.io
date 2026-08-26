@@ -1,7 +1,10 @@
 # --- Quarto Output & Cache (build artefacts) ---
 # Ignore the entire output directory
 _site/
-# docs/ # removed because stragey A needs it
+# docs/ # removed because strategy A needs it
+# Override global ~/.gitignore which excludes docs/ (added there to avoid
+# committing pkgdown sites in R package repos — not applicable here).
+!docs/
 
 # Ignore the Quarto cache directory (contains R execution caches, figures, etc.)
 .quarto/
