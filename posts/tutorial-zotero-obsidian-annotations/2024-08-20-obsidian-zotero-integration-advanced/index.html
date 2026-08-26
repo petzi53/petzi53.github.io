@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
-
+<meta name="generator" content="quarto-1.10.18">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Peter Baumgartner">
 <meta name="dcterms.date" content="2024-08-20">
 <meta name="description" content="Here, I explain an advanced feature of the Obsidian Zotero Integration Plugin: How can annotation from Zotero documents be scraped and imported programmatically as a note into Obisidan?">
-
 <title>Annotation Tutorial 3: Zotero - Obsidian Integration Advanced – Thought Splinters</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -82,7 +82,6 @@ div.csl-indent {
   margin-left: 2em;
 }</style>
 
-
 <script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../../site_libs/clipboard/clipboard.min.js"></script>
@@ -99,15 +98,14 @@ div.csl-indent {
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-781e46921ee0a53317941336be000c3f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-c4aff173bdb29f86b01cc55e5a32ba7d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="../../../site_libs/quarto-contrib/iconify-3.0.0/iconify-icon.min.js"></script>
 <script src="../../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="../../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
-<script id="quarto-search-options" type="application/json">{
+<link href="../../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -132,18 +130,13 @@ div.csl-indent {
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-CLE95GVN04"></script>
-
-<script type="text/plain" cookie-consent="tracking">
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-CLE95GVN04"></script><script type="text/plain" cookie-consent="tracking">
 
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-CLE95GVN04', { 'anonymize_ip': true});
-</script>
-
-<script type="text/javascript" charset="UTF-8">
+</script><script type="text/javascript" charset="UTF-8">
 document.addEventListener('DOMContentLoaded', function () {
 cookieconsent.run({
   "notice_banner_type":"simple",
@@ -158,9 +151,7 @@ cookieconsent.run({
 "language":"en"
   });
 });
-</script> 
-  
-<script type="application/json" class="js-hypothesis-config">
+</script><script type="application/json" class="js-hypothesis-config">
 {
   "theme": "classic",
   "openSidebar": false,
@@ -173,17 +164,11 @@ cookieconsent.run({
     "selectionFontFamily": "helvetica, arial, sans serif"
   }
 }
-</script>
-<script async="" src="https://hypothes.is/embed.js"></script>
-<script>
+</script><script async="" src="https://hypothes.is/embed.js"></script><script>
   window.document.addEventListener("DOMContentLoaded", function (_event) {
     document.body.classList.add('hypothesis-enabled');
   });
-</script>
-<script src="../../../site_libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="../../../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-
-
+</script><script src="../../../site_libs/kePrint-0.0.1/kePrint.js"></script><link href="../../../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <link rel="stylesheet" href="../../../styles.css">
 <link rel="stylesheet" href="../../../glossary.css">
 <meta name="twitter:title" content="Annotation Tutorial 3: Zotero - Obsidian Integration Advanced – Thought Splinters">
@@ -194,13 +179,10 @@ cookieconsent.run({
 <meta name="twitter:image:alt" content="The Zotero application icon is on the left, and the Obsidian icon is on the right of the image. Below both app icons is the Nunjucks icon. There are two arrows, one from Zotero to Nunjunck and the other from Nunkunck to Obsidian.">
 <meta name="twitter:card" content="summary_large_image">
 </head>
-
 <body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">Thought Splinters</span>
@@ -212,7 +194,7 @@ cookieconsent.run({
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="../../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
@@ -224,8 +206,8 @@ cookieconsent.run({
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Tutorials</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">
+<li>
     <a class="dropdown-item" href="../../../quarto-blog.html">
  <span class="dropdown-text">Create a Quarto Blog</span></a>
   </li>  
@@ -234,13 +216,13 @@ cookieconsent.run({
  <span class="dropdown-text">Zotero-Obsidian Annotations</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-links" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Links</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-links">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-links">
+<li>
     <a class="dropdown-item" href="https://opensource.posit.co/">
  <span class="dropdown-text">Posit Open Source</span></a>
   </li>  
@@ -265,7 +247,7 @@ cookieconsent.run({
  <span class="dropdown-text">R Bloggers</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item">
     <a class="nav-link" href="../../../archive.html"> 
 <span class="menu-text">Archive</span></a>
@@ -300,15 +282,11 @@ cookieconsent.run({
 <span class="menu-text"></span></a>
   </li>  
 </ul>
-          </div> <!-- /navcollapse -->
+</div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Annotation Tutorial 3: Zotero - Obsidian Integration Advanced</h1>
             <p class="subtitle lead">Using the Nunjucks Template Language to Import Zotero Annotations into Obsidian</p>
@@ -359,38 +337,29 @@ cookieconsent.run({
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="../../../portrait-peter.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Peter Baumgartner"><img src="../../../portrait-peter.png" class="img-fluid figure-img" alt="Peter Baumgartner"></a></p>
-<figcaption>Peter Baumgartner</figcaption>
-</figure>
+<figure class="figure"><p><a href="../../../portrait-peter.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Peter Baumgartner"><img src="../../../portrait-peter.png" class="img-fluid figure-img" alt="Peter Baumgartner"></a></p>
+<figcaption>Peter Baumgartner</figcaption></figure>
 </div>
 </div></div>
-        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="4">
-    <h2 id="toc-title">On this page</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="4"><h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#objectives" id="toc-objectives" class="nav-link active" data-scroll-target="#objectives">Objectives</a></li>
+<li><a href="#objectives" id="toc-objectives" class="nav-link active" data-scroll-target="#objectives">Objectives</a></li>
   <li><a href="#zotero---obsidian-integration-with-templates" id="toc-zotero---obsidian-integration-with-templates" class="nav-link" data-scroll-target="#zotero---obsidian-integration-with-templates">Zotero - Obsidian Integration with Templates</a></li>
-  <li><a href="#template-examples" id="toc-template-examples" class="nav-link" data-scroll-target="#template-examples">Template Examples</a>
+  <li>
+<a href="#template-examples" id="toc-template-examples" class="nav-link" data-scroll-target="#template-examples">Template Examples</a>
   <ul>
-  <li><a href="#nunjucks-template-language" id="toc-nunjucks-template-language" class="nav-link" data-scroll-target="#nunjucks-template-language">Nunjucks Template Language</a></li>
+<li><a href="#nunjucks-template-language" id="toc-nunjucks-template-language" class="nav-link" data-scroll-target="#nunjucks-template-language">Nunjucks Template Language</a></li>
   <li><a href="#my-template-code" id="toc-my-template-code" class="nav-link" data-scroll-target="#my-template-code">My template code</a></li>
   <li><a href="#my-css-snippet" id="toc-my-css-snippet" class="nav-link" data-scroll-target="#my-css-snippet">My CSS Snippet</a></li>
   <li><a href="#result-of-my-template" id="toc-result-of-my-template" class="nav-link" data-scroll-target="#result-of-my-template">Result of my template</a></li>
-  </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/petzi53/petzi53.github.io/edit/main/posts/tutorial-zotero-obsidian-annotations/2024-08-20-obsidian-zotero-integration-advanced/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/petzi53/petzi53.github.io/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+</li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/petzi53/petzi53.github.io/edit/main/posts/tutorial-zotero-obsidian-annotations/2024-08-20-obsidian-zotero-integration-advanced/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/petzi53/petzi53.github.io/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-
-<section id="objectives" class="level2">
-<h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="objectives" class="level2"><h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
 <p>After the creation of Zotero annotations, as explained in <a href="../2024-08-20-annotations-with-zotero-version-7">Annotation Tutorial 1</a> and the installation of two plugins (see: <a href="../2024-08-12-academic-workflow-obsidian-zotero">Annotation Tutorial 2</a>) you can import your annotations into Obsidian. In the second part of the tutorial I described the easy way by using the default mechanism of the Zotero Integration <a class="glossary" title="A plug-in (or plugin, add-in, addin, add-on, or addon) is a software component that adds a specific feature to an existing computer program. (Wikipedia)">plugin</a>.</p>
 <p>In this third part of the tutorial, I am going to explain the more complex import procedure by using templates. We have said that the configuration setting page for the “Zotero Integration” plugin consists of four parts:</p>
 <ul>
@@ -400,9 +369,7 @@ cookieconsent.run({
 <li>Import Image Settings (additional configuration, also explained here)</li>
 </ul>
 <p>I will skip the part on “Citation Formats” here. This section uses the integration with Zotero to produce different kinds of citation formats inside Obsidian. Except for “Formatted Bibliography,” these formats produce code within Obsidian usable for further conversion. Export procedures. We can skip this part of the settings here for our purposes.</p>
-</section>
-<section id="zotero---obsidian-integration-with-templates" class="level2">
-<h2 class="anchored" data-anchor-id="zotero---obsidian-integration-with-templates">Zotero - Obsidian Integration with Templates</h2>
+</section><section id="zotero---obsidian-integration-with-templates" class="level2"><h2 class="anchored" data-anchor-id="zotero---obsidian-integration-with-templates">Zotero - Obsidian Integration with Templates</h2>
 <p>Although all annotations are imported into Obsidian without templates, you will lose many <a class="glossary" title="Metadata (or metainformation) is “data that provides information about other data” (Merriam-Webster), but not the content of the data itself, such as the text of a message or the image itself. (Wikipedia)">metadata</a> of your notes. Without a template, you are missing two types of metadata:</p>
 <ul>
 <li>Metadata about the Zotero bibliography item (author, title, year, publisher, location, abstract, item tags, etc.)</li>
@@ -416,61 +383,68 @@ cookieconsent.run({
 </ol>
 <p>After choosing the “Data Explorer” command, Obsidian will open a new horizontal section with two buttons on the top.</p>
 <ol type="1">
-<li><strong>Prompt for Selection</strong>: It displays a dialog window to choose your library and Zotero item you want to import. Please be patient — Obsidian may take seconds to open the dialog window.</li>
-<li><strong>Preview Import Format</strong>: This is the default value of this menu (button). It will display all the variable’s names and values for the Zotero item. However, you can also select one of your templates defined in the Zotero Integration plugin to see the result. The “Data Explorer” is an important tool for creating and improving Obsidian-Zotero Integration templates.</li>
+<li>
+<strong>Prompt for Selection</strong>: It displays a dialog window to choose your library and Zotero item you want to import. Please be patient — Obsidian may take seconds to open the dialog window.</li>
+<li>
+<strong>Preview Import Format</strong>: This is the default value of this menu (button). It will display all the variable’s names and values for the Zotero item. However, you can also select one of your templates defined in the Zotero Integration plugin to see the result. The “Data Explorer” is an important tool for creating and improving Obsidian-Zotero Integration templates.</li>
 </ol>
-<div id="fig-zotero-integration-data-explorer" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="The screenshot shows the top two buttons, 'Prompt for Selection' and Preview Import Format'. What follows is the internal structure of the Zotero annotation. It starts with 'Template Data {} 45 keys' with an opened triangle on the left. The next intended line starts gray with 'abstractNote' followed by the text of the abstract in yellow. Another intended line in gray says 'alltags' followed by yellow 'inequality' in double parenthesis. And so on. There are many different intended lines with closed triangles on the left, except for an open triangle saying 'creators' in gray followed by '[] 3 items' in white. The following three lines display the values for 'creators' with separate lines for 'creatorType author'; 'firstName Amary'; 'lastName Gethin'. There are many more lines with different values but similar structures." data-group="zotero-integration">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-zotero-integration-data-explorer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="fig-zotero-integration-data-explorer" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The screenshot shows the top two buttons, 'Prompt for Selection' and Preview Import Format'. What follows is the internal structure of the Zotero annotation. It starts with 'Template Data {} 45 keys' with an opened triangle on the left. The next intended line starts gray with 'abstractNote' followed by the text of the abstract in yellow. Another intended line in gray says 'alltags' followed by yellow 'inequality' in double parenthesis. And so on. There are many different intended lines with closed triangles on the left, except for an open triangle saying 'creators' in gray followed by '[] 3 items' in white. The following three lines display the values for 'creators' with separate lines for 'creatorType author'; 'firstName Amary'; 'lastName Gethin'. There are many more lines with different values but similar structures." data-group="zotero-integration" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-zotero-integration-data-explorer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <a href="advanced-zotero-integration-data-explorer-min.png" class="lightbox" data-gallery="zotero-integration" title="Figure&nbsp;1: Part of the Data Explorer for the Zotero Integration plugin. You can open/close hierarchical values by clicking on the small triangle as is shown in the middle of the screenshot with “creators”."><img src="advanced-zotero-integration-data-explorer-min.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="The screenshot shows the top two buttons, 'Prompt for Selection' and Preview Import Format'. What follows is the internal structure of the Zotero annotation. It starts with 'Template Data {} 45 keys' with an opened triangle on the left. The next intended line starts gray with 'abstractNote' followed by the text of the abstract in yellow. Another intended line in gray says 'alltags' followed by yellow 'inequality' in double parenthesis. And so on. There are many different intended lines with closed triangles on the left, except for an open triangle saying 'creators' in gray followed by '[] 3 items' in white. The following three lines display the values for 'creators' with separate lines for 'creatorType author'; 'firstName Amary'; 'lastName Gethin'. There are many more lines with different values but similar structures."></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-zotero-integration-data-explorer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Part of the Data Explorer for the Zotero Integration plugin. You can open/close hierarchical values by clicking on the small triangle as is shown in the middle of the screenshot with “creators”.
-</figcaption>
-</figure>
+</figcaption></figure>
 </div>
-</section>
-<section id="template-examples" class="level2">
-<h2 class="anchored" data-anchor-id="template-examples">Template Examples</h2>
-<section id="nunjucks-template-language" class="level3">
-<h3 class="anchored" data-anchor-id="nunjucks-template-language">Nunjucks Template Language</h3>
+</section><section id="template-examples" class="level2"><h2 class="anchored" data-anchor-id="template-examples">Template Examples</h2>
+<section id="nunjucks-template-language" class="level3"><h3 class="anchored" data-anchor-id="nunjucks-template-language">Nunjucks Template Language</h3>
 <p>The best way to learn how to apply the Nunjucks template language is to look through the somewhat meager <a href="https://github.com/mgmeyers/obsidian-zotero-integration/blob/main/docs/README.md">documentation of the plugin</a> and then experiment with examples developed by other people. I have collected several examples for Obsidian-Zotero Integration templates.</p>
 <div class="my-example">
 <div class="my-example-header">
 <p>Examples of Nunjucks templates</p>
 </div>
 <div class="my-example-container">
-<details>
-<summary>
+<details><summary>
 Commented list of templates examples
-</summary>
-<ul>
-<li><a href="https://publish.obsidian.md/history-notes/01+Notetaking+for+Historians">Doing History with Zotero and Obsidian</a>: A very detailed article which not only contains a template example but also explains the whole integration process similar to this post here <span class="citation" data-cites="razglova2023">(<a href="#ref-razglova2023" role="doc-biblioref">Razglova 2023</a>)</span>.</li>
-<li><a href="https://medium.com/@alexandraphelan/an-updated-academic-workflow-zotero-obsidian-cffef080addd">An Updated Academic Workflow: Zotero &amp; Obsidian</a>: A detailed explanation of the whole process with a sophisticated Zotero Integration template <span class="citation" data-cites="phelan2024a">(<a href="#ref-phelan2024a" role="doc-biblioref">Phelan 2024</a>)</span>.</li>
+</summary><ul>
+<li>
+<a href="https://publish.obsidian.md/history-notes/01+Notetaking+for+Historians">Doing History with Zotero and Obsidian</a>: A very detailed article which not only contains a template example but also explains the whole integration process similar to this post here <span class="citation" data-cites="razglova2023">(<a href="#ref-razglova2023" role="doc-biblioref">Razglova 2023</a>)</span>.</li>
+<li>
+<a href="https://medium.com/@alexandraphelan/an-updated-academic-workflow-zotero-obsidian-cffef080addd">An Updated Academic Workflow: Zotero &amp; Obsidian</a>: A detailed explanation of the whole process with a sophisticated Zotero Integration template <span class="citation" data-cites="phelan2024a">(<a href="#ref-phelan2024a" role="doc-biblioref">Phelan 2024</a>)</span>.</li>
 <li>There is a collection of several templates in an important <a href="https://forum.obsidian.md/t/zotero-integration-import-templates/36310">Obsidian Forum post</a>. There are many posts about general questions about how to apply the templates, I will list some posts that include template codes for you to experiment:
 <ul>
-<li><a href="https://forum.obsidian.md/t/zotero-integration-import-templates/36310/2">mgmeyers</a>: An excellent and detailed template from the author of the Zotero Integration plugin. It also has code for strikethrough and underlining, which was impossible in the Zotero PDF reader at the time of the posting. This may originate from an external PDF reader. Another caveat: The color codes need to be corrected.</li>
-<li><a href="https://forum.obsidian.md/t/zotero-integration-import-templates/36310/3">erazlogo</a>: The author of the Doing History website mentioned above. Very detailed, it has on other pages of the website many other important practical tips for usage of the Zotero-Obsidian integration.</li>
-<li><a href="https://forum.obsidian.md/t/zotero-integration-import-templates/36310/8">apflestrudelig</a>: Several templates for special tasks, but truncated. To see the full template code, go to the <a href="https://gist.github.com/lguenth/e8a5c4fa0b4a1ed6f8bd0b9ccfc31013">Gist article on GitHub</a> Click on the right top raw buttons to access the source file.</li>
-<li><a href="https://forum.obsidian.md/t/zotero-integration-import-templates/36310/11">gustafferson</a>: a comment with a reference to the template code in a [GitHub gist article] (https://gist.github.com/Gustafferson/698e92d1ac939d60a63aac35fe4c4c4e).</li>
-<li><a href="https://forum.obsidian.md/t/zotero-integration-import-templates/36310/12">Zocahontas1</a>: Similar to mgmeyers but using for the color codes, the <a href="https://github.com/chetachiezikeuzor/Highlightr-Plugin">Obsidian Highlights plugin</a>.</li>
-<li><a href="https://forum.obsidian.md/t/zotero-integration-import-templates/36310/16">Zocahontas2</a>: How do you add page numbers and a revised template?</li>
-<li><a href="https://forum.obsidian.md/t/zotero-integration-import-templates/36310/65">espalia1</a>: Learned from the previous template approaches with minor tweaks. Added the meaning of the annotation colors to the output, that is mainly sorted by colors and inside the colors, then by chronology.</li>
-<li><a href="https://forum.obsidian.md/t/zotero-integration-import-templates/36310/66">espalia2</a>: An updated version. Instead, for every quote its own callout, it just has one callout (admonition in Obsidian parlance) for every color. This improves reading tremendously.</li>
-<li><a href="https://forum.obsidian.md/t/zotero-integration-import-templates/36310/67">Cat</a>: A template with a very sophisticated text color system. The template uses notion color blocks snippets from <a href="https://github.com/deathau/obsidian-snippets">GitHub - deathau/obsidian-snippets</a> to have different colored texts. (But this didn’t work for me after a quick first trial.) Comments are in callouts, and the <a href="https://blacksmithgu.github.io/obsidian-dataview/">Dataview plugin</a> is also used to generate a table of contents.</li>
-</ul></li>
+<li>
+<a href="https://forum.obsidian.md/t/zotero-integration-import-templates/36310/2">mgmeyers</a>: An excellent and detailed template from the author of the Zotero Integration plugin. It also has code for strikethrough and underlining, which was impossible in the Zotero PDF reader at the time of the posting. This may originate from an external PDF reader. Another caveat: The color codes need to be corrected.</li>
+<li>
+<a href="https://forum.obsidian.md/t/zotero-integration-import-templates/36310/3">erazlogo</a>: The author of the Doing History website mentioned above. Very detailed, it has on other pages of the website many other important practical tips for usage of the Zotero-Obsidian integration.</li>
+<li>
+<a href="https://forum.obsidian.md/t/zotero-integration-import-templates/36310/8">apflestrudelig</a>: Several templates for special tasks, but truncated. To see the full template code, go to the <a href="https://gist.github.com/lguenth/e8a5c4fa0b4a1ed6f8bd0b9ccfc31013">Gist article on GitHub</a> Click on the right top raw buttons to access the source file.</li>
+<li>
+<a href="https://forum.obsidian.md/t/zotero-integration-import-templates/36310/11">gustafferson</a>: a comment with a reference to the template code in a [GitHub gist article] (https://gist.github.com/Gustafferson/698e92d1ac939d60a63aac35fe4c4c4e).</li>
+<li>
+<a href="https://forum.obsidian.md/t/zotero-integration-import-templates/36310/12">Zocahontas1</a>: Similar to mgmeyers but using for the color codes, the <a href="https://github.com/chetachiezikeuzor/Highlightr-Plugin">Obsidian Highlights plugin</a>.</li>
+<li>
+<a href="https://forum.obsidian.md/t/zotero-integration-import-templates/36310/16">Zocahontas2</a>: How do you add page numbers and a revised template?</li>
+<li>
+<a href="https://forum.obsidian.md/t/zotero-integration-import-templates/36310/65">espalia1</a>: Learned from the previous template approaches with minor tweaks. Added the meaning of the annotation colors to the output, that is mainly sorted by colors and inside the colors, then by chronology.</li>
+<li>
+<a href="https://forum.obsidian.md/t/zotero-integration-import-templates/36310/66">espalia2</a>: An updated version. Instead, for every quote its own callout, it just has one callout (admonition in Obsidian parlance) for every color. This improves reading tremendously.</li>
+<li>
+<a href="https://forum.obsidian.md/t/zotero-integration-import-templates/36310/67">Cat</a>: A template with a very sophisticated text color system. The template uses notion color blocks snippets from <a href="https://github.com/deathau/obsidian-snippets">GitHub - deathau/obsidian-snippets</a> to have different colored texts. (But this didn’t work for me after a quick first trial.) Comments are in callouts, and the <a href="https://blacksmithgu.github.io/obsidian-dataview/">Dataview plugin</a> is also used to generate a table of contents.</li>
+</ul>
+</li>
 <li>I just found out that there is <a href="https://forum.obsidian.md/t/my-zotero-annotation-template-that-works/51662">another forum thread</a> about Zotero Integration templates. It is shorter and started January 2023, with the last post (so far) May 2024. I will add just one example here:
 <ul>
-<li><a href="https://forum.obsidian.md/t/my-zotero-annotation-template-that-works/51662">Albialy</a>: A simple template with the interesting feature that the colors of the Zotero, annotations are converted to underlined colors in Obsidian. (Maybe the conversion from background colors to underline-colors is a feature of Obsidian or of one of its plugin I am using.)</li>
-</ul></li>
+<li>
+<a href="https://forum.obsidian.md/t/my-zotero-annotation-template-that-works/51662">Albialy</a>: A simple template with the interesting feature that the colors of the Zotero, annotations are converted to underlined colors in Obsidian. (Maybe the conversion from background colors to underline-colors is a feature of Obsidian or of one of its plugin I am using.)</li>
+</ul>
+</li>
 </ul>
 <p>I have stopped with forum entry number 67 of 312 comments (February 2023) of the first Obsidian forum thread and just mentioned one of the smaller (37 comments). So, there may be some other exciting templates in more recent times.</p>
 </details>
 </div>
 </div>
-</section>
-<section id="my-template-code" class="level3">
-<h3 class="anchored" data-anchor-id="my-template-code">My template code</h3>
+</section><section id="my-template-code" class="level3"><h3 class="anchored" data-anchor-id="my-template-code">My template code</h3>
 <p>I am still refining my template to catch new possibilities of version 7 of Zotero. Therefore, the following template code is a work in progress (WIP)</p>
 <p>To understand how the colored highlights are interpreted, look up my color classification in the <a href="../2024-08-04-annotations-with-zotero-version-7#tbl-color-classification">first part of the annotation tutorial</a>.</p>
 <div class="my-r-code">
@@ -478,11 +452,9 @@ Commented list of templates examples
 <p>My personal example for a Nunjucks template code</p>
 </div>
 <div class="my-r-code-container">
-<details>
-<summary>
+<details><summary>
 My Nunjucks Template Code to Copy
-</summary>
-<p>Hover the gray field to see the copy button at the top right.</p>
+</summary><p>Hover the gray field to see the copy button at the top right.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>UID: &lt;% tp.file.creation_date("YYYYMMDDHHmm") %&gt;</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>created:</span>
@@ -613,20 +585,16 @@ My Nunjucks Template Code to Copy
 </details>
 </div>
 </div>
-</section>
-<section id="my-css-snippet" class="level3">
-<h3 class="anchored" data-anchor-id="my-css-snippet">My CSS Snippet</h3>
+</section><section id="my-css-snippet" class="level3"><h3 class="anchored" data-anchor-id="my-css-snippet">My CSS Snippet</h3>
 <p>For the correct formatting, you need to include a <a class="glossary" title="Cascading Style Sheets (CSS) is a style sheet language used for specifying the presentation and styling of a document written in a markup language such as HTML or XML (including XML dialects such as SVG, MathML or XHTML). CSS is a cornerstone technology of the World Wide Web, alongside HTML and JavaScript. CSS is designed to enable the separation of content and presentation, including layout, colors, and fonts. (Wikipedia)">CSS</a> snippet into Obsidian. Take the code below and paste it into your .css file following the procedure description of Obsidian <a href="https://help.obsidian.md/Extending+Obsidian/CSS+snippets">CSS snippets</a>.</p>
 <div class="my-r-code">
 <div class="my-r-code-header">
 <p>My personal example of a CSS code to format the output of the template</p>
 </div>
 <div class="my-r-code-container">
-<details>
-<summary>
+<details><summary>
 My CSS Code to Copy
-</summary>
-<p>Hover the gray field to see the copy button at the top right.</p>
+</summary><p>Hover the gray field to see the copy button at the top right.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>/* </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Zotero Integration Plugin</span>
@@ -677,52 +645,45 @@ My CSS Code to Copy
 </details>
 </div>
 </div>
-</section>
-<section id="result-of-my-template" class="level3">
-<h3 class="anchored" data-anchor-id="result-of-my-template">Result of my template</h3>
-<div id="fig-zotero-template-example" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="The screenshot shows a part of an Obsidian document in dark mode with a colored header. It starts with two yellow title headers, 'Highlights by Sequence…' and 'Sorted by Colors,' followed by three smaller green headers, 'Running text (Yellow) …', 'Concept, Definition Important (Red)&nbsp;…', and 'ToDo (Orange)'. What follows are quote admonitions (callouts) titled 'Highlight' in orange with a blue text paragraph and a red link to the page of the annotated document. The third of the four 'highlights' has the cursor in it and shows, therefore, the markdown code of this part of the Obsidian file." data-group="zotero-integration">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-zotero-template-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+</section><section id="result-of-my-template" class="level3"><h3 class="anchored" data-anchor-id="result-of-my-template">Result of my template</h3>
+<div id="fig-zotero-template-example" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The screenshot shows a part of an Obsidian document in dark mode with a colored header. It starts with two yellow title headers, 'Highlights by Sequence…' and 'Sorted by Colors,' followed by three smaller green headers, 'Running text (Yellow) …', 'Concept, Definition Important (Red)&nbsp;…', and 'ToDo (Orange)'. What follows are quote admonitions (callouts) titled 'Highlight' in orange with a blue text paragraph and a red link to the page of the annotated document. The third of the four 'highlights' has the cursor in it and shows, therefore, the markdown code of this part of the Obsidian file." data-group="zotero-integration" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-zotero-template-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <a href="advanced-zotero-integration-template-example-min.png" class="lightbox" data-gallery="zotero-integration" title="Figure&nbsp;2: Part of my Zotero Integration template for creating literature notes."><img src="advanced-zotero-integration-template-example-min.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="The screenshot shows a part of an Obsidian document in dark mode with a colored header. It starts with two yellow title headers, 'Highlights by Sequence…' and 'Sorted by Colors,' followed by three smaller green headers, 'Running text (Yellow) …', 'Concept, Definition Important (Red)&nbsp;…', and 'ToDo (Orange)'. What follows are quote admonitions (callouts) titled 'Highlight' in orange with a blue text paragraph and a red link to the page of the annotated document. The third of the four 'highlights' has the cursor in it and shows, therefore, the markdown code of this part of the Obsidian file."></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-zotero-template-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: Part of my Zotero Integration template for creating literature notes.
-</figcaption>
-</figure>
+</figcaption></figure>
 </div>
 <p>My template consists of four main parts:</p>
 <ul>
-<li><strong>1. Metadata</strong>: This includes the YAML header, the abstract, and other important information (title, cite key, bibliography, tags).</li>
-<li><strong>2. Highlights by sequence</strong>: All annotations are sorted by their position in the document.</li>
-<li><strong>3. Highlights by color</strong>: Annotations sorted by their meaning. This requires a correspondence between color and purpose/reference type of the annotation.</li>
-<li><strong>4. Updates</strong>: Changes after the first import are added at the end of the Obsidian file. To get a file without updates, change the folder position of the file, rename the original file, or delete it.</li>
+<li>
+<strong>1. Metadata</strong>: This includes the YAML header, the abstract, and other important information (title, cite key, bibliography, tags).</li>
+<li>
+<strong>2. Highlights by sequence</strong>: All annotations are sorted by their position in the document.</li>
+<li>
+<strong>3. Highlights by color</strong>: Annotations sorted by their meaning. This requires a correspondence between color and purpose/reference type of the annotation.</li>
+<li>
+<strong>4. Updates</strong>: Changes after the first import are added at the end of the Obsidian file. To get a file without updates, change the folder position of the file, rename the original file, or delete it.</li>
 </ul>
 <p>I am planning to improve this template in two ways:</p>
 <ol type="1">
 <li>Only one admonition (callout) block for every color should exist.</li>
 <li>Integrating the text of my green (H3) headers into the title of the admonition (callout) block.</li>
-</ol>
-</section>
-</section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+</ol></section></section><section id="conclusion" class="level2"><h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 <p>With the annotation tutorial, I have demonstrated a modern technology supported annotation strategy. Every one of the three parts of the tutorial emphasizes one crucial aspect of this strategy:</p>
 <ol type="1">
 <li>Creating annotation with Zotero in <a class="glossary" title="A probability density function (PDF) describes a probability distribution for a random, continuous variable. Use a probability density function to find the chances that the value of a random variable will occur within a range of values that you specify. More specifically, a PDF is a function where its integral for an interval provides the probability of a value occurring in that interval. (Statistics By Jim)">PDFs</a>, <a class="glossary" title="EPUB (auch ePUB, Akronym für electronic publication) ist ein offener Standard für E-Books, documents and other digital resources.">ePUB</a>-eBooks or website snapshots.</li>
 <li>Installing two <a class="glossary" title="A plug-in (or plugin, add-in, addin, add-on, or addon) is a software component that adds a specific feature to an existing computer program. (Wikipedia)">plugins</a> to build a bridge between Zotero and Obsidian to import notes created with Zotero from the annotated document.</li>
 <li>Scraping annotations directly from the original document and redact them in a way to optimize further work in the note-taking app Obsidian.</li>
 </ol>
-<section id="glossary" class="level6">
-<h6 class="anchored" data-anchor-id="glossary">Glossary</h6>
+<section id="glossary" class="level6"><h6 class="anchored" data-anchor-id="glossary">Glossary</h6>
 <div class="cell">
 <div class="cell-output-display">
 <table class="table caption-top table-sm table-striped small">
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">term</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">definition</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">CSS</td>
@@ -759,10 +720,7 @@ Figure&nbsp;2: Part of my Zotero Integration template for creating literature no
 
 
 
-</section>
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+</section></section><a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-phelan2024a" class="csl-entry" role="listitem">
 Phelan, Alexandra. 2024. <em>An Updated Academic Workflow: Zotero &amp; Obsidian</em>. <a href="https://medium.com/@alexandraphelan/an-updated-academic-workflow-zotero-obsidian-cffef080addd">https://medium.com/@alexandraphelan/an-updated-academic-workflow-zotero-obsidian-cffef080addd</a>.
 </div>
@@ -780,8 +738,7 @@ Razglova, Elena. 2023. <em>01 Notetaking for Historians - Doing History with Zot
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-baumgartner2024" class="csl-entry quarto-appendix-citeas" role="listitem">
 Baumgartner, Peter. 2024. <span>“Annotation Tutorial 3: Zotero -
 Obsidian Integration Advanced.”</span> August 20. <a href="https://peter-baumgartner.net/posts/tutorial-zotero-obsidian-annotations/2024-08-20-obsidian-zotero-integration-advanced/">https://peter-baumgartner.net/posts/tutorial-zotero-obsidian-annotations/2024-08-20-obsidian-zotero-integration-advanced/</a>.
-</div></div></section></div></main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -1180,22 +1137,20 @@ Obsidian Integration Advanced.”</span> August 20. <a href="https://peter-baumg
       }
     }
   });
-  </script>
-<script src="https://utteranc.es/client.js" repo="petzi53/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+  </script><script src="https://utteranc.es/client.js" repo="petzi53/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
+<footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
       <ul class="footer-items list-unstyled">
-    <li class="nav-item">
+<li class="nav-item">
  <a href="https://www.peter-baumgartner.net">Thought Splinters</a> © 2023-2026 by <a href="https://www.peter-baumgartner.net/about">Peter Baumgartner</a> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1">CC BY 4.0</a>
   </li>  
 </ul>
-    </div>   
+</div>   
     <div class="nav-footer-center">
       <ul class="footer-items list-unstyled">
-    <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="../../../about.html">
 <p>About</p>
 </a>
@@ -1211,17 +1166,16 @@ Obsidian Integration Advanced.”</span> August 20. <a href="https://peter-baumg
 </a>
   </li>  
 </ul>
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/petzi53/petzi53.github.io/edit/main/posts/tutorial-zotero-obsidian-annotations/2024-08-20-obsidian-zotero-integration-advanced/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/petzi53/petzi53.github.io/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/petzi53/petzi53.github.io/edit/main/posts/tutorial-zotero-obsidian-annotations/2024-08-20-obsidian-zotero-integration-advanced/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/petzi53/petzi53.github.io/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
-    <li class="nav-item">
+<li class="nav-item">
  Proudly powered by <a href="https://quarto.org/">Quarto</a>
   </li>  
 </ul>
-    </div>
+</div>
   </div>
-</footer>
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":true,"openEffect":"zoom","selector":".lightbox"});
+</footer><script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":true,"openEffect":"zoom","selector":".lightbox"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
@@ -1253,8 +1207,6 @@ Obsidian Integration Advanced.”</span> August 20. <a href="https://peter-baumg
   
 })();
           </script>
-
-
 
 
 </body></html>

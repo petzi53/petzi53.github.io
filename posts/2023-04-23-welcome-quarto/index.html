@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
-
+<meta name="generator" content="quarto-1.10.18">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Peter Baumgartner">
 <meta name="dcterms.date" content="2023-04-23">
 <meta name="description" content="This is my first entry in a new blog powered by Quarto. After continuously struggling with a complex machinery (blogdown, Hugo, Wowchemy), I feel like coming home from a trip abroad!">
-
 <title>Bye, Bye Hugo, Welcome Quarto! – Thought Splinters</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -27,7 +27,6 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 </style>
-
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
@@ -45,15 +44,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-781e46921ee0a53317941336be000c3f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-c4aff173bdb29f86b01cc55e5a32ba7d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="../../site_libs/quarto-contrib/iconify-3.0.0/iconify-icon.min.js"></script>
 <script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
-<script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -78,18 +76,13 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-CLE95GVN04"></script>
-
-<script type="text/plain" cookie-consent="tracking">
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-CLE95GVN04"></script><script type="text/plain" cookie-consent="tracking">
 
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-CLE95GVN04', { 'anonymize_ip': true});
-</script>
-
-<script type="text/javascript" charset="UTF-8">
+</script><script type="text/javascript" charset="UTF-8">
 document.addEventListener('DOMContentLoaded', function () {
 cookieconsent.run({
   "notice_banner_type":"simple",
@@ -104,9 +97,7 @@ cookieconsent.run({
 "language":"en"
   });
 });
-</script> 
-  
-<script type="application/json" class="js-hypothesis-config">
+</script><script type="application/json" class="js-hypothesis-config">
 {
   "theme": "classic",
   "openSidebar": false,
@@ -119,16 +110,11 @@ cookieconsent.run({
     "selectionFontFamily": "helvetica, arial, sans serif"
   }
 }
-</script>
-<script async="" src="https://hypothes.is/embed.js"></script>
-<script>
+</script><script async="" src="https://hypothes.is/embed.js"></script><script>
   window.document.addEventListener("DOMContentLoaded", function (_event) {
     document.body.classList.add('hypothesis-enabled');
   });
-</script>
-
-
-<link rel="stylesheet" href="../../styles.css">
+</script><link rel="stylesheet" href="../../styles.css">
 <link rel="stylesheet" href="../../glossary.css">
 <meta name="twitter:title" content="Bye, Bye Hugo, Welcome Quarto! – Thought Splinters">
 <meta name="twitter:description" content="This is my first entry in a new blog powered by Quarto. After continuously struggling with a complex machinery (blogdown, Hugo, Wowchemy), I feel like coming home from a trip abroad!">
@@ -138,13 +124,10 @@ cookieconsent.run({
 <meta name="twitter:image:alt" content="A photo of lead vocalist Jordan Pundik walking out of a restaurant holding a suitcase that reads the words 'NEW FOUND GLORY'. The words 'COMING HOME' appear in the bottom-left of the image.">
 <meta name="twitter:card" content="summary_large_image">
 </head>
-
 <body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Thought Splinters</span>
@@ -156,7 +139,7 @@ cookieconsent.run({
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
@@ -168,8 +151,8 @@ cookieconsent.run({
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Tutorials</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">
+<li>
     <a class="dropdown-item" href="../../quarto-blog.html">
  <span class="dropdown-text">Create a Quarto Blog</span></a>
   </li>  
@@ -178,13 +161,13 @@ cookieconsent.run({
  <span class="dropdown-text">Zotero-Obsidian Annotations</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-links" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Links</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-links">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-links">
+<li>
     <a class="dropdown-item" href="https://opensource.posit.co/">
  <span class="dropdown-text">Posit Open Source</span></a>
   </li>  
@@ -209,7 +192,7 @@ cookieconsent.run({
  <span class="dropdown-text">R Bloggers</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item">
     <a class="nav-link" href="../../archive.html"> 
 <span class="menu-text">Archive</span></a>
@@ -244,15 +227,11 @@ cookieconsent.run({
 <span class="menu-text"></span></a>
   </li>  
 </ul>
-          </div> <!-- /navcollapse -->
+</div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Bye, Bye Hugo, Welcome Quarto!</h1>
             <p class="subtitle lead">My first blogging impressions with Quarto</p>
@@ -300,66 +279,45 @@ cookieconsent.run({
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="../../portrait-peter.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Peter Baumgartner"><img src="../../portrait-peter.png" class="img-fluid figure-img" alt="Peter Baumgartner"></a></p>
-<figcaption>Peter Baumgartner</figcaption>
-</figure>
+<figure class="figure"><p><a href="../../portrait-peter.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Peter Baumgartner"><img src="../../portrait-peter.png" class="img-fluid figure-img" alt="Peter Baumgartner"></a></p>
+<figcaption>Peter Baumgartner</figcaption></figure>
 </div>
 </div></div>
-        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="4">
-    <h2 id="toc-title">On this page</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="4"><h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#my-first-blog-entry-with-quarto" id="toc-my-first-blog-entry-with-quarto" class="nav-link active" data-scroll-target="#my-first-blog-entry-with-quarto">My first blog entry with Quarto</a></li>
+<li><a href="#my-first-blog-entry-with-quarto" id="toc-my-first-blog-entry-with-quarto" class="nav-link active" data-scroll-target="#my-first-blog-entry-with-quarto">My first blog entry with Quarto</a></li>
   <li><a href="#future-plans" id="toc-future-plans" class="nav-link" data-scroll-target="#future-plans">Future plans</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/petzi53/petzi53.github.io/edit/main/posts/2023-04-23-welcome-quarto/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/petzi53/petzi53.github.io/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/petzi53/petzi53.github.io/edit/main/posts/2023-04-23-welcome-quarto/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/petzi53/petzi53.github.io/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="New_Found_Glory_Coming_Home-min.png" class="img-fluid figure-img"></p>
-<figcaption>This is the front cover for the CD “Coming Home” by the artist “New Found Glory” via <a href="https://en.wikipedia.org/wiki/Coming_Home_(New_Found_Glory_album)">Wikipedia</a> (Fair Use)</figcaption>
-</figure>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="New_Found_Glory_Coming_Home-min.png" class="img-fluid figure-img"></p>
+<figcaption>This is the front cover for the CD “Coming Home” by the artist “New Found Glory” via <a href="https://en.wikipedia.org/wiki/Coming_Home_(New_Found_Glory_album)">Wikipedia</a> (Fair Use)</figcaption></figure>
 </div>
-<section id="my-first-blog-entry-with-quarto" class="level2">
-<h2 class="anchored" data-anchor-id="my-first-blog-entry-with-quarto">My first blog entry with Quarto</h2>
+<section id="my-first-blog-entry-with-quarto" class="level2"><h2 class="anchored" data-anchor-id="my-first-blog-entry-with-quarto">My first blog entry with Quarto</h2>
 <p>This is my first entry in a new <a href="https://quarto.org/" title="Welcome to Quarto – An open-source scientific and technical publishing system">blog powered by Quarto</a>. After continuously struggling with the complex machinery <a href="https://bookdown.org/yihui/blogdown/" title="first page of the online blogdown book">blogdown</a> - <a href="https://gohugo.io/" title="The world’s fastest framework for building websites">Hugo</a> - <a href="https://wowchemy.com/" title="The site you need to grow as a creator — without the bloat">Wowchemy</a>, I feel like coming home from a trip abroad!</p>
 <p>Following the Quarto guide <a href="https://quarto.org/docs/websites/website-blog.html" title="Quarto websites include integrated support for blogging.">Creating a Blog</a>, it took me only 2 (!) minutes to render the provided blog template locally. After just one hour, I had my blog using Quarto, GitHub, and Netlify online. And half of this time, I spent thinking about a name for my blog and what to do with my older and outdated other blogdown web presences. (To put this quick access into perspective: I already had a <a href="https://github.com/petzi53" title="The complete developer platform to build, scale, and deliver secure software">GitHub account</a>, GitHub credential, and a <a href="https://www.netlify.com/" title="Bring it all together The fastest way to combine your favorite tools and APIs to build the fastest sites, stores, and apps for the web">Netlify</a> account. And I didn’t work on the content of a blog entry but used just the installed test pages.)</p>
 <p>I never was happy with the fast development of <a href="https://gohugo.io/" title="The world’s fastest framework for building websites">Hugo</a> that brought with it many changes and a considerable learning overhead. The same problem happened with the Academic theme by <a href="https://wowchemy.com/">Wowchemy</a>. The end product looked nice and ran fast, but I had already forgotten some of the many details for a good-looking blog post after two weeks. As a result, I spent more time learning the blog machinery than I had time to write about substantive subjects.</p>
 <p>It was helpful when <a href="https://bookdown.org/yihui/blogdown/a-quick-example.html#when-in-doubt-run-blogdowncheck_site">Yihui Xie introduced `blogdown::checksite()`</a> and the possibility of <a href="https://bookdown.org/yihui/blogdown/global-options.html#global-options">freezing to a specific Hugo version</a>. But the work in the blogdown-Hugo environment was never intuitive and satisfying. I think it’s self-explanatory that the introductory message to the blogdown book for over <del>two</del> three years now states as a note from the authors: “Some of the information and instructions in this book are now out of date because of changes to Hugo and the blogdown package.”</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="intro-note-blogdown-book-min.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Preface banner of blogdown: Creating Websites with R Markdown"><img src="intro-note-blogdown-book-min.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="A note from the authors: Some of the information and instructions in this book are now out of date because of changes to Hugo and the blogdown package. If you have suggestions for improving this book, please file an issue in our GitHub repository. Thanks for your patience while we work to update the book, and please stay tuned for the revised version! In the meantime, you can find an introduction to the changes and new features in the v1.0 release blog post and this 'Up &amp; running with blogdown in 2021' blog post. — Yihui, Amber, &amp; Alison"></a></p>
+<figure class="figure"><div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="intro-note-blogdown-book-min.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Preface banner of blogdown: Creating Websites with R Markdown"><img src="intro-note-blogdown-book-min.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="A note from the authors: Some of the information and instructions in this book are now out of date because of changes to Hugo and the blogdown package. If you have suggestions for improving this book, please file an issue in our GitHub repository. Thanks for your patience while we work to update the book, and please stay tuned for the revised version! In the meantime, you can find an introduction to the changes and new features in the v1.0 release blog post and this 'Up &amp; running with blogdown in 2021' blog post. — Yihui, Amber, &amp; Alison"></a></p>
 </figure>
 </div>
-<figcaption>Preface banner of <a href="https://bookdown.org/yihui/blogdown/">blogdown: Creating Websites with R Markdown</a></figcaption>
-</figure>
+<figcaption>Preface banner of <a href="https://bookdown.org/yihui/blogdown/">blogdown: Creating Websites with R Markdown</a></figcaption></figure>
 </div>
-</section>
-<section id="future-plans" class="level2">
-<h2 class="anchored" data-anchor-id="future-plans">Future plans</h2>
+</section><section id="future-plans" class="level2"><h2 class="anchored" data-anchor-id="future-plans">Future plans</h2>
 <p>I am sure there will also be some intricacies I must learn and overcome with Quarto, but this will conform with all my other R knowledge. At the moment, my feeling is enthusiastic: It is easy and intuitive to write on this platform. I hope to overcome technical barriers and concentrate on thematic topics finally. Since English is not my mother tongue, it is already difficult enough to express myself precisely about complex content-related questions. I don’t need any additional technical difficulty in writing blog posts.</p>
 <p>In contrast to my previous website projects, I am planning two different strategies:&nbsp;</p>
 <ul>
 <li><p>I will not go into the details of the website design immediately but will work on these issues from time to time.</p></li>
 <li><p>I will not announce the website until I am sure I will use it regularly and long-term. I think that about 10 articles – written in two months – should give me the trust that I will use it sustainably.</p></li>
 </ul>
-<!-- COinS metadata for Zotero compatibility (auto-generated) -->
-<p><span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3aofi%2ffmt%3akev%3amtx%3adc&amp;rft.type=blogPost&amp;rft.title=Bye%2c%20Bye%20Hugo%2c%20Welcome%20Quarto%21%3a%20My%20first%20blogging%20impressions%20with%20Quarto&amp;rft.date=2023&amp;rft.source=Thought%20Splinters&amp;rft_id=https://peter-baumgartner.net/posts%2f2023-04-23-welcome-quarto%2findex&amp;rft.language=en&amp;rft.rights=CC%20BY%204.0&amp;rft.description=This%20is%20my%20first%20entry%20in%20a%20new%20blog%20powered%20by%20Quarto.%20After%20continuously%20struggling%20with%20a%20complex%20machinery%20%28blogdown%2c%20Hugo%2c%20Wowchemy%29%2c%20I%20feel%20like%20coming%20home%20from%20a%20trip%20abroad%21&amp;rft.au=Baumgartner%2c%20Peter"></span></p>
+<!-- COinS metadata for Zotero compatibility (auto-generated) --><p><span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3aofi%2ffmt%3akev%3amtx%3adc&amp;rft.type=blogPost&amp;rft.title=Bye%2c%20Bye%20Hugo%2c%20Welcome%20Quarto%21%3a%20My%20first%20blogging%20impressions%20with%20Quarto&amp;rft.date=2023&amp;rft.source=Thought%20Splinters&amp;rft_id=https://peter-baumgartner.net/posts%2f2023-04-23-welcome-quarto%2findex&amp;rft.language=en&amp;rft.rights=CC%20BY%204.0&amp;rft.description=This%20is%20my%20first%20entry%20in%20a%20new%20blog%20powered%20by%20Quarto.%20After%20continuously%20struggling%20with%20a%20complex%20machinery%20%28blogdown%2c%20Hugo%2c%20Wowchemy%29%2c%20I%20feel%20like%20coming%20home%20from%20a%20trip%20abroad%21&amp;rft.au=Baumgartner%2c%20Peter"></span></p>
 
 
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{baumgartner2023,
+</section><a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{baumgartner2023,
   author = {Baumgartner, Peter},
   title = {Bye, {Bye} {Hugo,} {Welcome} {Quarto!}},
   date = {2023-04-23},
@@ -369,8 +327,7 @@ cookieconsent.run({
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-baumgartner2023" class="csl-entry quarto-appendix-citeas" role="listitem">
 Baumgartner, Peter. 2023. <span>“Bye, Bye Hugo, Welcome Quarto!”</span>
 April 23. <a href="https://peter-baumgartner.net/posts/2023-04-23-welcome-quarto/">https://peter-baumgartner.net/posts/2023-04-23-welcome-quarto/</a>.
-</div></div></section></div></main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -769,22 +726,20 @@ April 23. <a href="https://peter-baumgartner.net/posts/2023-04-23-welcome-quarto
       }
     }
   });
-  </script>
-<script src="https://utteranc.es/client.js" repo="petzi53/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+  </script><script src="https://utteranc.es/client.js" repo="petzi53/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
+<footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
       <ul class="footer-items list-unstyled">
-    <li class="nav-item">
+<li class="nav-item">
  <a href="https://www.peter-baumgartner.net">Thought Splinters</a> © 2023-2026 by <a href="https://www.peter-baumgartner.net/about">Peter Baumgartner</a> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1">CC BY 4.0</a>
   </li>  
 </ul>
-    </div>   
+</div>   
     <div class="nav-footer-center">
       <ul class="footer-items list-unstyled">
-    <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="../../about.html">
 <p>About</p>
 </a>
@@ -800,17 +755,16 @@ April 23. <a href="https://peter-baumgartner.net/posts/2023-04-23-welcome-quarto
 </a>
   </li>  
 </ul>
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/petzi53/petzi53.github.io/edit/main/posts/2023-04-23-welcome-quarto/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/petzi53/petzi53.github.io/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/petzi53/petzi53.github.io/edit/main/posts/2023-04-23-welcome-quarto/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/petzi53/petzi53.github.io/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
-    <li class="nav-item">
+<li class="nav-item">
  Proudly powered by <a href="https://quarto.org/">Quarto</a>
   </li>  
 </ul>
-    </div>
+</div>
   </div>
-</footer>
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":true,"openEffect":"zoom","selector":".lightbox"});
+</footer><script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":true,"openEffect":"zoom","selector":".lightbox"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
@@ -842,8 +796,6 @@ April 23. <a href="https://peter-baumgartner.net/posts/2023-04-23-welcome-quarto
   
 })();
           </script>
-
-
 
 
 </body></html>

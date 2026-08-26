@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
-
+<meta name="generator" content="quarto-1.10.18">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Peter Baumgartner">
 <meta name="dcterms.date" content="2023-05-05">
 <meta name="description" content="The article explains how I finally succeeded in deleting different branches in Git. It turned out – contrary to my previous mental model – that there are not only two branches but three (local, remote origin, and local remote-tracking branch).">
-
 <title>How to delete Git branches – Thought Splinters</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -63,7 +63,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
@@ -80,15 +79,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-781e46921ee0a53317941336be000c3f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-c4aff173bdb29f86b01cc55e5a32ba7d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="../../site_libs/quarto-contrib/iconify-3.0.0/iconify-icon.min.js"></script>
 <script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
-<script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -113,18 +111,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-CLE95GVN04"></script>
-
-<script type="text/plain" cookie-consent="tracking">
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-CLE95GVN04"></script><script type="text/plain" cookie-consent="tracking">
 
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-CLE95GVN04', { 'anonymize_ip': true});
-</script>
-
-<script type="text/javascript" charset="UTF-8">
+</script><script type="text/javascript" charset="UTF-8">
 document.addEventListener('DOMContentLoaded', function () {
 cookieconsent.run({
   "notice_banner_type":"simple",
@@ -139,9 +132,7 @@ cookieconsent.run({
 "language":"en"
   });
 });
-</script> 
-  
-<script type="application/json" class="js-hypothesis-config">
+</script><script type="application/json" class="js-hypothesis-config">
 {
   "theme": "classic",
   "openSidebar": false,
@@ -154,16 +145,11 @@ cookieconsent.run({
     "selectionFontFamily": "helvetica, arial, sans serif"
   }
 }
-</script>
-<script async="" src="https://hypothes.is/embed.js"></script>
-<script>
+</script><script async="" src="https://hypothes.is/embed.js"></script><script>
   window.document.addEventListener("DOMContentLoaded", function (_event) {
     document.body.classList.add('hypothesis-enabled');
   });
-</script>
-
-
-<link rel="stylesheet" href="../../styles.css">
+</script><link rel="stylesheet" href="../../styles.css">
 <link rel="stylesheet" href="../../glossary.css">
 <meta name="twitter:title" content="How to delete Git branches – Thought Splinters">
 <meta name="twitter:description" content="The article explains how I finally succeeded in deleting different branches in Git. It turned out – contrary to my previous mental model – that there are not only two branches but three (local, remote origin, and local remote-tracking branch).">
@@ -173,13 +159,10 @@ cookieconsent.run({
 <meta name="twitter:image:alt" content="Git Logo">
 <meta name="twitter:card" content="summary_large_image">
 </head>
-
 <body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Thought Splinters</span>
@@ -191,7 +174,7 @@ cookieconsent.run({
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
@@ -203,8 +186,8 @@ cookieconsent.run({
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Tutorials</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">
+<li>
     <a class="dropdown-item" href="../../quarto-blog.html">
  <span class="dropdown-text">Create a Quarto Blog</span></a>
   </li>  
@@ -213,13 +196,13 @@ cookieconsent.run({
  <span class="dropdown-text">Zotero-Obsidian Annotations</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-links" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Links</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-links">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-links">
+<li>
     <a class="dropdown-item" href="https://opensource.posit.co/">
  <span class="dropdown-text">Posit Open Source</span></a>
   </li>  
@@ -244,7 +227,7 @@ cookieconsent.run({
  <span class="dropdown-text">R Bloggers</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item">
     <a class="nav-link" href="../../archive.html"> 
 <span class="menu-text">Archive</span></a>
@@ -279,15 +262,11 @@ cookieconsent.run({
 <span class="menu-text"></span></a>
   </li>  
 </ul>
-          </div> <!-- /navcollapse -->
+</div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">How to delete Git branches</h1>
             <p class="subtitle lead">The limits of RStudio with the <code>pr_*()</code> family of the {<a href="https://usethis.r-lib.org/">usethis</a>} functions</p>
@@ -336,74 +315,56 @@ cookieconsent.run({
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="../../portrait-peter.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Peter Baumgartner"><img src="../../portrait-peter.png" class="img-fluid figure-img" alt="Peter Baumgartner"></a></p>
-<figcaption>Peter Baumgartner</figcaption>
-</figure>
+<figure class="figure"><p><a href="../../portrait-peter.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Peter Baumgartner"><img src="../../portrait-peter.png" class="img-fluid figure-img" alt="Peter Baumgartner"></a></p>
+<figcaption>Peter Baumgartner</figcaption></figure>
 </div>
 </div></div>
-        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="4">
-    <h2 id="toc-title">On this page</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="4"><h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#if-a-pull-request-is-not-accepted" id="toc-if-a-pull-request-is-not-accepted" class="nav-link active" data-scroll-target="#if-a-pull-request-is-not-accepted">If a pull request is not accepted…</a></li>
+<li><a href="#if-a-pull-request-is-not-accepted" id="toc-if-a-pull-request-is-not-accepted" class="nav-link active" data-scroll-target="#if-a-pull-request-is-not-accepted">If a pull request is not accepted…</a></li>
   <li><a href="#deletion-of-the-remote-branch-with-github-is-not-enough" id="toc-deletion-of-the-remote-branch-with-github-is-not-enough" class="nav-link" data-scroll-target="#deletion-of-the-remote-branch-with-github-is-not-enough">… deletion of the remote branch with GitHub is not enough</a></li>
   <li><a href="#there-are-three-not-two-branches" id="toc-there-are-three-not-two-branches" class="nav-link" data-scroll-target="#there-are-three-not-two-branches">There are three, not two branches</a></li>
-  <li><a href="#useful-commands-for-deleting-branches" id="toc-useful-commands-for-deleting-branches" class="nav-link" data-scroll-target="#useful-commands-for-deleting-branches">Useful commands for deleting branches</a>
+  <li>
+<a href="#useful-commands-for-deleting-branches" id="toc-useful-commands-for-deleting-branches" class="nav-link" data-scroll-target="#useful-commands-for-deleting-branches">Useful commands for deleting branches</a>
   <ul>
-  <li><a href="#deleting-a-remote-branch" id="toc-deleting-a-remote-branch" class="nav-link" data-scroll-target="#deleting-a-remote-branch">Deleting a remote branch</a></li>
+<li><a href="#deleting-a-remote-branch" id="toc-deleting-a-remote-branch" class="nav-link" data-scroll-target="#deleting-a-remote-branch">Deleting a remote branch</a></li>
   <li><a href="#deleting-a-local-branch" id="toc-deleting-a-local-branch" class="nav-link" data-scroll-target="#deleting-a-local-branch">Deleting a local branch</a></li>
   <li><a href="#deleting-a-local-remote-tracking-branch" id="toc-deleting-a-local-remote-tracking-branch" class="nav-link" data-scroll-target="#deleting-a-local-remote-tracking-branch">Deleting a local remote-tracking branch</a></li>
-  </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/petzi53/petzi53.github.io/edit/main/posts/2023-05-05-how-to-delete-git-branches/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/petzi53/petzi53.github.io/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+</li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/petzi53/petzi53.github.io/edit/main/posts/2023-05-05-how-to-delete-git-branches/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/petzi53/petzi53.github.io/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-
-<section id="if-a-pull-request-is-not-accepted" class="level2">
-<h2 class="anchored" data-anchor-id="if-a-pull-request-is-not-accepted">If a pull request is not accepted…</h2>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="if-a-pull-request-is-not-accepted" class="level2"><h2 class="anchored" data-anchor-id="if-a-pull-request-is-not-accepted">If a pull request is not accepted…</h2>
 <p>As I am not very experienced with R and coding, my knowledge of using Git and GitHub is limited. Usually, I use the <code>pr_*()</code> family of {<a href="https://usethis.r-lib.org/" title="Automates repetitive tasks that arise during project setup and development">usethis</a>} functions as pull request helpers. They work very well – as long as the workflow follows the standard (successful) workflow:</p>
 <ul>
-<li>Initiate the pull request with <code>pr_init(&lt;branch name&gt;)</code></li>
+<li>Initiate the pull request with <code>pr_init(&lt;branch name&gt;)</code>
+</li>
 <li>Submit the changes in the new branch with <code>pr_push()</code>.</li>
 <li>Click the “Create pull request”-button to make the PR.</li>
 <li>After the code is accepted and merged, conclude the process with <code>pr_finish()</code>.</li>
 </ul>
 <p>This sequence does not fly if the workflow deviates from the above model. The standard procedure describes the scenario of a discussion between contributor and reviewer that finally results in the acceptance of the PR. But what about a rejection of the PR?</p>
-</section>
-<section id="deletion-of-the-remote-branch-with-github-is-not-enough" class="level2">
-<h2 class="anchored" data-anchor-id="deletion-of-the-remote-branch-with-github-is-not-enough">… deletion of the remote branch with GitHub is not enough</h2>
+</section><section id="deletion-of-the-remote-branch-with-github-is-not-enough" class="level2"><h2 class="anchored" data-anchor-id="deletion-of-the-remote-branch-with-github-is-not-enough">… deletion of the remote branch with GitHub is not enough</h2>
 <p>This situation happened to me after I proposed fixing a typo for a repo that had been frozen because of a necessary general overhaul. I thought to delete the submitted remote branch at the GitHub site would bring me back to my initial position.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/delete-remote-branch-at-github-min.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Screenshot 1: Delete obsolete branch “typo” at GitHub site (simulated for this article)."><img src="images/delete-remote-branch-at-github-min.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="A screenshot shows the default branch &quot;master&quot; and &quot;Your branches&quot; named &quot;typo,&quot; which also figures under &quot;Active branches&quot;. The cursor hovers over the trash can to delete the active branch &quot;typo&quot;."></a></p>
+<figure class="figure"><div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="images/delete-remote-branch-at-github-min.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Screenshot 1: Delete obsolete branch “typo” at GitHub site (simulated for this article)."><img src="images/delete-remote-branch-at-github-min.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="A screenshot shows the default branch &quot;master&quot; and &quot;Your branches&quot; named &quot;typo,&quot; which also figures under &quot;Active branches&quot;. The cursor hovers over the trash can to delete the active branch &quot;typo&quot;."></a></p>
 </figure>
 </div>
-<figcaption><strong>Screenshot 1</strong>: Delete obsolete branch “typo” at GitHub site (simulated for this article).</figcaption>
-</figure>
+<figcaption><strong>Screenshot 1</strong>: Delete obsolete branch “typo” at GitHub site (simulated for this article).</figcaption></figure>
 </div>
 <p>But back in RStudio, it turned out that the deleted branch was still there.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/git-branches-at-rstudio.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Screenshot 2: Local and Remote branches seen in RStudio"><img src="images/git-branches-at-rstudio.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The window shows under the two headings &quot;(Local Branches&quot;) and (Remote: Origin) with &quot;master&quot; and &quot;typo&quot; two branches."></a></p>
+<figure class="figure"><div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="images/git-branches-at-rstudio.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Screenshot 2: Local and Remote branches seen in RStudio"><img src="images/git-branches-at-rstudio.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The window shows under the two headings &quot;(Local Branches&quot;) and (Remote: Origin) with &quot;master&quot; and &quot;typo&quot; two branches."></a></p>
 </figure>
 </div>
-<figcaption><strong>Screenshot 2</strong>: Local and Remote branches seen in RStudio</figcaption>
-</figure>
+<figcaption><strong>Screenshot 2</strong>: Local and Remote branches seen in RStudio</figcaption></figure>
 </div>
 <p>Ok, I understood that my remote action did not delete the local branch too. But why was the remote branch still there? After all, I had it just removed. (I double-checked the deletion, and the remote branch at the remote GitHub site was, in fact, completely gone.</p>
-</section>
-<section id="there-are-three-not-two-branches" class="level2">
-<h2 class="anchored" data-anchor-id="there-are-three-not-two-branches">There are three, not two branches</h2>
+</section><section id="there-are-three-not-two-branches" class="level2"><h2 class="anchored" data-anchor-id="there-are-three-not-two-branches">There are three, not two branches</h2>
 <p>After some research, I found an appropriate question-answer dialog (<a href="https://stackoverflow.com/questions/2003505/how-do-i-delete-a-git-branch-locally-and-remotely">How do I delete a Git branch locally and remotely?</a>) at StackOverflow with more than 11 million views! It seems that I am not the only one surprised by the situation.</p>
 <p>After reading this and other answers at SO, I learned that there are three different branches:</p>
 <blockquote class="blockquote">
@@ -411,14 +372,13 @@ cookieconsent.run({
 <ul>
 <li>The local branch X.</li>
 <li>The remote origin branch X.</li>
-<li>The local remote-tracking branch origin/X that tracks the remote branch X. <a href="https://stackoverflow.com/a/23961231/7322615">Quote from the top second answer</a></li>
+<li>The local remote-tracking branch origin/X that tracks the remote branch X. <a href="https://stackoverflow.com/a/23961231/7322615">Quote from the top second answer</a>
+</li>
 </ul>
 </blockquote>
 <p>I deleted the remote origin branch X manually at the GitHub site. The local branch but also the local remote-tracking branch were still functional!</p>
 <p>For every one of these three branches, one needs different commands to delete them. And here – as far as I understood – we have met the limits of RStudio and/or {usethis}. For the following commands, you have to change from the console to the terminal.</p>
-</section>
-<section id="useful-commands-for-deleting-branches" class="level2">
-<h2 class="anchored" data-anchor-id="useful-commands-for-deleting-branches">Useful commands for deleting branches</h2>
+</section><section id="useful-commands-for-deleting-branches" class="level2"><h2 class="anchored" data-anchor-id="useful-commands-for-deleting-branches">Useful commands for deleting branches</h2>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -435,8 +395,7 @@ cookieconsent.run({
 </div>
 </div>
 </div>
-<section id="deleting-a-remote-branch" class="level4">
-<h4 class="anchored" data-anchor-id="deleting-a-remote-branch">Deleting a remote branch</h4>
+<section id="deleting-a-remote-branch" class="level4"><h4 class="anchored" data-anchor-id="deleting-a-remote-branch">Deleting a remote branch</h4>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
@@ -444,9 +403,7 @@ cookieconsent.run({
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-filename="Terminal"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">setopt</span> interactivecomments</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin <span class="at">-d</span> <span class="op">&lt;</span>branch<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section>
-<section id="deleting-a-local-branch" class="level4">
-<h4 class="anchored" data-anchor-id="deleting-a-local-branch">Deleting a local branch</h4>
+</section><section id="deleting-a-local-branch" class="level4"><h4 class="anchored" data-anchor-id="deleting-a-local-branch">Deleting a local branch</h4>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
@@ -455,9 +412,7 @@ cookieconsent.run({
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-d</span> <span class="op">&lt;</span>branch<span class="op">&gt;</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-D</span> <span class="op">&lt;</span>branch<span class="op">&gt;</span> <span class="co"># force-delete un-merged branches</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section>
-<section id="deleting-a-local-remote-tracking-branch" class="level4">
-<h4 class="anchored" data-anchor-id="deleting-a-local-remote-tracking-branch">Deleting a local remote-tracking branch</h4>
+</section><section id="deleting-a-local-remote-tracking-branch" class="level4"><h4 class="anchored" data-anchor-id="deleting-a-local-remote-tracking-branch">Deleting a local remote-tracking branch</h4>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
@@ -492,34 +447,25 @@ text-align: center;
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/rstudio-refresh-branch-listing-circle-min.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Click on the circle symbol at the top right corner…"><img src="images/rstudio-refresh-branch-listing-circle-min.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Click on the circle symbol at the top right corner…"></a></p>
+<figure class="figure"><div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="images/rstudio-refresh-branch-listing-circle-min.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Click on the circle symbol at the top right corner…"><img src="images/rstudio-refresh-branch-listing-circle-min.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Click on the circle symbol at the top right corner…"></a></p>
 </figure>
 </div>
-<figcaption>Click on the circle symbol at the top right corner…</figcaption>
-</figure>
+<figcaption>Click on the circle symbol at the top right corner…</figcaption></figure>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/rstudio-refresh-branch-listing-manually-min.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="… and choose “Refresh Now” to list the branches currently available."><img src="images/rstudio-refresh-branch-listing-manually-min.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="… and choose “Refresh Now” to list the branches currently available."></a></p>
+<figure class="figure"><div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="images/rstudio-refresh-branch-listing-manually-min.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="… and choose “Refresh Now” to list the branches currently available."><img src="images/rstudio-refresh-branch-listing-manually-min.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="… and choose “Refresh Now” to list the branches currently available."></a></p>
 </figure>
 </div>
-<figcaption>… and choose “Refresh Now” to list the branches currently available.</figcaption>
-</figure>
+<figcaption>… and choose “Refresh Now” to list the branches currently available.</figcaption></figure>
 </div>
 </div>
 </div>
 
 
-</section>
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{baumgartner2023,
+</section></section><a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{baumgartner2023,
   author = {Baumgartner, Peter},
   title = {How to Delete {Git} Branches},
   date = {2023-05-05},
@@ -529,8 +475,7 @@ text-align: center;
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-baumgartner2023" class="csl-entry quarto-appendix-citeas" role="listitem">
 Baumgartner, Peter. 2023. <span>“How to Delete Git Branches.”</span> May
 5. <a href="https://peter-baumgartner.net/posts/2023-05-05-how-to-delete-git-branches/">https://peter-baumgartner.net/posts/2023-05-05-how-to-delete-git-branches/</a>.
-</div></div></section></div></main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -929,22 +874,20 @@ Baumgartner, Peter. 2023. <span>“How to Delete Git Branches.”</span> May
       }
     }
   });
-  </script>
-<script src="https://utteranc.es/client.js" repo="petzi53/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+  </script><script src="https://utteranc.es/client.js" repo="petzi53/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
+<footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
       <ul class="footer-items list-unstyled">
-    <li class="nav-item">
+<li class="nav-item">
  <a href="https://www.peter-baumgartner.net">Thought Splinters</a> © 2023-2026 by <a href="https://www.peter-baumgartner.net/about">Peter Baumgartner</a> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1">CC BY 4.0</a>
   </li>  
 </ul>
-    </div>   
+</div>   
     <div class="nav-footer-center">
       <ul class="footer-items list-unstyled">
-    <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="../../about.html">
 <p>About</p>
 </a>
@@ -960,17 +903,16 @@ Baumgartner, Peter. 2023. <span>“How to Delete Git Branches.”</span> May
 </a>
   </li>  
 </ul>
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/petzi53/petzi53.github.io/edit/main/posts/2023-05-05-how-to-delete-git-branches/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/petzi53/petzi53.github.io/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/petzi53/petzi53.github.io/edit/main/posts/2023-05-05-how-to-delete-git-branches/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/petzi53/petzi53.github.io/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
-    <li class="nav-item">
+<li class="nav-item">
  Proudly powered by <a href="https://quarto.org/">Quarto</a>
   </li>  
 </ul>
-    </div>
+</div>
   </div>
-</footer>
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":true,"openEffect":"zoom","selector":".lightbox"});
+</footer><script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":true,"openEffect":"zoom","selector":".lightbox"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
@@ -1002,8 +944,6 @@ Baumgartner, Peter. 2023. <span>“How to Delete Git Branches.”</span> May
   
 })();
           </script>
-
-
 
 
 </body></html>
