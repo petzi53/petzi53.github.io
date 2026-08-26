@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Peter Baumgartner">
+<meta name="dcterms.date" content="2026-08-24">
+<meta name="description" content="A debugging session grew more complicated until I switched models and asked better questions. I’ll share what went wrong at each step, how Claude found the root cause, and what I learned about using LLMs effectively in R projects.”">
+
+<title>When LLMs Fall Into a Rabbit Hole – Thought Splinters</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.ico" rel="icon">
+<script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-c4aff173bdb29f86b01cc55e5a32ba7d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/iconify-3.0.0/iconify-icon.min.js"></script>
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-CLE95GVN04"></script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-CLE95GVN04', { 'anonymize_ip': true});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"express",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  ,
+"language":"en"
+  });
+});
+</script> 
+  
+<script type="application/json" class="js-hypothesis-config">
+{
+  "theme": "classic",
+  "openSidebar": false,
+  "showHighlights": "whenSidebarOpen",
+  "enableExperimentalNewNoteButton": true,
+  "branding": {
+    "appBackgroundColor": "white",
+    "ctaBackgroundColor": "rgb(81, 118, 153)",
+    "ctaTextColor": "rgb(221, 228, 235)",
+    "selectionFontFamily": "helvetica, arial, sans serif"
+  }
+}
+</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../../glossary.css">
+<meta name="twitter:title" content="When LLMs Fall Into a Rabbit Hole – Thought Splinters">
+<meta name="twitter:description" content="A debugging session grew more complicated until I switched models and asked better questions. I’ll share what went wrong at each step, how Claude found the root cause, and what I learned about using LLMs effectively in R projects.”">
+<meta name="twitter:image" content="https://peter-baumgartner.net/posts/2026-08-23-llm-rabbit-hole/rabbit-hole.webp">
+<meta name="twitter:image:alt" content="Split-screen illustration: Left side shows a person at a laptop surrounded by tangled red yarn/threads, documents scattered, confused expression. Right side shows a computer screen with checkmarks, and a clear logical flow. Over the computer screen float two light bulbs symbolizing the ideas that entagled the problem of the left side.">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Thought Splinters</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../contact.html"> 
+<span class="menu-text">Contact</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../quarto-blog.html">
+ <span class="dropdown-text">Create a Quarto Blog</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../zotero-obsidian-annotations.html">
+ <span class="dropdown-text">Zotero-Obsidian Annotations</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-links" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Links</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-links">    
+        <li>
+    <a class="dropdown-item" href="https://opensource.posit.co/">
+ <span class="dropdown-text">Posit Open Source</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://opensource.posit.co/blog">
+ <span class="dropdown-text">Posit Open Source Blog</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://opensource.posit.co/blog/?q=source%3Aquarto">
+ <span class="dropdown-text">Posit Quarto Blog</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://opensource.posit.co/software">
+ <span class="dropdown-text">Posit Packages</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://rweekly.org/">
+ <span class="dropdown-text">R Weekly</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://www.r-bloggers.com/">
+ <span class="dropdown-text">R Bloggers</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../archive.html"> 
+<span class="menu-text">Archive</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/petzi53/petzi53.github.io/"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:github" style="font-size: 1.25em;" aria-label="Icon github from fa6-brands Iconify.design set." title="GitHub repo of this site" mode="svg"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://social.anoxinon.de/@pbaumgartner" rel="me"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:mastodon" style="font-size: 1.25em;" aria-label="Icon mastodon from fa6-brands Iconify.design set." title="My Mastodon account" mode="svg"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://pbaumgartner.bsky.social"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:bluesky" style="font-size: 1.25em;" aria-label="Icon bluesky from fa6-brands Iconify.design set." title="My Bluesky account" mode="svg"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://peter.baumgartner.name"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:wordpress" style="font-size: 1.25em;" aria-label="Icon wordpress from fa6-brands Iconify.design set." title="Gedankensplitter: My German WordPress blog" mode="svg"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://scholar.google.com/citations?user=mKCNn9kAAAAJ&amp;hl=de"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:google-scholar" style="font-size: 1.25em;" aria-label="Icon google-scholar from fa6-brands Iconify.design set." title="My Google Scholar account" mode="svg"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://orcid.org/0000-0003-4526-8791"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:orcid" style="font-size: 1.25em;" aria-label="Icon orcid from fa6-brands Iconify.design set." title="My ORCID account: 0000-0003-4526-8791" mode="svg"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img" aria-label="RSS Feed">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">When LLMs Fall Into a Rabbit Hole</h1>
+            <p class="subtitle lead">My First Big Lesson in Using AI for Debugging</p>
+                  <div>
+        <div class="description">
+          <p>A debugging session grew more complicated until I switched models and asked better questions. I’ll share what went wrong at each step, how Claude found the root cause, and what I learned about using LLMs effectively in R projects.”</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">LLM</div>
+                <div class="quarto-category">debugging</div>
+                <div class="quarto-category">workflow</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Peter Baumgartner </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">August 24, 2026</p>
+      </div>
+    </div>
+    
+      <div>
+      <div class="quarto-title-meta-heading">Modified</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">August 26, 2026</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../../portrait-peter.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Peter Baumgartner"><img src="../../portrait-peter.png" class="img-fluid figure-img" alt="Peter Baumgartner"></a></p>
+<figcaption>Peter Baumgartner</figcaption>
+</figure>
+</div>
+</div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="4">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-problem" id="toc-the-problem" class="nav-link active" data-scroll-target="#the-problem">The Problem</a></li>
+  <li><a href="#the-escalation-pattern" id="toc-the-escalation-pattern" class="nav-link" data-scroll-target="#the-escalation-pattern">The Escalation Pattern</a></li>
+  <li><a href="#where-it-went-wrong-two-critical-mistakes" id="toc-where-it-went-wrong-two-critical-mistakes" class="nav-link" data-scroll-target="#where-it-went-wrong-two-critical-mistakes">Where It Went Wrong: Two Critical Mistakes</a>
+  <ul>
+  <li><a href="#mistake-1-i-didnt-notice-the-setup-was-wrong-weeks-earlier" id="toc-mistake-1-i-didnt-notice-the-setup-was-wrong-weeks-earlier" class="nav-link" data-scroll-target="#mistake-1-i-didnt-notice-the-setup-was-wrong-weeks-earlier">Mistake 1: I Didn’t Notice the Setup Was Wrong (Weeks Earlier)</a></li>
+  <li><a href="#mistake-2-i-missed-the-rabbit-hole-pattern-during-debugging" id="toc-mistake-2-i-missed-the-rabbit-hole-pattern-during-debugging" class="nav-link" data-scroll-target="#mistake-2-i-missed-the-rabbit-hole-pattern-during-debugging">Mistake 2: I Missed the Rabbit Hole Pattern During Debugging</a></li>
+  </ul></li>
+  <li><a href="#what-i-should-have-done-two-interventions-i-missed" id="toc-what-i-should-have-done-two-interventions-i-missed" class="nav-link" data-scroll-target="#what-i-should-have-done-two-interventions-i-missed">What I Should Have Done: Two Interventions I Missed</a>
+  <ul>
+  <li><a href="#intervention-1-demand-a-proper-structural-comparison" id="toc-intervention-1-demand-a-proper-structural-comparison" class="nav-link" data-scroll-target="#intervention-1-demand-a-proper-structural-comparison">Intervention 1: Demand a Proper Structural Comparison</a></li>
+  <li><a href="#intervention-2-notice-and-stop-the-escalation" id="toc-intervention-2-notice-and-stop-the-escalation" class="nav-link" data-scroll-target="#intervention-2-notice-and-stop-the-escalation">Intervention 2: Notice and Stop the Escalation</a></li>
+  <li><a href="#bonus-lesson-learned-use-usethis-from-the-start" id="toc-bonus-lesson-learned-use-usethis-from-the-start" class="nav-link" data-scroll-target="#bonus-lesson-learned-use-usethis-from-the-start">Bonus Lesson Learned: Use <code>usethis</code> from the Start</a></li>
+  </ul></li>
+  <li><a href="#how-claude-finally-found-it-when-i-switched-from-haiku-to-sonnet" id="toc-how-claude-finally-found-it-when-i-switched-from-haiku-to-sonnet" class="nav-link" data-scroll-target="#how-claude-finally-found-it-when-i-switched-from-haiku-to-sonnet">How Claude Finally Found It (When I Switched from Haiku to Sonnet)</a>
+  <ul>
+  <li><a href="#step-1-isolate-the-problem" id="toc-step-1-isolate-the-problem" class="nav-link" data-scroll-target="#step-1-isolate-the-problem">Step 1: Isolate the Problem</a></li>
+  <li><a href="#step-2-follow-the-chain-of-execution" id="toc-step-2-follow-the-chain-of-execution" class="nav-link" data-scroll-target="#step-2-follow-the-chain-of-execution">Step 2: Follow the Chain of Execution</a></li>
+  <li><a href="#step-3-look-at-the-actual-artifact" id="toc-step-3-look-at-the-actual-artifact" class="nav-link" data-scroll-target="#step-3-look-at-the-actual-artifact">Step 3: Look at the Actual Artifact</a></li>
+  <li><a href="#step-4-connect-the-dots" id="toc-step-4-connect-the-dots" class="nav-link" data-scroll-target="#step-4-connect-the-dots">Step 4: Connect the Dots</a></li>
+  <li><a href="#why-this-matters-different-test-runners" id="toc-why-this-matters-different-test-runners" class="nav-link" data-scroll-target="#why-this-matters-different-test-runners">Why This Matters: Different Test Runners</a></li>
+  </ul></li>
+  <li><a href="#what-ill-do-next-time-differently" id="toc-what-ill-do-next-time-differently" class="nav-link" data-scroll-target="#what-ill-do-next-time-differently">What I’ll Do Next Time Differently</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/petzi53/petzi53.github.io/edit/main/posts/2026-08-23-llm-rabbit-hole/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/petzi53/petzi53.github.io/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="the-problem" class="level2">
+<h2 class="anchored" data-anchor-id="the-problem">The Problem</h2>
+<p>Last week I asked a simple question: if all 81 tests passed when I ran <code>devtools::test()</code>, why did <code>covr::package_coverage()</code> show 0% coverage for my R package <code>qpost</code>?</p>
+<p>I asked Claude—using Posit Assistant—to assist me with debugging. I believed it would only take ten minutes, but it ended up taking two hours of ever more complicated troubleshooting before Claude managed to identify the actual problem.</p>
+<p>What’s the actual answer? A single missing file: <code>tests/testthat.R</code>.</p>
+<p>But here’s the embarrassing part: the real problem started much earlier. I didn’t notice that when Claude created the test files one by one instead of using <code>usethis::use_testthat()</code> to set up the infrastructure correctly. If I had caught that mistake then, I could have avoided this whole debugging session.</p>
+<p>Even during the debugging, there were several times when I could have paused Claude and said, “Wait, let me check the basics first.” But I didn’t.</p>
+<p>In this post, I want to go through what went wrong and what I could have done differently. I’m still figuring out how to use LLMs properly, and this experience was a humbling lesson in what I overlooked.</p>
+</section>
+<section id="the-escalation-pattern" class="level2">
+<h2 class="anchored" data-anchor-id="the-escalation-pattern">The Escalation Pattern</h2>
+<p>Here’s how the session went. Each attempt got more complex, but the output always stayed the same.</p>
+<table class="caption-top table">
+<caption>Escalation sequence</caption>
+<colgroup>
+<col style="width: 5%">
+<col style="width: 70%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Attempt</th>
+<th>Proposed Solution</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>“The tests use <code>:::</code> to call internal functions. Maybe covr can’t instrument those. Let’s add <code>@export</code> and roxygen comments to export them as internal functions.”</td>
+<td>Still 0% coverage.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>“Maybe the dependencies aren’t declared. Let’s add <code>covr</code> and <code>withr</code> to the Suggests field.”</td>
+<td>Still 0% coverage.</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>“The tests are calling internal functions with <code>:::</code>. Let’s rewrite all test files to use the proper syntax.”</td>
+<td>Still 0% coverage.</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>“Maybe covr’s test runner isn’t firing. Let’s try setting environment variables like <code>RENV_CONFIG_AUTOLOADER_ENABLED = FALSE</code>.”</td>
+<td>Still 0% coverage.</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>“Let’s try <code>R_PROFILE_USER</code> to bypass the <code>.Rprofile</code> file.”</td>
+<td>Still 0% coverage.</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>“Let’s read the actual covr source code and find the test execution function.”</td>
+<td>Still 0% coverage.</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>“Wait—let me preserve the temp files from covr and check what actually ran in the subprocess.”</td>
+<td>Found the subprocess log</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>The subprocess log showed <code>library('qpost')</code> and then… nothing. No test commands at all. This finally led to the question: “Does qpost have a <code>tests/testthat.R</code> file?” Answer: No.</td>
+<td>Create <code>tests/testthat.R</code> file and covr finally showed the coverage.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="where-it-went-wrong-two-critical-mistakes" class="level2">
+<h2 class="anchored" data-anchor-id="where-it-went-wrong-two-critical-mistakes">Where It Went Wrong: Two Critical Mistakes</h2>
+<section id="mistake-1-i-didnt-notice-the-setup-was-wrong-weeks-earlier" class="level3">
+<h3 class="anchored" data-anchor-id="mistake-1-i-didnt-notice-the-setup-was-wrong-weeks-earlier">Mistake 1: I Didn’t Notice the Setup Was Wrong (Weeks Earlier)</h3>
+<p>When Claude first created the test infrastructure for <code>qpost</code>, it wrote the test files manually—creating <code>tests/testthat/</code> folder and writing <code>test-*.R</code> files by hand. <strong>It never ran <code>usethis::use_testthat()</code> to generate the proper structure.</strong></p>
+<p>I didn’t flag this. I should have. If I had insisted from the beginning that Claude use <code>usethis::use_testthat()</code>, it would have automatically generated a file called <code>tests/testthat.R</code>, and this whole debugging session would then have been avoided.</p>
+<p>It is my fault for not having scrutinized what Claude was doing carefully.</p>
+</section>
+<section id="mistake-2-i-missed-the-rabbit-hole-pattern-during-debugging" class="level3">
+<h3 class="anchored" data-anchor-id="mistake-2-i-missed-the-rabbit-hole-pattern-during-debugging">Mistake 2: I Missed the Rabbit Hole Pattern During Debugging</h3>
+<p>In the debugging session there were several signals which I ought to have picked up.</p>
+<p>Every attempt was <strong>more complicated than the previous one</strong>, but the result was <strong>always the same</strong>: 0% coverage and no error messages. That is a clear indication of a rabbit hole.</p>
+<p><strong>Here’s the pattern I missed:</strong></p>
+<ul>
+<li><strong>Attempt 1 to 3:</strong> Claude tries reasonable guesses: It checked exports, dependencies, and syntax, which could have been helpful.</li>
+<li><strong>Attempt 4 to 5:</strong> Claude switches to environment variables (<code>RENV_CONFIG_AUTOLOADER_ENABLED</code>, <code>R_PROFILE_USER</code>). No new information from the failures, but I kept going along. – <strong>Attempt 6:</strong> Claude decides to have a look at covr’s source code in order to get an understanding of its internal workings. <strong>At this point I should have stopped.</strong> When simple fixes don’t work and there is no change in the output, investigating the source code of a library is a distraction.</li>
+<li><strong>Attempt 7:</strong> Only when I changed the model (from <a href="https://www.anthropic.com/news/claude-haiku-4-5">Claude HAIKU 4.5</a> to <a href="https://www.anthropic.com/news/claude-sonnet-4-6">Claude Sonnet 4.6</a>) and asked to start the debugging process from scratch the LLM investigated in different directions and did finally discover the missing file.</li>
+</ul>
+<p><strong>Here’s what made it worse:</strong></p>
+<p>I knew that <a href="https://peter-baumgartner.net/glossary2">glossary2</a> (another package I am working on) displayed the test coverage percentage using covr perfectly. The difference should have been obvious at once:</p>
+<pre><code>ls tests/           # in both qpost and glossary2
+ls tests/testthat/  # in both</code></pre>
+<p>If I had asked Claude to display every file and directory in the test folders of both packages side by side, we would have noticed the missing <code>tests/testthat.R</code> file within thirty seconds. Instead, Claude only looked one level deeper into the <code>tests/testthat/</code> directory, and thus failed to find the file which should have been one level higher (at the <code>tests/testthat.R</code> level).</p>
+<p>This was again my default: I didn’t push back. I didn’t insist on the structural comparison. I let the model escalate.</p>
+</section>
+</section>
+<section id="what-i-should-have-done-two-interventions-i-missed" class="level2">
+<h2 class="anchored" data-anchor-id="what-i-should-have-done-two-interventions-i-missed">What I Should Have Done: Two Interventions I Missed</h2>
+<section id="intervention-1-demand-a-proper-structural-comparison" class="level3">
+<h3 class="anchored" data-anchor-id="intervention-1-demand-a-proper-structural-comparison">Intervention 1: Demand a Proper Structural Comparison</h3>
+<p>When comparing a working system (glossary2) with a broken one (qpost), there’s a natural order:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Step</th>
+<th>Question</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. <strong>Structure</strong></td>
+<td>Does the directory structure match?</td>
+</tr>
+<tr class="even">
+<td>2. <strong>Configuration</strong></td>
+<td>Do the key configuration files match?</td>
+</tr>
+<tr class="odd">
+<td>3. <strong>Dependencies</strong></td>
+<td>Do the declared dependencies match?</td>
+</tr>
+<tr class="even">
+<td>4. <strong>Environment</strong></td>
+<td>Is the runtime environment different?</td>
+</tr>
+</tbody>
+</table>
+<p>I ought to have clearly asked: “List each and every file and directory in pressfreedom.data/tests/ and qpost/tests/ together and show me the differences.”</p>
+<p>Just one command, thirty seconds, and the problem would have been solved.</p>
+<p>Rather, Claude only looked inside <code>tests/testthat/</code> (comparing the R scripts) and thus failed to notice that glossary2 has <code>tests/testthat.R</code> and that qpost doesn’t.</p>
+</section>
+<section id="intervention-2-notice-and-stop-the-escalation" class="level3">
+<h3 class="anchored" data-anchor-id="intervention-2-notice-and-stop-the-escalation">Intervention 2: Notice and Stop the Escalation</h3>
+<p>Already at the fourth attempt, I ought to have spotted the pattern and remarked, “This isn’t working because each solution becomes more complicated yet nothing changes–Go back to the fundamentals.”</p>
+<p>The question I should have forced Claude to answer earlier: <strong>“What is the simplest structural thing we haven’t checked?”</strong></p>
+</section>
+<section id="bonus-lesson-learned-use-usethis-from-the-start" class="level3">
+<h3 class="anchored" data-anchor-id="bonus-lesson-learned-use-usethis-from-the-start">Bonus Lesson Learned: Use <code>usethis</code> from the Start</h3>
+<p>That is the most important lesson: when I asked Claude to prepare the test, it performed the file writing manually, even though no infrastructure had been set up at that point. I ought to have insisted upon it by saying, “Don’t write the files manually. Use <code>usethis::use_testthat()</code> to set up the structure.”</p>
+<p>This is a lesson I’ll apply more broadly:</p>
+<div id="imp-rabbit-hole-1" class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important&nbsp;1: Whenever possible, make use of the <code>usethis::*()</code> functions.
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>They encode the structural knowledge and set the infrastructure. Using them not only prevents mistakes but also frees the mind so that one does not need to remember the nitty-gritty details.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="how-claude-finally-found-it-when-i-switched-from-haiku-to-sonnet" class="level2">
+<h2 class="anchored" data-anchor-id="how-claude-finally-found-it-when-i-switched-from-haiku-to-sonnet">How Claude Finally Found It (When I Switched from Haiku to Sonnet)</h2>
+<p>For most of the escalating trials, I had been using Claude Haiku 4.5. At a certain stage, I switched to Claude Sonnet 4.6, and then the quality of the reasoning changed noticeably.</p>
+<section id="step-1-isolate-the-problem" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-isolate-the-problem">Step 1: Isolate the Problem</h3>
+<p>Claude said: “Let me add a trivial test with zero dependencies to isolate the issue.”</p>
+<p>It created a minimal test file:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">"1 + 1 equals 2"</span>, {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_equal</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Even this basic arithmetic test produced 0% coverage. Claude’s insight: “This rules out everything test-related. The covr subprocess is running but the test runner itself is failing to launch.”</p>
+</section>
+<section id="step-2-follow-the-chain-of-execution" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-follow-the-chain-of-execution">Step 2: Follow the Chain of Execution</h3>
+<p>Claude then asked: “How does covr actually run tests?” Instead of guessing, it went to read covr’s source code—but this time with a specific question in mind.</p>
+<p>It found that <code>covr</code> uses <code>tools::testInstalledPackage()</code> internally, which in turn looks for <code>*.R</code> files in the <code>tests/</code> directory and runs them with <code>R CMD BATCH --vanilla</code>. The key insight: “covr writes a script with <code>library('qpost')</code> plus test commands to a file. Let me see what output file it creates — the output file will tell us exactly what’s failing.”</p>
+</section>
+<section id="step-3-look-at-the-actual-artifact" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-look-at-the-actual-artifact">Step 3: Look at the Actual Artifact</h3>
+<p>Claude thought: “There should be an <code>.Rout</code> file (R output file) from running that subprocess script. Let me find the most recent one.”</p>
+<p>When Claude looked at that <code>.Rout</code> file, it showed:</p>
+<pre><code>library('qpost')
+[... nothing else ...]</code></pre>
+<p>The tests were not carried out; the subprocess loaded the package and then stopped.</p>
+</section>
+<section id="step-4-connect-the-dots" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-connect-the-dots">Step 4: Connect the Dots</h3>
+<p>Claude realized: “If <code>tools::testInstalledPackage()</code> looks for <code>*.R</code> files in <code>tests/</code> to run, and there’s no output, then… what’s it finding? Let me check the structure.”</p>
+<p>The answer was obvious once it was visible: <code>tests/</code> contains only a <code>testthat/</code> subdirectory with test files. It’s missing <code>tests/testthat.R</code>—the runner script that tells <code>tools::testInstalledPackage()</code> where to find the actual tests.</p>
+</section>
+<section id="why-this-matters-different-test-runners" class="level3">
+<h3 class="anchored" data-anchor-id="why-this-matters-different-test-runners">Why This Matters: Different Test Runners</h3>
+<p>I then returned to my original question where the problem started: “But why did it work with <code>devtools::test()</code>?”</p>
+<p>The answer: <code>devtools::test()</code> bypasses <code>tools::testInstalledPackage()</code> entirely. It calls testthat directly, which automatically finds <code>tests/testthat/</code>. So <code>devtools::test()</code> worked fine the whole time. But <code>covr</code> (which uses <code>tools::testInstalledPackage()</code>) couldn’t find the tests without the runner script.</p>
+<hr>
+<p>The difference between Haiku’s and Sonnet’s approach is clear:</p>
+<ul>
+<li><strong>Before with Haiku 4.5:</strong> Try increasingly complex fixes, hope one works, give up and dig into source code</li>
+<li><strong>After with Sonnet 4.6:</strong> Form a hypothesis → follow the chain of execution → look at actual artifacts → ask what’s missing</li>
+</ul>
+<p>But to make it clear: The general solution is not to use a better (and more expensive) model. I had a similar problem with Sonnet 4.6 as well. The actual root cause was that I did not steer the model in the right direction.</p>
+<div id="imp-rabbit-hole-2" class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important&nbsp;2: Ask questions about the basic structure before going into the details.
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It is essential to monitor the LLM’s work closely and to intervene if it goes down a rabbit hole.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="what-ill-do-next-time-differently" class="level2">
+<h2 class="anchored" data-anchor-id="what-ill-do-next-time-differently">What I’ll Do Next Time Differently</h2>
+<p>I still have to learn how to use LLMs properly for code work. This session showed me I need to be more active and skeptical—less accepting of whatever the LLM suggests, more willing to intervene.</p>
+<div class="my-procedure">
+<div class="my-procedure-header">
+<p>The core takeaways</p>
+</div>
+<div class="my-procedure-container">
+<ol type="1">
+<li><p><strong>Make use of the usethis functions when carrying out any kind of infrastructure task — never accept the need to create files manually.</strong> Functions such as use_testthat(), use_vignette() and use_data() contain the structural knowledge which I don’t need to remember. I have already made this mistake two times (with testthat and vignettes), so I know it’s something I should be on the lookout for. Whenever I am working on package setup with an LLM I must insist on: “Don’t come up with a solution from scratch. Use the tool that was designed for the job.”</p></li>
+<li><p><strong>Before making any adjustments, compare similar systems (one working the other not) in terms of their structure.</strong> If the problem does not occur in a similar project that works, then start by carrying out a side-by-side comparison of the directory structures. A single <code>ls</code> command takes 30 seconds and usually resolves the issue right away. This step should be taken before making any changes to the code or fiddling with the environment.</p></li>
+<li><p><strong>Halt the LLM when the attempts worsen without leading to any progress.</strong> When the solutions become more complicated but the error remains unchanged, that is the sign on which to act and stop. Ask yourself “What is the simplest thing that we haven’t already checked?” and then bring the approach back to fundamentals, not push it any further into complexity.</p></li>
+<li><p><strong>Before sticking to the LLM’s method, question it.</strong> Whenever it moves on to reading the library’s internals or adopts any other complicated strategy, stop it and ask: “Have we checked the basic points? What are fundamental structural questions we haven’t asked yet?” Although this sounds a bit awkward, this strategy is better than spending two hours unnecessarily.</p></li>
+</ol>
+</div>
+</div>
+<p>The most difficult part is making sure I follow these steps when I’m in the middle of a debugging session. Because in these situations (chasing problems), the momentum is very strong. Often I end up getting carried away. But I’ll try to stop myself the next time.</p>
+<hr>
+<p><em>Have you had a similar experience? Did you miss obvious clues while working with an LLM? I’m curious what signals you noticed—or wish you’d noticed—and how you got unstuck.</em></p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{baumgartner2026,
+  author = {Baumgartner, Peter},
+  title = {When {LLMs} {Fall} {Into} a {Rabbit} {Hole}},
+  date = {2026-08-24},
+  url = {https://peter-baumgartner.net/posts/2026-08-23-llm-rabbit-hole/},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-baumgartner2026" class="csl-entry quarto-appendix-citeas" role="listitem">
+Baumgartner, Peter. 2026. <span>“When LLMs Fall Into a Rabbit
+Hole.”</span> August 24. <a href="https://peter-baumgartner.net/posts/2026-08-23-llm-rabbit-hole/">https://peter-baumgartner.net/posts/2026-08-23-llm-rabbit-hole/</a>.
+</div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/peter-baumgartner\.net");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="petzi53/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+ <a href="https://www.peter-baumgartner.net">Thought Splinters</a> © 2023-2026 by <a href="https://www.peter-baumgartner.net/about">Peter Baumgartner</a> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1">CC BY 4.0</a>
+  </li>  
+</ul>
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+<p>About</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../../privacy.html">
+<p>Privacy</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../../disclaimer.html">
+<p>Disclaimer</p>
+</a>
+  </li>  
+</ul>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/petzi53/petzi53.github.io/edit/main/posts/2026-08-23-llm-rabbit-hole/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/petzi53/petzi53.github.io/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+ Proudly powered by <a href="https://quarto.org/">Quarto</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":true,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+</body></html>
