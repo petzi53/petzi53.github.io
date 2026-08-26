@@ -70,7 +70,7 @@ Every attempt was **more complicated than the previous one**, but the result was
 
 **Here's what made it worse:** 
 
-I knew that pressfreedom.data (another package I am working on) displayed the test coverage percentage using covr perfectly. The difference should have been obvious at once:
+I knew that [glossary2](https://peter-baumgartner.net/glossary2) (another package I am working on) displayed the test coverage percentage using covr perfectly. The difference should have been obvious at once:
 
 ```
 ls tests/           # in both qpost and glossary2
@@ -120,7 +120,7 @@ They encode the structural knowledge and set the infrastructure. Using them not 
 :::
 
 
-## How Haiku Finally Found It (When I Switched to Sonnet)
+## How Claude Finally Found It (When I Switched from Haiku to Sonnet)
 
 For most of the escalating trials, I had been using Claude Haiku 4.5. At a certain stage, I switched to Claude Sonnet 4.6, and then the quality of the reasoning changed noticeably.
 
