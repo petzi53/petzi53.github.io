@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
-
+<meta name="generator" content="quarto-1.10.18">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Peter Baumgartner">
 <meta name="dcterms.date" content="2024-07-25">
 <meta name="description" content="In this post I will explain one of the most important features of blog (or generally Quarto) projects: The ability to share YAML metadata options across multiple documents. Shared metadata can be defined at both the blog (project) and directory level.">
-
 <title>Quarto Blog Tutorial 4: Shared Metadata – Thought Splinters</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -63,7 +63,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-
 <script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../../site_libs/clipboard/clipboard.min.js"></script>
@@ -80,12 +79,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-781e46921ee0a53317941336be000c3f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script src="../../../site_libs/quarto-contrib/iconify-3.0.0/iconify-icon.min.js"></script>
-<script id="quarto-search-options" type="application/json">{
+<link href="../../../site_libs/bootstrap/bootstrap-c4aff173bdb29f86b01cc55e5a32ba7d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../../site_libs/quarto-contrib/iconify-3.0.0/iconify-icon.min.js"></script><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -110,18 +108,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-CLE95GVN04"></script>
-
-<script type="text/plain" cookie-consent="tracking">
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-CLE95GVN04"></script><script type="text/plain" cookie-consent="tracking">
 
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-CLE95GVN04', { 'anonymize_ip': true});
-</script>
-
-<script type="text/javascript" charset="UTF-8">
+</script><script type="text/javascript" charset="UTF-8">
 document.addEventListener('DOMContentLoaded', function () {
 cookieconsent.run({
   "notice_banner_type":"simple",
@@ -136,9 +129,7 @@ cookieconsent.run({
 "language":"en"
   });
 });
-</script> 
-  
-<script type="application/json" class="js-hypothesis-config">
+</script><script type="application/json" class="js-hypothesis-config">
 {
   "theme": "classic",
   "openSidebar": false,
@@ -151,16 +142,11 @@ cookieconsent.run({
     "selectionFontFamily": "helvetica, arial, sans serif"
   }
 }
-</script>
-<script async="" src="https://hypothes.is/embed.js"></script>
-<script>
+</script><script async="" src="https://hypothes.is/embed.js"></script><script>
   window.document.addEventListener("DOMContentLoaded", function (_event) {
     document.body.classList.add('hypothesis-enabled');
   });
-</script>
-
-
-<link rel="stylesheet" href="../../../styles.css">
+</script><link rel="stylesheet" href="../../../styles.css">
 <link rel="stylesheet" href="../../../glossary.css">
 <meta name="twitter:title" content="Quarto Blog Tutorial 4: Shared Metadata – Thought Splinters">
 <meta name="twitter:description" content="In this post I will explain one of the most important features of blog (or generally Quarto) projects: The ability to share YAML metadata options across multiple documents. Shared metadata can be defined at both the blog (project) and directory level.">
@@ -168,13 +154,10 @@ cookieconsent.run({
 <meta name="twitter:image:alt" content="Seven different hands grab a slice of a salami pizza cut in eight different pieces.">
 <meta name="twitter:card" content="summary_large_image">
 </head>
-
 <body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">Thought Splinters</span>
@@ -186,7 +169,7 @@ cookieconsent.run({
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="../../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
@@ -198,8 +181,8 @@ cookieconsent.run({
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Tutorials</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">
+<li>
     <a class="dropdown-item" href="../../../quarto-blog.html">
  <span class="dropdown-text">Create a Quarto Blog</span></a>
   </li>  
@@ -208,13 +191,13 @@ cookieconsent.run({
  <span class="dropdown-text">Zotero-Obsidian Annotations</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-links" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Links</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-links">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-links">
+<li>
     <a class="dropdown-item" href="https://opensource.posit.co/">
  <span class="dropdown-text">Posit Open Source</span></a>
   </li>  
@@ -239,7 +222,7 @@ cookieconsent.run({
  <span class="dropdown-text">R Bloggers</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item">
     <a class="nav-link" href="../../../archive.html"> 
 <span class="menu-text">Archive</span></a>
@@ -274,15 +257,11 @@ cookieconsent.run({
 <span class="menu-text"></span></a>
   </li>  
 </ul>
-          </div> <!-- /navcollapse -->
+</div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Quarto Blog Tutorial 4: Shared Metadata</h1>
             <p class="subtitle lead">Share YAML metadata options across multiple documents</p>
@@ -332,51 +311,37 @@ cookieconsent.run({
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../../../portrait-peter.png" class="img-fluid figure-img"></p>
-<figcaption>Peter Baumgartner</figcaption>
-</figure>
+<figure class="figure"><p><img src="../../../portrait-peter.png" class="img-fluid figure-img"></p>
+<figcaption>Peter Baumgartner</figcaption></figure>
 </div>
 </div></div>
-        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="4">
-    <h2 id="toc-title">On this page</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="4"><h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+<li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#project-level" id="toc-project-level" class="nav-link" data-scroll-target="#project-level">Project Level</a></li>
   <li><a href="#directory-level" id="toc-directory-level" class="nav-link" data-scroll-target="#directory-level">Directory Level</a></li>
   <li><a href="#git-and-github" id="toc-git-and-github" class="nav-link" data-scroll-target="#git-and-github">Git and GitHub</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/petzi53/petzi53.github.io/edit/main/posts/tutorial-quarto-blog/2024-07-25-shared-metadata/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/petzi53/petzi53.github.io/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/petzi53/petzi53.github.io/edit/main/posts/tutorial-quarto-blog/2024-07-25-shared-metadata/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/petzi53/petzi53.github.io/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="pexels-cottonbro-3944311-min1.jpg" class="img-fluid figure-img" style="width:50.0%" alt="Seven different hands grab a slice of a salami pizza cut in eight different pieces."></p>
-<figcaption>Sharing resources via metadata. <br> Foto von <a href="https://www.pexels.com/de-de/foto/lebensmittel-essen-pizza-hande-3944311/">cottonbro studio</a> via <a href="https://www.pexels.com/">Pexels.com</a></figcaption>
-</figure>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="pexels-cottonbro-3944311-min1.jpg" class="img-fluid figure-img" style="width:50.0%" alt="Seven different hands grab a slice of a salami pizza cut in eight different pieces."></p>
+<figcaption>Sharing resources via metadata. <br> Foto von <a href="https://www.pexels.com/de-de/foto/lebensmittel-essen-pizza-hande-3944311/">cottonbro studio</a> via <a href="https://www.pexels.com/">Pexels.com</a></figcaption></figure>
 </div>
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>Shared YAML metadata can be defined at both the project and directory level:</p>
 <ul>
-<li>project level: filename <code>_quarto.yml</code></li>
-<li>directory level: filename <code>_metadata.yml</code></li>
+<li>project level: filename <code>_quarto.yml</code>
+</li>
+<li>directory level: filename <code>_metadata.yml</code>
+</li>
 </ul>
 <p>For more information, see <a href="https://quarto.org/docs/projects/quarto-projects.html#shared-metadata">Project Basics – Quarto Shared Metadata</a></p>
-</section>
-<section id="project-level" class="level2">
-<h2 class="anchored" data-anchor-id="project-level">Project Level</h2>
+</section><section id="project-level" class="level2"><h2 class="anchored" data-anchor-id="project-level">Project Level</h2>
 <p>On the project level, I will change only the provided URLs for my GitHub and Twitter accounts in this first step.</p>
 <div class="grid">
-<section id="before-my-change" class="level5 g-col-5">
-<h5 class="anchored" data-anchor-id="before-my-change">Before My Change</h5>
+<section id="before-my-change" class="level5 g-col-5"><h5 class="anchored" data-anchor-id="before-my-change">Before My Change</h5>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>_quarto.yml</strong></pre>
@@ -398,9 +363,7 @@ cookieconsent.run({
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> cosmo</span></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">css</span><span class="kw">:</span><span class="at"> styles.css</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section>
-<section id="after-my-change" class="level5 g-col-7">
-<h5 class="anchored" data-anchor-id="after-my-change">After My Change</h5>
+</section><section id="after-my-change" class="level5 g-col-7"><h5 class="anchored" data-anchor-id="after-my-change">After My Change</h5>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>_quarto.yml</strong></pre>
@@ -424,13 +387,10 @@ cookieconsent.run({
 </div>
 </section>
 </div>
-</section>
-<section id="directory-level" class="level2">
-<h2 class="anchored" data-anchor-id="directory-level">Directory Level</h2>
+</section><section id="directory-level" class="level2"><h2 class="anchored" data-anchor-id="directory-level">Directory Level</h2>
 <p>We have seen in an <a href="../../../posts/2024-07-24-default-blog-source-code/#fig-content-posts-folder">previous post</a> that there is a <code>_metadata.yml</code> file in the <code>posts</code> folder.</p>
 <div class="grid">
-<section id="before-my-change-1" class="level5 g-col-6">
-<h5 class="anchored" data-anchor-id="before-my-change-1">Before My Change</h5>
+<section id="before-my-change-1" class="level5 g-col-6"><h5 class="anchored" data-anchor-id="before-my-change-1">Before My Change</h5>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>_metadata.yml</strong></pre>
@@ -444,9 +404,7 @@ cookieconsent.run({
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Enable banner style title blocks</span></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">title-block-banner</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section>
-<section id="after-my-change-1" class="level5 g-col-6">
-<h5 class="anchored" data-anchor-id="after-my-change-1">After My Change</h5>
+</section><section id="after-my-change-1" class="level5 g-col-6"><h5 class="anchored" data-anchor-id="after-my-change-1">After My Change</h5>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>_metadata.yml</strong></pre>
@@ -473,20 +431,19 @@ cookieconsent.run({
 </div>
 <p>The changes are self-explanatory, so short comments will suffice:</p>
 <ul>
-<li><code>title-block-banner</code>: I have already removed the title block banner from the home page listings and will disable it for blog posts as well. (I will revise this decision after I have written several posts. Maybe the title block banner is very useful for displaying a short description of the article.)</li>
-<li><code>author</code>: All articles in my blog will be written by me.</li>
-<li><code>toc</code> and <code>toc-depth</code>: I want a table of contents on the right side of the blog post, with a maximum of four levels. (I will revise this decision after I have written some longer articles. Maybe the TOC levels go too deep.)</li>
-<li><code>page-layout</code>: I have <a href="../../../posts/2024-07-24-default-blog-source-code/#page-layout">already explained</a> the <code>page-layout: full</code> directive from the title home page <code>index.qmd</code>. Now we want an <code>article</code> layout, because it creates a content area with a page-based grid layout that provides margins, areas for sidebars, and a reading width-optimized body region.</li>
-</ul>
-</section>
-<section id="git-and-github" class="level2">
-<h2 class="anchored" data-anchor-id="git-and-github">Git and GitHub</h2>
+<li>
+<code>title-block-banner</code>: I have already removed the title block banner from the home page listings and will disable it for blog posts as well. (I will revise this decision after I have written several posts. Maybe the title block banner is very useful for displaying a short description of the article.)</li>
+<li>
+<code>author</code>: All articles in my blog will be written by me.</li>
+<li>
+<code>toc</code> and <code>toc-depth</code>: I want a table of contents on the right side of the blog post, with a maximum of four levels. (I will revise this decision after I have written some longer articles. Maybe the TOC levels go too deep.)</li>
+<li>
+<code>page-layout</code>: I have <a href="../../../posts/2024-07-24-default-blog-source-code/#page-layout">already explained</a> the <code>page-layout: full</code> directive from the title home page <code>index.qmd</code>. Now we want an <code>article</code> layout, because it creates a content area with a page-based grid layout that provides margins, areas for sidebars, and a reading width-optimized body region.</li>
+</ul></section><section id="git-and-github" class="level2"><h2 class="anchored" data-anchor-id="git-and-github">Git and GitHub</h2>
 <p>I will commit these third bulk of changes to Git and my demonstration repository <code>quarto-pb-blog</code> <a href="https://github.com/petzi53/quarto-pb-blog">on GitHub</a>.</p>
 
 
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{baumgartner2024,
+</section><a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{baumgartner2024,
   author = {Baumgartner, Peter},
   title = {Quarto {Blog} {Tutorial} 4: {Shared} {Metadata}},
   date = {2024-07-25},
@@ -496,8 +453,7 @@ cookieconsent.run({
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-baumgartner2024" class="csl-entry quarto-appendix-citeas" role="listitem">
 Baumgartner, Peter. 2024. <span>“Quarto Blog Tutorial 4: Shared
 Metadata.”</span> July 25. <a href="https://peter-baumgartner.net/posts/tutorial-quarto-blog/2024-07-25-shared-metadata/">https://peter-baumgartner.net/posts/tutorial-quarto-blog/2024-07-25-shared-metadata/</a>.
-</div></div></section></div></main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -896,22 +852,20 @@ Metadata.”</span> July 25. <a href="https://peter-baumgartner.net/posts/tutori
       }
     }
   });
-  </script>
-<script src="https://utteranc.es/client.js" repo="petzi53/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+  </script><script src="https://utteranc.es/client.js" repo="petzi53/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
+<footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
       <ul class="footer-items list-unstyled">
-    <li class="nav-item">
+<li class="nav-item">
  <a href="https://www.peter-baumgartner.net">Thought Splinters</a> © 2023-2026 by <a href="https://www.peter-baumgartner.net/about">Peter Baumgartner</a> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1">CC BY 4.0</a>
   </li>  
 </ul>
-    </div>   
+</div>   
     <div class="nav-footer-center">
       <ul class="footer-items list-unstyled">
-    <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="../../../about.html">
 <p>About</p>
 </a>
@@ -927,18 +881,16 @@ Metadata.”</span> July 25. <a href="https://peter-baumgartner.net/posts/tutori
 </a>
   </li>  
 </ul>
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/petzi53/petzi53.github.io/edit/main/posts/tutorial-quarto-blog/2024-07-25-shared-metadata/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/petzi53/petzi53.github.io/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/petzi53/petzi53.github.io/edit/main/posts/tutorial-quarto-blog/2024-07-25-shared-metadata/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/petzi53/petzi53.github.io/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
-    <li class="nav-item">
+<li class="nav-item">
  Proudly powered by <a href="https://quarto.org/">Quarto</a>
   </li>  
 </ul>
-    </div>
+</div>
   </div>
 </footer>
-
-
 
 
 </body></html>

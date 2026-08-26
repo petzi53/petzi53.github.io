@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
-
+<meta name="generator" content="quarto-1.10.18">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Peter Baumgartner">
 <meta name="dcterms.date" content="2023-05-07">
 <meta name="description" content="Do you want to place two figures side by side or write text in parallel in different columns? The post describes four methods to turn part of your blog post into a column-based layout.">
-
 <title>Creating a column-based layout – Thought Splinters</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -63,7 +63,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
@@ -80,15 +79,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-781e46921ee0a53317941336be000c3f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-c4aff173bdb29f86b01cc55e5a32ba7d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="../../site_libs/quarto-contrib/iconify-3.0.0/iconify-icon.min.js"></script>
 <script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
-<script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -113,18 +111,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-CLE95GVN04"></script>
-
-<script type="text/plain" cookie-consent="tracking">
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-CLE95GVN04"></script><script type="text/plain" cookie-consent="tracking">
 
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-CLE95GVN04', { 'anonymize_ip': true});
-</script>
-
-<script type="text/javascript" charset="UTF-8">
+</script><script type="text/javascript" charset="UTF-8">
 document.addEventListener('DOMContentLoaded', function () {
 cookieconsent.run({
   "notice_banner_type":"simple",
@@ -139,9 +132,7 @@ cookieconsent.run({
 "language":"en"
   });
 });
-</script> 
-  
-<script type="application/json" class="js-hypothesis-config">
+</script><script type="application/json" class="js-hypothesis-config">
 {
   "theme": "classic",
   "openSidebar": false,
@@ -154,16 +145,11 @@ cookieconsent.run({
     "selectionFontFamily": "helvetica, arial, sans serif"
   }
 }
-</script>
-<script async="" src="https://hypothes.is/embed.js"></script>
-<script>
+</script><script async="" src="https://hypothes.is/embed.js"></script><script>
   window.document.addEventListener("DOMContentLoaded", function (_event) {
     document.body.classList.add('hypothesis-enabled');
   });
-</script>
-
-
-<link rel="stylesheet" href="../../styles.css">
+</script><link rel="stylesheet" href="../../styles.css">
 <link rel="stylesheet" href="../../glossary.css">
 <meta name="twitter:title" content="Creating a column-based layout – Thought Splinters">
 <meta name="twitter:description" content="Do you want to place two figures side by side or write text in parallel in different columns? The post describes four methods to turn part of your blog post into a column-based layout.">
@@ -171,13 +157,10 @@ cookieconsent.run({
 <meta name="twitter:image:alt" content="Three classical greek pillars">
 <meta name="twitter:card" content="summary_large_image">
 </head>
-
 <body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Thought Splinters</span>
@@ -189,7 +172,7 @@ cookieconsent.run({
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
@@ -201,8 +184,8 @@ cookieconsent.run({
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Tutorials</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">
+<li>
     <a class="dropdown-item" href="../../quarto-blog.html">
  <span class="dropdown-text">Create a Quarto Blog</span></a>
   </li>  
@@ -211,13 +194,13 @@ cookieconsent.run({
  <span class="dropdown-text">Zotero-Obsidian Annotations</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-links" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Links</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-links">    
-        <li>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-links">
+<li>
     <a class="dropdown-item" href="https://opensource.posit.co/">
  <span class="dropdown-text">Posit Open Source</span></a>
   </li>  
@@ -242,7 +225,7 @@ cookieconsent.run({
  <span class="dropdown-text">R Bloggers</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item">
     <a class="nav-link" href="../../archive.html"> 
 <span class="menu-text">Archive</span></a>
@@ -277,15 +260,11 @@ cookieconsent.run({
 <span class="menu-text"></span></a>
   </li>  
 </ul>
-          </div> <!-- /navcollapse -->
+</div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Creating a column-based layout</h1>
             <p class="subtitle lead">Changing the Page Layout in Quarto</p>
@@ -334,58 +313,50 @@ cookieconsent.run({
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="../../portrait-peter.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Peter Baumgartner"><img src="../../portrait-peter.png" class="img-fluid figure-img" alt="Peter Baumgartner"></a></p>
-<figcaption>Peter Baumgartner</figcaption>
-</figure>
+<figure class="figure"><p><a href="../../portrait-peter.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Peter Baumgartner"><img src="../../portrait-peter.png" class="img-fluid figure-img" alt="Peter Baumgartner"></a></p>
+<figcaption>Peter Baumgartner</figcaption></figure>
 </div>
 </div></div>
-        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="4">
-    <h2 id="toc-title">On this page</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="4"><h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#help-page-about-article-layout" id="toc-help-page-about-article-layout" class="nav-link active" data-scroll-target="#help-page-about-article-layout">Help page about article layout</a></li>
+<li><a href="#help-page-about-article-layout" id="toc-help-page-about-article-layout" class="nav-link active" data-scroll-target="#help-page-about-article-layout">Help page about article layout</a></li>
   <li><a href="#using-a-table-failed" id="toc-using-a-table-failed" class="nav-link" data-scroll-target="#using-a-table-failed">Using a table failed</a></li>
-  <li><a href="#using-pandoc-extensions" id="toc-using-pandoc-extensions" class="nav-link" data-scroll-target="#using-pandoc-extensions">Using pandoc extensions</a>
+  <li>
+<a href="#using-pandoc-extensions" id="toc-using-pandoc-extensions" class="nav-link" data-scroll-target="#using-pandoc-extensions">Using pandoc extensions</a>
   <ul>
-  <li><a href="#example-1-two-columns-separated-by-a-small-third-column" id="toc-example-1-two-columns-separated-by-a-small-third-column" class="nav-link" data-scroll-target="#example-1-two-columns-separated-by-a-small-third-column">Example 1: Two columns separated by a small third column</a></li>
+<li><a href="#example-1-two-columns-separated-by-a-small-third-column" id="toc-example-1-two-columns-separated-by-a-small-third-column" class="nav-link" data-scroll-target="#example-1-two-columns-separated-by-a-small-third-column">Example 1: Two columns separated by a small third column</a></li>
   <li><a href="#example-2-two-columns-using-the-bootstrap-css-grid-system" id="toc-example-2-two-columns-using-the-bootstrap-css-grid-system" class="nav-link" data-scroll-target="#example-2-two-columns-using-the-bootstrap-css-grid-system">Example 2: Two columns using the bootstrap CSS grid system</a></li>
   <li><a href="#example-3-two-columns-with-text-center-aligned" id="toc-example-3-two-columns-with-text-center-aligned" class="nav-link" data-scroll-target="#example-3-two-columns-with-text-center-aligned">Example 3: Two columns with text center-aligned</a></li>
-  </ul></li>
-  <li><a href="#fenced-divs-in-pandoc-how-do-they-work" id="toc-fenced-divs-in-pandoc-how-do-they-work" class="nav-link" data-scroll-target="#fenced-divs-in-pandoc-how-do-they-work">Fenced divs in Pandoc: How do they work?</a>
-  <ul>
-  <li><a href="#what-is-pandoc" id="toc-what-is-pandoc" class="nav-link" data-scroll-target="#what-is-pandoc">What is Pandoc?</a></li>
-  <li><a href="#div-blocks-in-pandoc" id="toc-div-blocks-in-pandoc" class="nav-link" data-scroll-target="#div-blocks-in-pandoc">Div Blocks in Pandoc</a></li>
-  </ul></li>
-  <li><a href="#a-genuine-quarto-solution" id="toc-a-genuine-quarto-solution" class="nav-link" data-scroll-target="#a-genuine-quarto-solution">A genuine Quarto solution</a>
-  <ul>
-  <li><a href="#version-1-with-equally-wide-columns" id="toc-version-1-with-equally-wide-columns" class="nav-link" data-scroll-target="#version-1-with-equally-wide-columns">Version 1 with equally wide columns</a></li>
-  <li><a href="#version-2-with-different-wide-columns" id="toc-version-2-with-different-wide-columns" class="nav-link" data-scroll-target="#version-2-with-different-wide-columns">Version 2 with different wide columns</a></li>
-  </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/petzi53/petzi53.github.io/edit/main/posts/2023-05-07-creating-a-column-based-layout/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/petzi53/petzi53.github.io/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+</li>
+  <li>
+<a href="#fenced-divs-in-pandoc-how-do-they-work" id="toc-fenced-divs-in-pandoc-how-do-they-work" class="nav-link" data-scroll-target="#fenced-divs-in-pandoc-how-do-they-work">Fenced divs in Pandoc: How do they work?</a>
+  <ul>
+<li><a href="#what-is-pandoc" id="toc-what-is-pandoc" class="nav-link" data-scroll-target="#what-is-pandoc">What is Pandoc?</a></li>
+  <li><a href="#div-blocks-in-pandoc" id="toc-div-blocks-in-pandoc" class="nav-link" data-scroll-target="#div-blocks-in-pandoc">Div Blocks in Pandoc</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#a-genuine-quarto-solution" id="toc-a-genuine-quarto-solution" class="nav-link" data-scroll-target="#a-genuine-quarto-solution">A genuine Quarto solution</a>
+  <ul>
+<li><a href="#version-1-with-equally-wide-columns" id="toc-version-1-with-equally-wide-columns" class="nav-link" data-scroll-target="#version-1-with-equally-wide-columns">Version 1 with equally wide columns</a></li>
+  <li><a href="#version-2-with-different-wide-columns" id="toc-version-2-with-different-wide-columns" class="nav-link" data-scroll-target="#version-2-with-different-wide-columns">Version 2 with different wide columns</a></li>
+  </ul>
+</li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/petzi53/petzi53.github.io/edit/main/posts/2023-05-07-creating-a-column-based-layout/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/petzi53/petzi53.github.io/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="three-columns-min.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="From PxHere (CC0, Public Domain)"><img src="three-columns-min.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="text-align: center;" alt="Four ionic column with scroll-shaped ornaments on the capital, which sits at the top of the column shaft against the blue sky"></a></p>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><div class="quarto-figure quarto-figure-center">
+<figure class="figure"><div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="three-columns-min.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="From PxHere (CC0, Public Domain)"><img src="three-columns-min.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="text-align: center;" alt="Four ionic column with scroll-shaped ornaments on the capital, which sits at the top of the column shaft against the blue sky"></a></p>
 </figure>
 </div>
-<figcaption>From <a href="https://pxhere.com/en/photo/649542">PxHere</a> (CC0, Public Domain)</figcaption>
-</figure>
+<figcaption>From <a href="https://pxhere.com/en/photo/649542">PxHere</a> (CC0, Public Domain)</figcaption></figure>
 </div>
 <p>In my first two articles, I encountered the problem of changing the page layout several times: So I wanted – for instance – in my article <a href="https://l3lab.net/posts/2023-05-05-how-to-delete-git-branches/">How to delete Git branches</a> two small screenshots to appear side by side.</p>
-<section id="help-page-about-article-layout" class="level2">
-<h2 class="anchored" data-anchor-id="help-page-about-article-layout">Help page about article layout</h2>
+<section id="help-page-about-article-layout" class="level2"><h2 class="anchored" data-anchor-id="help-page-about-article-layout">Help page about article layout</h2>
 <p>When I looked at the Quarto help pages, I found a <a href="https://quarto.org/docs/authoring/article-layout.html">chapter about article layouts</a>. But it treated the layout of pages in a more general way by answering the following questions:</p>
 <ul>
 <li>How to use the whole main content region?</li>
@@ -394,34 +365,24 @@ cookieconsent.run({
 <li>How can authors place content on the document margin?</li>
 </ul>
 <p>I think that these questions address pretty special requirements. I just wanted a solution for content items side by side. This support page about the article layout was not helpful to me.</p>
-</section>
-<section id="using-a-table-failed" class="level2">
-<h2 class="anchored" data-anchor-id="using-a-table-failed">Using a table failed</h2>
+</section><section id="using-a-table-failed" class="level2"><h2 class="anchored" data-anchor-id="using-a-table-failed">Using a table failed</h2>
 <p>My first approach was to use a table to position images side by side. I created a one-row / two-column table with the visual editor of RStudio and uploaded in each column a picture. But the screenshots didn’t appear. Whenever I rendered the page, Quarto told me, “404: Not Found”.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/error-message-image-not-found-min.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Looking after rendering into the tab “Background Jobs” revealed these error messages"><img src="images/error-message-image-not-found-min.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Two red error messages"></a></p>
+<figure class="figure"><div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="images/error-message-image-not-found-min.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Looking after rendering into the tab “Background Jobs” revealed these error messages"><img src="images/error-message-image-not-found-min.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Two red error messages"></a></p>
 </figure>
 </div>
-<figcaption>Looking after rendering into the tab “Background Jobs” revealed these error messages</figcaption>
-</figure>
+<figcaption>Looking after rendering into the tab “Background Jobs” revealed these error messages</figcaption></figure>
 </div>
 <p>As I inspected the source code, I saw the reason: The long image URLs didn’t fit in the table column, and therefore forced line breaks that destroyed the URLs.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/wrong-forced-line-breaks-min.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Screenshot 1: Source code generated by RStudio after loading two images into a one-row / two-columns desing"><img src="images/wrong-forced-line-breaks-min.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The source code shows that the URLs are wrapped in wrong places and therefore broken"></a></p>
+<figure class="figure"><div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="images/wrong-forced-line-breaks-min.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Screenshot 1: Source code generated by RStudio after loading two images into a one-row / two-columns desing"><img src="images/wrong-forced-line-breaks-min.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The source code shows that the URLs are wrapped in wrong places and therefore broken"></a></p>
 </figure>
 </div>
-<figcaption>Screenshot 1: Source code generated by RStudio after loading two images into a one-row / two-columns desing</figcaption>
-</figure>
+<figcaption>Screenshot 1: Source code generated by RStudio after loading two images into a one-row / two-columns desing</figcaption></figure>
 </div>
-</section>
-<section id="using-pandoc-extensions" class="level2">
-<h2 class="anchored" data-anchor-id="using-pandoc-extensions">Using pandoc extensions</h2>
+</section><section id="using-pandoc-extensions" class="level2"><h2 class="anchored" data-anchor-id="using-pandoc-extensions">Using pandoc extensions</h2>
 <p>After long research, I found three answers to my question via StackOverflow. They all used the <a href="https://pandoc.org/MANUAL.html#extension-fenced_divs">fenced_divs extension of pandoc</a>.</p>
 <p>It is easier to explain the method after I have presented these three examples. I will use the same toy text sample for the following illustration.</p>
 <p><strong>Text in the left column:</strong></p>
@@ -438,8 +399,7 @@ cookieconsent.run({
 <blockquote class="blockquote">
 <p>More text</p>
 </blockquote>
-<section id="example-1-two-columns-separated-by-a-small-third-column" class="level3">
-<h3 class="anchored" data-anchor-id="example-1-two-columns-separated-by-a-small-third-column">Example 1: Two columns separated by a small third column</h3>
+<section id="example-1-two-columns-separated-by-a-small-third-column" class="level3"><h3 class="anchored" data-anchor-id="example-1-two-columns-separated-by-a-small-third-column">Example 1: Two columns separated by a small third column</h3>
 <p>The example is — slightly redacted — taken <a href="https://stackoverflow.com/a/74162353/7322615">from shafee via StackOverflow</a></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
@@ -495,16 +455,14 @@ cookieconsent.run({
 <div class="callout-body-container callout-body">
 <div class="columns">
 <div class="column" style="width:30%;">
-<section id="first-column" class="level5">
-<h5 class="anchored" data-anchor-id="first-column">First column</h5>
+<section id="first-column" class="level5"><h5 class="anchored" data-anchor-id="first-column">First column</h5>
 <p>I would like to have text here</p>
 <p>Sentence becomes longer, it should automatically stay in their column</p>
 </section>
 </div><div class="column" style="width:10%;">
 <!-- empty column to create gap -->
 </div><div class="column" style="width:20%;">
-<section id="second-column" class="level5">
-<h5 class="anchored" data-anchor-id="second-column">Second column</h5>
+<section id="second-column" class="level5"><h5 class="anchored" data-anchor-id="second-column">Second column</h5>
 <p>and here</p>
 <p>More text</p>
 </section>
@@ -513,9 +471,7 @@ cookieconsent.run({
 </div>
 </div>
 </div>
-</section>
-<section id="example-2-two-columns-using-the-bootstrap-css-grid-system" class="level3">
-<h3 class="anchored" data-anchor-id="example-2-two-columns-using-the-bootstrap-css-grid-system">Example 2: Two columns using the bootstrap CSS grid system</h3>
+</section><section id="example-2-two-columns-using-the-bootstrap-css-grid-system" class="level3"><h3 class="anchored" data-anchor-id="example-2-two-columns-using-the-bootstrap-css-grid-system">Example 2: Two columns using the bootstrap CSS grid system</h3>
 <p>The example is — slightly redacted — taken <a href="https://stackoverflow.com/a/75383017/7322615">from Julian via StackOverflow</a>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
@@ -570,13 +526,10 @@ cookieconsent.run({
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="grid">
-<section id="first-column-1" class="level5 g-col-4">
-<h5 class="anchored" data-anchor-id="first-column-1">First column</h5>
+<section id="first-column-1" class="level5 g-col-4"><h5 class="anchored" data-anchor-id="first-column-1">First column</h5>
 <p>I would like to have text here</p>
 <p>Sentence becomes longer, it should automatically stay in their column</p>
-</section>
-<section id="second-column-1" class="level5 g-col-4">
-<h5 class="anchored" data-anchor-id="second-column-1">Second column</h5>
+</section><section id="second-column-1" class="level5 g-col-4"><h5 class="anchored" data-anchor-id="second-column-1">Second column</h5>
 <p>and here</p>
 <p>More text</p>
 </section>
@@ -584,9 +537,7 @@ cookieconsent.run({
 </div>
 </div>
 </div>
-</section>
-<section id="example-3-two-columns-with-text-center-aligned" class="level3">
-<h3 class="anchored" data-anchor-id="example-3-two-columns-with-text-center-aligned">Example 3: Two columns with text center-aligned</h3>
+</section><section id="example-3-two-columns-with-text-center-aligned" class="level3"><h3 class="anchored" data-anchor-id="example-3-two-columns-with-text-center-aligned">Example 3: Two columns with text center-aligned</h3>
 <p>The example is — slightly redacted — <a href="https://stackoverflow.com/a/73307989/7322615">taken again from shafee via StackOverflow</a>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
@@ -657,14 +608,12 @@ text-align: center;
 </div>
 <div class="columns">
 <div class="column" style="width:30%;">
-<section id="first-column-2" class="level5">
-<h5 class="anchored" data-anchor-id="first-column-2">First column</h5>
+<section id="first-column-2" class="level5"><h5 class="anchored" data-anchor-id="first-column-2">First column</h5>
 <p>I would like to have text here</p>
 <p>Sentence becomes longer, it should automatically stay in their column</p>
 </section>
 </div><div class="column" style="width:30%;">
-<section id="second-column-2" class="level5">
-<h5 class="anchored" data-anchor-id="second-column-2">Second column</h5>
+<section id="second-column-2" class="level5"><h5 class="anchored" data-anchor-id="second-column-2">Second column</h5>
 <p>and here</p>
 <p>More text</p>
 </section>
@@ -673,16 +622,12 @@ text-align: center;
 </div>
 </div>
 </div>
-</section>
-</section>
-<section id="fenced-divs-in-pandoc-how-do-they-work" class="level2">
-<h2 class="anchored" data-anchor-id="fenced-divs-in-pandoc-how-do-they-work">Fenced divs in Pandoc: How do they work?</h2>
-<section id="what-is-pandoc" class="level3">
-<h3 class="anchored" data-anchor-id="what-is-pandoc">What is Pandoc?</h3>
+</section></section><section id="fenced-divs-in-pandoc-how-do-they-work" class="level2"><h2 class="anchored" data-anchor-id="fenced-divs-in-pandoc-how-do-they-work">Fenced divs in Pandoc: How do they work?</h2>
+<section id="what-is-pandoc" class="level3"><h3 class="anchored" data-anchor-id="what-is-pandoc">What is Pandoc?</h3>
 <p><a href="https://pandoc.org/index.html">Pandoc</a> is an open-source universal document converter. Pandoc is licensed with the very permissive GNU<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> General Public License (<a href="https://www.gnu.org/licenses/gpl-3.0.html">GPL</a>). Currently, Pandoc supports the conversion of more than 60 formats. <a href="https://johnmacfarlane.net/">John MacFarlane</a>, a philosophy professor at the University of Berkeley, is developing and maintaining Pandoc.</p>
-<p>RStudio IDE ships with a pandoc binary. The path is stored in the <code>RSTUDIO_PANDOC</code> environment variable. You can get the path and the current pandoc version used by RStudio with <code>rmarkdown::find_pandoc()</code>.</p>
+<p>RStudio IDE ships with a pandoc binary. The path is stored in the <code>RSTUDIO_PANDOC</code> environment variable. You can get the path and the current pandoc version used by RStudio with <code><a href="https://pkgs.rstudio.com/rmarkdown/reference/find_pandoc.html">rmarkdown::find_pandoc()</a></code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">find_pandoc</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">rmarkdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/find_pandoc.html">find_pandoc</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$version
 [1] '3.2.1'
@@ -708,9 +653,7 @@ $dir
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">base</span><span class="kw">)</span> <span class="ex">path@my_machine</span> quarto-blog % </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>This result shows I have two different pandoc versions installed — a potential danger for a version conflict: One version installed RStudio, and the other I downloaded with the macOS package manager <a href="https://brew.sh/">Homebrew</a>.</p>
-</section>
-<section id="div-blocks-in-pandoc" class="level3">
-<h3 class="anchored" data-anchor-id="div-blocks-in-pandoc">Div Blocks in Pandoc</h3>
+</section><section id="div-blocks-in-pandoc" class="level3"><h3 class="anchored" data-anchor-id="div-blocks-in-pandoc">Div Blocks in Pandoc</h3>
 <p>The pandoc <code>div</code> extension allows a special fenced syntax to generate HTML div-tags:</p>
 <blockquote class="blockquote">
 <p>A <code>div</code> starts with a fence containing at least three consecutive colons plus some attributes. The attributes may optionally be followed by another string of consecutive colons. … [O]ne can use either attributes in curly braces or a single unbraced word, which will be treated as a class name. The Div ends with another line containing a string of at least three consecutive colons. The fenced Div should be separated by blank lines from preceding and following blocks. From <a href="https://pandoc.org/MANUAL.html#extension-fenced_divs">Extension: <code>fenced_divs</code></a></p>
@@ -719,19 +662,14 @@ $dir
 <ol type="1">
 <li><p>If you are going to nest pandoc div directives, you must provide more colons for the outer divs than the inner divs.</p></li>
 <li><p>To prevent that Quarto uses the jupyter engine, you must provide engine: knitr in the YAML front matter.</p></li>
-</ol>
-</section>
-</section>
-<section id="a-genuine-quarto-solution" class="level2">
-<h2 class="anchored" data-anchor-id="a-genuine-quarto-solution">A genuine Quarto solution</h2>
+</ol></section></section><section id="a-genuine-quarto-solution" class="level2"><h2 class="anchored" data-anchor-id="a-genuine-quarto-solution">A genuine Quarto solution</h2>
 <p>After I looked around at how to create a two-<strong>text</strong>&nbsp;column layout for a while, I found a simple Quarto answer. Hidden in the help page about figures, I found the remark:</p>
 <blockquote class="blockquote">
 <p>You can treat any markdown content you want as a figure by enclosing it in Pandoc div block with an identifier prefaced with #fig-. See the <a href="https://quarto.org/docs/authoring/figures.html#figure-divs">first sentence under the header <code>Figure Divs</code></a>.</p>
 </blockquote>
 <p>The first part of the sentence, “You can treat any markdown content you want as a figure…” could be reversed to the concept that a layout for figures works similarly to a design for text.</p>
 <p>I came up with the following solution that I also published to answer the <a href="https://stackoverflow.com/a/76191188/7322615">StackOverflow post</a>.</p>
-<section id="version-1-with-equally-wide-columns" class="level3">
-<h3 class="anchored" data-anchor-id="version-1-with-equally-wide-columns">Version 1 with equally wide columns</h3>
+<section id="version-1-with-equally-wide-columns" class="level3"><h3 class="anchored" data-anchor-id="version-1-with-equally-wide-columns">Version 1 with equally wide columns</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">"Two columns layout Quarto with equally wide columns"</span></span>
@@ -756,9 +694,7 @@ $dir
 <span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="sc">:::</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The above solution uses the Quarto <code>layout-ncol</code> attribute. There is also a <code>layout-nrow</code>attribute. In both directives, you can specify the number of columns respectively rows.</p>
-</section>
-<section id="version-2-with-different-wide-columns" class="level3">
-<h3 class="anchored" data-anchor-id="version-2-with-different-wide-columns">Version 2 with different wide columns</h3>
+</section><section id="version-2-with-different-wide-columns" class="level3"><h3 class="anchored" data-anchor-id="version-2-with-different-wide-columns">Version 2 with different wide columns</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">"Two columns layout Quarto with different wide columns"</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>format<span class="sc">:</span> html</span>
@@ -786,11 +722,7 @@ $dir
 <ol type="1">
 <li><p>There needs to be an empty line between every paragraph (here sentence). This structure is necessary so Pandoc can see the break and addresses the next column.</p></li>
 <li><p>You need to use the <code>engine: knitr</code> command to prevent rendering with the jupyter engine.</p></li>
-</ol>
-</section>
-</section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+</ol></section></section><section id="conclusion" class="level2"><h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 <p>There are many possibilities for a creative layout design in Quarto. This article shows the use of Pandocs <code>div block</code> directives with five different methods. These layout directives can be generalized from a two-column to a many column layout</p>
 <ol type="1">
 <li>Several columns with varying percentages of widths.</li>
@@ -801,15 +733,10 @@ $dir
 </ol>
 
 
-</section>
-
-
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
+</section><a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 <ol>
 <li id="fn1"><p>GNU is a recursive acronym and means: <a href="https://en.wikipedia.org/wiki/GNU">GNU’s Not Unix</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{baumgartner2023,
+</ol></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{baumgartner2023,
   author = {Baumgartner, Peter},
   title = {Creating a Column-Based Layout},
   date = {2023-05-07},
@@ -819,8 +746,7 @@ $dir
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-baumgartner2023" class="csl-entry quarto-appendix-citeas" role="listitem">
 Baumgartner, Peter. 2023. <span>“Creating a Column-Based Layout.”</span>
 May 7. <a href="https://peter-baumgartner.net/posts/2023-05-07-creating-a-column-based-layout/">https://peter-baumgartner.net/posts/2023-05-07-creating-a-column-based-layout/</a>.
-</div></div></section></div></main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -1219,22 +1145,20 @@ May 7. <a href="https://peter-baumgartner.net/posts/2023-05-07-creating-a-column
       }
     }
   });
-  </script>
-<script src="https://utteranc.es/client.js" repo="petzi53/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+  </script><script src="https://utteranc.es/client.js" repo="petzi53/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
+<footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
       <ul class="footer-items list-unstyled">
-    <li class="nav-item">
+<li class="nav-item">
  <a href="https://www.peter-baumgartner.net">Thought Splinters</a> © 2023-2026 by <a href="https://www.peter-baumgartner.net/about">Peter Baumgartner</a> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1">CC BY 4.0</a>
   </li>  
 </ul>
-    </div>   
+</div>   
     <div class="nav-footer-center">
       <ul class="footer-items list-unstyled">
-    <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="../../about.html">
 <p>About</p>
 </a>
@@ -1250,17 +1174,16 @@ May 7. <a href="https://peter-baumgartner.net/posts/2023-05-07-creating-a-column
 </a>
   </li>  
 </ul>
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/petzi53/petzi53.github.io/edit/main/posts/2023-05-07-creating-a-column-based-layout/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/petzi53/petzi53.github.io/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/petzi53/petzi53.github.io/edit/main/posts/2023-05-07-creating-a-column-based-layout/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/petzi53/petzi53.github.io/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
-    <li class="nav-item">
+<li class="nav-item">
  Proudly powered by <a href="https://quarto.org/">Quarto</a>
   </li>  
 </ul>
-    </div>
+</div>
   </div>
-</footer>
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":true,"openEffect":"zoom","selector":".lightbox"});
+</footer><script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":true,"openEffect":"zoom","selector":".lightbox"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
@@ -1292,8 +1215,6 @@ May 7. <a href="https://peter-baumgartner.net/posts/2023-05-07-creating-a-column
   
 })();
           </script>
-
-
 
 
 </body></html>
