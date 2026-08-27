@@ -8,7 +8,7 @@
 
 <meta name="author" content="Peter Baumgartner">
 <meta name="dcterms.date" content="2026-08-26">
-<meta name="description" content="I had 24 years of press freedom data and over 200 country names that needed consolidating. I thought it was a string-matching problem. It wasn’t. Here’s how I found out, and what the solution actually looks like.">
+<meta name="description" content="I had data consisting of 24 years of press freedom and more than 200 country names that needed to be consolidated. At first I thought it was a string-matching problem, but it wasn’t. Here’s how I worked that out, and what the solution actually looks like.">
 
 <title>When Data Cleaning Becomes Decision-Making – Thought Splinters</title>
 <style>
@@ -169,9 +169,9 @@ cookieconsent.run({
 <link rel="stylesheet" href="../../styles.css">
 <link rel="stylesheet" href="../../glossary.css">
 <meta name="twitter:title" content="When Data Cleaning Becomes Decision-Making – Thought Splinters">
-<meta name="twitter:description" content="I had 24 years of press freedom data and over 200 country names that needed consolidating. I thought it was a string-matching problem. It wasn’t. Here’s how I found out, and what the solution actually looks like.">
+<meta name="twitter:description" content="I had data consisting of 24 years of press freedom and more than 200 country names that needed to be consolidated. At first I thought it was a string-matching problem, but it wasn’t. Here’s how I worked that out, and what the solution actually looks like.">
 <meta name="twitter:image" content="https://peter-baumgartner.net/posts/2026-08-26-data-cleaning-decisions/data-cleaning-decision.webp">
-<meta name="twitter:image:alt" content="A person or analyst sitting at a desk, deeply engaged in examining and organizing data into a world map. The scene shows the actual thinking process, not before/after states.">
+<meta name="twitter:image:alt" content="A person or analyst sitting at a desk, deeply engaged in examining and organizing data into a world map.">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
@@ -294,7 +294,7 @@ cookieconsent.run({
             <p class="subtitle lead">How I Learned That Consolidating Country Names Is a Thinking Problem, Not a Technical One</p>
                   <div>
         <div class="description">
-          <p>I had 24 years of press freedom data and over 200 country names that needed consolidating. I thought it was a string-matching problem. It wasn’t. Here’s how I found out, and what the solution actually looks like.</p>
+          <p>I had data consisting of 24 years of press freedom and more than 200 country names that needed to be consolidated. At first I thought it was a string-matching problem, but it wasn’t. Here’s how I worked that out, and what the solution actually looks like.</p>
         </div>
       </div>
                           <div class="quarto-categories">
@@ -326,7 +326,7 @@ cookieconsent.run({
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">August 26, 2026</p>
+        <p class="date-modified">August 27, 2026</p>
       </div>
     </div>
       
@@ -366,27 +366,27 @@ cookieconsent.run({
 
 <section id="the-problem-i-thought-i-had" class="level2">
 <h2 class="anchored" data-anchor-id="the-problem-i-thought-i-had">The problem I thought I had</h2>
-<p>I’ve been building <a href="https://cran.r-project.org/package=pressfreedom.data"><code>pressfreedom.data</code></a>, an R data package that combines Reporters Without Borders (RSF) press freedom rankings from 2002 to 2026. Alongside it, I’m developing with <code>pressfreedom</code> another package, a Shiny app built on top of the data package that lets non-R users explore the rankings interactively — it’s finished and <a href="https://peter-baumgartner.net/pressfreedom">available at GitHub</a>, but still waiting on its own CRAN acceptance.</p>
-<div class="callout callout-style-default callout-tip callout-empty-content callout-titled">
+<p>I’ve been building <a href="https://cran.r-project.org/package=pressfreedom.data"><code>pressfreedom.data</code></a>; a data package for R that includes the press freedom rankings compiled by Reporters Without Borders (RSF) from 2002 through 2026. At the same time, I am also developing, in collaboration with the <code>pressfreedom</code> package, a Shiny app based on this data package which allows people who are not acquainted with R to investigate the rankings in an interactive way—the app is finished and can be accessed on GitHub at https://peter-baumgartner.net/pressfreedom, even though it has not yet been approved by CRAN.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Explore and play around with the <a href="https://pbaumgartner-pressfreedom.share.connect.posit.cloud/">interactive version of the pressfreedom package</a>
+Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-
+<p>Have a look at the interactive version of the pressfreedom package at https://pbaumgartner-pressfreedom.share.connect.posit.cloud/</p>
 </div>
 </div>
-<p>Twenty-four years of data, published by an organisation that changed its own naming conventions multiple times, means the “country” column is a mess. Countries were renamed. Territories appeared and disappeared. RSF itself used different labels for the same entity in different years. By the time I combined all 24 CSV files into one data frame, I had 207 distinct country strings where I needed something closer to 180.</p>
-<p>My initial assumption: this is a technical problem. Some string matching, a few regex rules, maybe a fuzzy-matching library. I figured I could get it sorted in an afternoon. What actually happened took considerably longer, and the reason it took longer is what I want to write about here.</p>
+<p>Twenty-four years of data, published by an organization that changed its own naming conventions multiple times, means the “country” column is a mess. Countries were renamed; territories came into being and then vanished again. The RSF itself used different labels for the same entity across years. By the time I combined all 24 CSV files into one data frame, I had 207 distinct country strings where I needed something closer to 180.</p>
+<p>The first thing I did was to look at the country names and combine them where it was necessary. I thought I would be able to sort it out in an afternoon. What actually happened took considerably longer, and the reason it took longer is what I want to write about here.</p>
 </section>
 <section id="first-approach-looking-not-matching" class="level2">
 <h2 class="anchored" data-anchor-id="first-approach-looking-not-matching">First approach: looking, not matching</h2>
-<p>A year before I brought in an AI assistant at all, I didn’t have the tooling — or honestly the vocabulary — to reach for something like fuzzy string matching. My first approach was much lower-tech: I looked at the data.</p>
-<p>Specifically, I had been building an early, unfinished version of the <a href="https://pbaumgartner-pressfreedom.share.connect.posit.cloud/">Shiny app</a>, and putting the raw country list onto a map and into filterable dropdowns turned out to be a far better error-detection tool than any script I could have written at the time. Duplicates and oddities that were easy to miss scrolling through a data frame were obvious the moment they showed up as two overlapping shapes on a choropleth map, or two entries in a dropdown that should have had one.</p>
+<p>A year before I learned to work with an AI assistant, I didn’t have the tooling to reach for something like <a href="https://en.wikipedia.org/wiki/Approximate_string_matching">fuzzy string matching</a>. My first approach was much lower-tech: I looked at the data.</p>
+<p>Specifically, I had been building an early, unfinished version of the <a href="https://pbaumgartner-pressfreedom.share.connect.posit.cloud/">Shiny app</a>, and putting the raw country list into line charts and filterable dropdowns turned out to be a far better error-detection tool than any script I could have written at the time. Duplicates and oddities that were easy to miss scrolling through a data frame were obvious the moment they showed up as broken in a line chart, or as two entries in a dropdown that should have had one.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -397,15 +397,15 @@ cookieconsent.run({
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A half-finished Shiny app with a country dropdown and a map caught problems that a data frame printout missed entirely. If you’re cleaning categorical data that has a natural visual representation — geography, time series, hierarchy — consider building even a rough visualization before reaching for programmatic cleaning. The eye catches pattern violations that code doesn’t know to look for.</p>
+<p>A half-finished Shiny app with a country dropdown and a line chart caught problems that a data frame printout missed entirely. If you’re cleaning categorical data that has a natural visual representation — geography, time series, hierarchy — consider building even a rough visualization before reaching for programmatic cleaning. The eye catches pattern violations that code doesn’t know to look for.</p>
 </div>
 </div>
-<p>That’s how I first caught the Israel and United States variants — rows like “Israel (occupied territories)” and “United States (in Irak)” sitting alongside plain “Israel” and “United States” entries. Looking at them on a line chart, next to each other, made it obvious these weren’t separate countries; they were reporting artifacts I needed to either fold into the main entry or drop, depending on what they actually represented.</p>
+<p>That’s how I first caught the Israel and United States variants — rows like “Israel (occupied territories)” and “United States (in Irak)” sitting alongside plain “Israel” and “United States” entries. Looking at them on a line chart, next to each other, made it obvious these weren’t separate countries; they were reporting artifacts I needed to either fold into the main entry or drop, depending what they really stood for.</p>
 <p>That visual pass didn’t give me a general framework, but it gave me a list of “things that don’t look right,” which turned out to matter more than any framework I could have defined upfront.</p>
 </section>
 <section id="when-i-consulted-an-ai-and-hit-the-limits-of-automation" class="level2">
 <h2 class="anchored" data-anchor-id="when-i-consulted-an-ai-and-hit-the-limits-of-automation">When I consulted an AI — and hit the limits of automation</h2>
-<p><a href="https://en.wikipedia.org/wiki/Approximate_string_matchingg">Fuzzy string matchin</a> only entered the picture much later, after I started working with an AI assistant. When I described the general shape of the country-name problem, one of the early suggestions was to catch spelling variants using similarity scoring rather than hand-listing every case. It’s a reasonable idea for plain spelling drift — and it did help with genuinely ambiguous transliteration variants.</p>
+<p><a href="https://en.wikipedia.org/wiki/Approximate_string_matchingg">Fuzzy string matching</a> only entered the picture much later, after I started working with an AI assistant. When I described the general shape of the country-name problem, one of the early suggestions was to catch spelling variants using similarity scoring rather than hand-listing every case. It’s a reasonable idea for plain spelling drift — and it did help with genuinely ambiguous transliteration variants.</p>
 <p>But it had a blind spot that visual inspection didn’t: nothing about <a href="https://www.whatsonintrnc.com/post/what-is-the-difference-between-north-and-south-cyprus">“Cyprus” and “Northern Cyprus”</a> being one edit apart tells you they’re two separate, politically contested territories with genuinely different press freedom situations. A similarity threshold loose enough to catch real spelling variants was also loose enough to quietly merge Cyprus into Northern Cyprus.</p>
 <div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -417,7 +417,7 @@ cookieconsent.run({
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Fuzzy matching can find candidates for consolidation, but it cannot decide whether two candidates <em>should</em> be consolidated. That decision depends on the real-world relationship between the entities — something that lives outside the data. Cyprus and Northern Cyprus look like near-duplicates to a string distance algorithm. To anyone who knows the political geography, they’re entirely distinct. Always verify automated match candidates against external knowledge before applying them.</p>
+<p>Fuzzy matching can find candidates for consolidation, but it cannot decide whether two candidates <em>should</em> be consolidated. That decision depends on the real-world relationship between the entities—something that lies outside the data. Cyprus and Northern Cyprus look like near-duplicates to a string distance algorithm. Anyone who knows the political geography knows they’re entirely distinct. Always verify automated match candidates against external knowledge before applying them.</p>
 </div>
 </div>
 <p>I hadn’t told the AI what I actually cared about, because at that point I hadn’t fully worked it out myself.</p>
@@ -427,26 +427,27 @@ cookieconsent.run({
 <p>The question I’d been asking was “how do I match these strings?” The question I actually needed to ask was “what does it mean for two rows to represent the same country?”</p>
 <div class="my-bullet">
 <div class="my-bullet-header">
-<p>Title for bullet text</p>
+<p>Different reasons for country name variants needs different actions</p>
 </div>
 <div class="my-bullet-container">
-<p>Those are different questions, and the difference matters. Once I reframed it — <em>what am I consolidating, and for what purpose?</em> — the cases separated into recognisable categories:</p>
+<p>Those are different questions, and the difference matters. Once I reframed it — <em>what am I consolidating, and for what purpose?</em> — the cases separated into recognizable categories:</p>
 <ol type="1">
 <li><strong>Territorial variants</strong> — same country, different administrative reporting configuration (drop or fold in, case by case)</li>
 <li><strong>Official name changes</strong> — same country, new name; follow the government’s own change</li>
 <li><strong>Spelling and formatting fixes</strong> — same name, inconsistent transliteration; merge</li>
-<li><strong>Historical entities</strong> — an entity that split or merged over time; do not force into one row, handle explicitly</li>
+<li><strong>Historical entities</strong> — an entity that split or merged over time; do not force into one row; handle explicitly</li>
 <li><strong>Verification</strong> — check the merged result against what you know about each country’s actual history</li>
 <li><strong>Documentation</strong> — write down <em>why</em>, not just <em>what</em>, for every non-obvious case</li>
 </ol>
 </div>
 </div>
-<p>That framework didn’t come from a single insight. It came from working through cases one at a time and noticing that each new “weird” one didn’t fit whatever rule I currently had. The AI was useful here not by generating the framework, but to find the inconsistencies in country names. So I get concrete ideas what I should investigate to clarify my most important question: “Is this the same country, or just a different way of describing the same territory?”</p>
+<p>That framework didn’t come from a single insight. It came from working through cases one at a time and noticing that each new “weird” one didn’t fit whatever rule I currently had. The AI was useful here not by generating the framework, but by finding inconsistencies in country names. So I get concrete ideas about what I should investigate to clarify my most important question: “Is this the same country, or just a different way of describing the same territory?”</p>
 </section>
 <section id="what-the-decisions-actually-look-like" class="level2">
 <h2 class="anchored" data-anchor-id="what-the-decisions-actually-look-like">What the decisions actually look like</h2>
-<p>Talking about “a mapping table with reasoning attached” is abstract. Here’s a slice of the real one — <code>inst/extdata/consolidation_mapping.csv</code> in <code>pressfreedom.data</code>, covering the name-change and disambiguation cases:</p>
+<p>To illustrate my abstract talk about consolidating country names, I want to give a concrete example. Here’s a slice of the real data — <code>inst/extdata/consolidation_mapping.csv</code> in <code>pressfreedom.data</code>, covering the name-change and disambiguation cases:</p>
 <table class="caption-top table">
+<caption>Demonstration of decision matrix for disambiguation of country names</caption>
 <colgroup>
 <col style="width: 25%">
 <col style="width: 25%">
@@ -506,7 +507,7 @@ cookieconsent.run({
 </tr>
 </tbody>
 </table>
-<p>Notice what the <code>reason</code> column is doing. It’s not describing the mechanics of the merge — the <code>old_name</code> → <code>new_name</code> structure does that. It’s recording <em>which kind</em> of decision each row represents. “Official name change” and “RSF standardization” look identical to a string-matching algorithm: two strings that aren’t equal. But they came from different reasoning, and only a human reading the row can tell the difference.</p>
+<p>Notice what the <code>reason</code> column is doing. It’s not describing the mechanics of the merge — the <code>old_name</code> -&gt; <code>new_name</code> structure does that. It’s recording <em>which kind</em> of decision each row represents. “Official name change” and “RSF standardization” look identical to a string-matching algorithm: two strings that aren’t equal. But they came from different reasoning, and only a human reading the row can tell the difference.</p>
 <p>The two Cyprus rows at the bottom are a small piece of evidence for the iteration point: I didn’t anticipate RSF using three different labels for Northern Cyprus over the years. I found them one at a time and added a row each time.</p>
 <p>The territorial-variant cases — the ones I first noticed by eye in the Shiny app — get handled separately, <em>before</em> the mapping table is even consulted, because they’re a different kind of decision (drop or fold in, not rename):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> result <span class="sc">|&gt;</span></span>
@@ -528,11 +529,11 @@ cookieconsent.run({
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <code>NA_character_</code> branches are deletions — rows that don’t belong in a country-level dataset. “Israel (outside Israeli territory)” reports press freedom conditions for Israeli military or diplomatic activity <em>outside</em> Israel’s own borders (these rows appear for 2006–2012); that’s not the country of Israel. The branches that assign a plain country name are the opposite call: same underlying country, redundant label.</p>
-<p>Every branch has a comment explaining the decision, not the R syntax. The code is short. The reasoning behind each line took much longer to arrive at.</p>
+<p>Every branch has a comment explaining the decision, not only the R syntax. The code is short. The reasoning behind each line took much longer to arrive at.</p>
 </section>
 <section id="lessons-learned" class="level2">
 <h2 class="anchored" data-anchor-id="lessons-learned">Lessons learned</h2>
-<p>Data consolidation looks like a technical problem from a distance. Up close, for anything with real-world categories that change over time — countries, currencies, industry codes, organisational units after a merger — it’s a decision problem wearing a technical disguise.</p>
+<p>Data consolidation looks like a technical problem from a distance. Up close, for anything with real-world categories that change over time — countries, currencies, industry codes, organizational units after a merger — it’s a decision problem wearing a technical disguise.</p>
 <p>A few things I’d do the same way again:</p>
 <ul>
 <li><strong>Start by looking, not coding.</strong> A visualization (even a rough one) surfaced problems that a data frame inspection missed.</li>
