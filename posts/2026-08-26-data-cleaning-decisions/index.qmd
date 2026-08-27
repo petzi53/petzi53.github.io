@@ -15,10 +15,10 @@ draft: false
 ## The problem I thought I had
 
 I've been building [`pressfreedom.data`](https://cran.r-project.org/package=pressfreedom.data);
-a data package for R that includes the press freedom rankings compiled by Reporters Without Borders (RSF) from 2002 through 2026. At the same time, I am also developing, in collaboration with the `pressfreedom` package, a Shiny app based on this data package which allows people who are not acquainted with R to investigate the rankings in an interactive way—the app is finished and can be accessed on GitHub at https://peter-baumgartner.net/pressfreedom, even though it has not yet been approved by CRAN.
+a data package for R that includes the press freedom rankings compiled by Reporters Without Borders (RSF) from 2002 through 2026. At the same time, I am also developing, in collaboration with the `pressfreedom` package, a Shiny app based on this data package which allows people who are not acquainted with R to investigate the rankings in an interactive way—the app is finished and can be accessed on GitHub at <https://peter-baumgartner.net/pressfreedom>, even though it has not yet been approved by CRAN.
 
 ::: {.callout-tip}
-Have a look at the interactive version of the pressfreedom package at https://pbaumgartner-pressfreedom.share.connect.posit.cloud/
+Have a look at the interactive version of the pressfreedom package at <https://pbaumgartner-pressfreedom.share.connect.posit.cloud/>
 :::
 
 
