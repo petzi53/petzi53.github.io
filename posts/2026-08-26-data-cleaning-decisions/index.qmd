@@ -2,59 +2,50 @@
 title: "When Data Cleaning Becomes Decision-Making"
 subtitle: "How I Learned That Consolidating Country Names Is a Thinking Problem, Not a Technical One"
 description: |
-  I had 24 years of press freedom data and over 200 country names that needed consolidating.
-  I thought it was a string-matching problem. It wasn't. Here's how I found out,
-  and what the solution actually looks like.
+  I had data consisting of 24 years of press freedom and more than 200 country names that needed to be consolidated. At first I thought it was a string-matching problem, but it wasn't. Here's how I worked that out, and what the solution actually looks like.
 author: "Peter Baumgartner"
 date: "2026-08-26"
 date-modified: last-modified
 image: "data-cleaning-decision.webp"
-image-alt: "A person or analyst sitting at a desk, deeply engaged in examining and organizing data into a world map. The scene shows the actual thinking process, not before/after states."
+image-alt: "A person or analyst sitting at a desk, deeply engaged in examining and organizing data into a world map."
 categories: [R, data-cleaning, LLM, pressfreedom.data]
 draft: false
 ---
 
 ## The problem I thought I had
 
-I've been building [`pressfreedom.data`](https://cran.r-project.org/package=pressfreedom.data),
-an R data package that combines Reporters Without Borders (RSF) press freedom
-rankings from 2002 to 2026. Alongside it, I'm developing with `pressfreedom` another package, a Shiny app built on top of the data package that lets non-R users explore the rankings interactively — it's finished and [available at GitHub](https://peter-baumgartner.net/pressfreedom), but still waiting on its own CRAN acceptance.
+I've been building [`pressfreedom.data`](https://cran.r-project.org/package=pressfreedom.data);
+a data package for R that includes the press freedom rankings compiled by Reporters Without Borders (RSF) from 2002 through 2026. At the same time, I am also developing, in collaboration with the `pressfreedom` package, a Shiny app based on this data package which allows people who are not acquainted with R to investigate the rankings in an interactive way—the app is finished and can be accessed on GitHub at https://peter-baumgartner.net/pressfreedom, even though it has not yet been approved by CRAN.
 
 ::: {.callout-tip}
-##### Explore and play around with the [interactive version of the pressfreedom package](https://pbaumgartner-pressfreedom.share.connect.posit.cloud/)
+Have a look at the interactive version of the pressfreedom package at https://pbaumgartner-pressfreedom.share.connect.posit.cloud/
 :::
 
 
-Twenty-four years of data, published by an organisation that changed its own
+Twenty-four years of data, published by an organization that changed its own
 naming conventions multiple times, means the "country" column is a mess. Countries
-were renamed. Territories appeared and disappeared. RSF itself used different labels
-for the same entity in different years. By the time I combined all 24 CSV files
+were renamed; territories came into being and then vanished again. The RSF itself used different labels for the same entity across years. By the time I combined all 24 CSV files
 into one data frame, I had 207 distinct country strings where I needed something
 closer to 180.
 
-My initial assumption: this is a technical problem. Some string matching, a few
-regex rules, maybe a fuzzy-matching library. I figured I could get it sorted in
-an afternoon. What actually happened took considerably longer, and the reason
-it took longer is what I want to write about here.
+The first thing I did was to look at the country names and combine them where it was necessary. I thought I would be able to sort it out in an afternoon. What actually happened took considerably longer, and the reason it took longer is what I want to write about here.
+
 
 ## First approach: looking, not matching
 
-A year before I brought in an AI assistant at all, I didn't have the tooling —
-or honestly the vocabulary — to reach for something like fuzzy string matching.
-My first approach was much lower-tech: I looked at the data.
+A year before I learned to work with an AI assistant, I didn't have the tooling to reach for something like [fuzzy string matching](https://en.wikipedia.org/wiki/Approximate_string_matching). My first approach was much lower-tech: I looked at the data.
 
 Specifically, I had been building an early, unfinished version of the
 [Shiny app](https://pbaumgartner-pressfreedom.share.connect.posit.cloud/), and
-putting the raw country list onto a map and into filterable dropdowns turned out
+putting the raw country list into line charts and filterable dropdowns turned out
 to be a far better error-detection tool than any script I could have written at
 the time. Duplicates and oddities that were easy to miss scrolling through a data
-frame were obvious the moment they showed up as two overlapping shapes on a
-choropleth map, or two entries in a dropdown that should have had one.
+frame were obvious the moment they showed up as broken in a line chart, or as two entries in a dropdown that should have had one.
 
 ::: {.callout-note}
 ##### Visual inspection is underrated as a data quality tool
 
-A half-finished Shiny app with a country dropdown and a map caught problems that
+A half-finished Shiny app with a country dropdown and a line chart caught problems that
 a data frame printout missed entirely. If you're cleaning categorical data that
 has a natural visual representation — geography, time series, hierarchy — consider building even a rough visualization before reaching for programmatic cleaning. The eye catches pattern violations that code doesn't know to look for.
 :::
@@ -64,15 +55,17 @@ That's how I first caught the Israel and United States variants — rows like
 plain "Israel" and "United States" entries. Looking at them on a line chart, next
 to each other, made it obvious these weren't separate countries; they were
 reporting artifacts I needed to either fold into the main entry or drop, depending
-on what they actually represented.
+what they really stood for.
 
 That visual pass didn't give me a general framework, but it gave me a list of
 "things that don't look right," which turned out to matter more than any framework
 I could have defined upfront.
 
+
+
 ## When I consulted an AI — and hit the limits of automation
 
-[Fuzzy string matchin](https://en.wikipedia.org/wiki/Approximate_string_matchingg) only entered the picture much later, after I started working
+[Fuzzy string matching](https://en.wikipedia.org/wiki/Approximate_string_matchingg) only entered the picture much later, after I started working
 with an AI assistant. When I described the general shape of the country-name
 problem, one of the early suggestions was to catch spelling variants using
 similarity scoring rather than hand-listing every case. It's a reasonable idea
@@ -89,9 +82,8 @@ enough to quietly merge Cyprus into Northern Cyprus.
 
 Fuzzy matching can find candidates for consolidation, but it cannot decide whether
 two candidates *should* be consolidated. That decision depends on the real-world
-relationship between the entities — something that lives outside the data. Cyprus
-and Northern Cyprus look like near-duplicates to a string distance algorithm. To
-anyone who knows the political geography, they're entirely distinct. Always verify
+relationship between the entities—something that lies outside the data. Cyprus
+and Northern Cyprus look like near-duplicates to a string distance algorithm. Anyone who knows the political geography knows they're entirely distinct. Always verify
 automated match candidates against external knowledge before applying them.
 :::
 
@@ -106,12 +98,12 @@ country?"
 
 :::::{.my-bullet}
 :::{.my-bullet-header}
-Title for bullet text
+Different reasons for country name variants needs different actions
 :::
 ::::{.my-bullet-container}
 Those are different questions, and the difference matters. Once I reframed it —
 *what am I consolidating, and for what purpose?* — the cases separated into
-recognisable categories:
+recognizable categories:
 
 1. **Territorial variants** — same country, different administrative reporting
    configuration (drop or fold in, case by case)
@@ -120,7 +112,7 @@ recognisable categories:
 3. **Spelling and formatting fixes** — same name, inconsistent transliteration;
    merge
 4. **Historical entities** — an entity that split or merged over time; do not
-   force into one row, handle explicitly
+   force into one row; handle explicitly
 5. **Verification** — check the merged result against what you know about each
    country's actual history
 6. **Documentation** — write down *why*, not just *what*, for every non-obvious
@@ -131,14 +123,14 @@ recognisable categories:
 
 That framework didn't come from a single insight. It came from working through
 cases one at a time and noticing that each new "weird" one didn't fit whatever
-rule I currently had. The AI was useful here not by generating the framework, but to find the inconsistencies in country names. So I get concrete ideas what I should investigate to clarify my most important question: 
+rule I currently had. The AI was useful here not by generating the framework, but by finding inconsistencies in country names. So I get concrete ideas about what I should investigate to clarify my most important question: 
 "Is this the same country, or just a different way
 of describing the same territory?"
 
 ## What the decisions actually look like
 
-Talking about "a mapping table with reasoning attached" is abstract. Here's a
-slice of the real one — `inst/extdata/consolidation_mapping.csv` in
+To illustrate my abstract talk about consolidating country names, I want to give a concrete example. Here's a
+slice of the real data — `inst/extdata/consolidation_mapping.csv` in
 `pressfreedom.data`, covering the name-change and disambiguation cases:
 
 | old_name | new_name | iso_code | reason |
@@ -150,9 +142,10 @@ slice of the real one — `inst/extdata/consolidation_mapping.csv` in
 | Congo | Congo-Brazzaville | COG | RSF disambiguation |
 | Northern Cyprus (Occupied) | Northern Cyprus | CXX | Turkish Republic of Northern Cyprus |
 | Cyprus North | Northern Cyprus | CXX | Turkish Republic of Northern Cyprus (2004–2022 label) |
+: Demonstration of decision matrix for disambiguation of country names
 
 Notice what the `reason` column is doing. It's not describing the mechanics of
-the merge — the `old_name` → `new_name` structure does that. It's recording *which
+the merge — the `old_name` -> `new_name` structure does that. It's recording *which
 kind* of decision each row represents. "Official name change" and "RSF
 standardization" look identical to a string-matching algorithm: two strings that
 aren't equal. But they came from different reasoning, and only a human reading the
@@ -194,14 +187,14 @@ borders (these rows appear for 2006–2012); that's not the country of Israel. T
 branches that assign a plain country name are the opposite call: same underlying
 country, redundant label.
 
-Every branch has a comment explaining the decision, not the R syntax. The code is
+Every branch has a comment explaining the decision, not only the R syntax. The code is
 short. The reasoning behind each line took much longer to arrive at.
 
 ## Lessons learned
 
 Data consolidation looks like a technical problem from a distance. Up close, for
 anything with real-world categories that change over time — countries, currencies,
-industry codes, organisational units after a merger — it's a decision problem
+industry codes, organizational units after a merger — it's a decision problem
 wearing a technical disguise.
 
 A few things I'd do the same way again:
@@ -228,3 +221,4 @@ The consolidation table isn't "finished" in any permanent sense. RSF could
 restructure how they report a territory next year, and I'd have to make a new
 judgment call. What I have instead of finished is *defensible*: every non-obvious
 row has a reason attached, and I can explain that reason to someone else.
+
