@@ -2751,6 +2751,17 @@ Version 7.”</span> August 4. <a href="https://peter-baumgartner.net/posts/tuto
   <media:content url="https://peter-baumgartner.net/posts/tutorial-zotero-obsidian-annotations/2024-08-04-annotations-with-zotero-version-7/Screenshot-WIR-2022-Zotero-min.png" medium="image" type="image/png" height="80" width="144"/>
 </item>
 <item>
+  <title></title>
+  <dc:creator>Peter Baumgartner</dc:creator>
+  <link>https://peter-baumgartner.net/posts/2024-07-27-data-for-inequality-research/</link>
+  <description><![CDATA[ undefined ]]></description>
+  <category>inequality</category>
+  <category>research</category>
+  <guid>https://peter-baumgartner.net/posts/2024-07-27-data-for-inequality-research/</guid>
+  <pubDate>Fri, 26 Jul 2024 22:00:00 GMT</pubDate>
+  <media:content url="https://peter-baumgartner.net/posts/2024-07-27-data-for-inequality-research/inequality-scale-balance-min.png" medium="image" type="image/png" height="96" width="144"/>
+</item>
+<item>
   <title>How to use the World Inequality Database (WID)?</title>
   <dc:creator>Peter Baumgartner</dc:creator>
   <link>https://peter-baumgartner.net/posts/2024-07-27-how-to-use-the-world-inequality-database-wid/</link>
@@ -3889,6 +3900,18 @@ Database (WID)?”</span> July 27. <a href="https://peter-baumgartner.net/posts/
   <guid>https://peter-baumgartner.net/posts/2024-07-27-how-to-use-the-world-inequality-database-wid/</guid>
   <pubDate>Fri, 26 Jul 2024 22:00:00 GMT</pubDate>
   <media:content url="https://peter-baumgartner.net/posts/2024-07-27-how-to-use-the-world-inequality-database-wid/WID-Logo-min.png" medium="image" type="image/png" height="103" width="144"/>
+</item>
+<item>
+  <title></title>
+  <dc:creator>Peter Baumgartner</dc:creator>
+  <link>https://peter-baumgartner.net/posts/2024-07-26-advanced-configurations/</link>
+  <description><![CDATA[ undefined ]]></description>
+  <category>blog</category>
+  <category>how-to</category>
+  <category>tutorial</category>
+  <guid>https://peter-baumgartner.net/posts/2024-07-26-advanced-configurations/</guid>
+  <pubDate>Thu, 25 Jul 2024 22:00:00 GMT</pubDate>
+  <media:content url="https://peter-baumgartner.net/posts/2024-07-26-advanced-configurations/cogwheels-min.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>Quarto Blog Tutorial 4: Shared Metadata</title>
