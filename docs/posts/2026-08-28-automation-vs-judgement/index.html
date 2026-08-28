@@ -336,7 +336,7 @@ cookieconsent.run({
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content"><section id="annual-updates-that-sometimes-change-the-data-format" class="level2"><h2 class="anchored" data-anchor-id="annual-updates-that-sometimes-change-the-data-format">Annual updates that sometimes change the data format</h2>
-<p>I’ve been building <a href="https://cran.r-project.org/package=pressfreedom.data"><code>pressfreedom.data</code></a>, an R data package that collects Reporters Without Borders (<a href="https://rsf.org/en">RSF</a>) press freedom data from 2002 through 2026. There is no consolidated dataset available because RSF publishes its press freedom data annually as a separate CSV file. This was a major task for me, as I explained in <a href="../posts/2026-08-12-endocing-resilience/index.qmd">Encoding Resilience</a>, and <a href="../posts/2026-08-26-data-cleaning-decisions/index.qmd">When Data Cleaning Becomes Decision-Making</a>. It involved not only downloading raw CSVs with inconsistent column names, but I had to normalize 24 years of data into one unified structure, standardize over 200 country-name variants, and assigning <a href="https://www.iso.org/iso-3166-country-codes.html">ISO codes</a> — a sequence of decisions and transformations that took me several months of iteration to get it right.</p>
+<p>I’ve been building <a href="https://cran.r-project.org/package=pressfreedom.data"><code>pressfreedom.data</code></a>, an R data package that collects Reporters Without Borders (<a href="https://rsf.org/en">RSF</a>) press freedom data from 2002 through 2026. There is no consolidated dataset available because RSF publishes its press freedom data annually as a separate CSV file. This was a major task for me, as I explained in <a href="../../posts/2026-08-12-encoding-resilience/index.html">Encoding Resilience</a>, and <a href="../../posts/2026-08-26-data-cleaning-decisions/index.html">When Data Cleaning Becomes Decision-Making</a>. It involved not only downloading raw CSVs with inconsistent column names, but I had to normalize 24 years of data into one unified structure, standardize over 200 country-name variants, and assigning <a href="https://www.iso.org/iso-3166-country-codes.html">ISO codes</a> — a sequence of decisions and transformations that took me several months of iteration to get it right.</p>
 <p>By late 2025, I had it finally working—the package compiled. The tests passed. The dataset was clean.</p>
 <p>But in the meantime, RSF released a new dataset in June 2026. I could download, inspect, and manually clean it, as I had done before. Then I thought: RSF will publish a new dataset again in 2027. When that happens, what do I do?</p>
 <p>The honest answer was: I’d do it all again. Manually. Re-read my own notes to remember what I’d done and why, almost certainly break something, and spend a day or two getting back to where I already was. That’s not a pipeline. That’s a recipe I’d memorized badly enough that I’d need to re-read the card every time I wanted to cook the dish.</p>
@@ -350,15 +350,15 @@ cookieconsent.run({
 <p>The work I’d done over those months had four natural phases:</p>
 <ol type="1">
 <li>
-<strong>Download</strong> — fetch the raw CSV from <a href="https://rsf.org/en/index">RSF’s website</a>: See <a href="../posts/2026-08-12-endocing-resilience/index.qmd">Encoding Resilience</a>
+<strong>Download</strong> — fetch the raw CSV from <a href="https://rsf.org/en/index">RSF’s website</a>: See <a href="../../posts/2026-08-12-encoding-resilience/index.html">Encoding Resilience</a>
 </li>
 <li>
-<strong>Clean</strong> — normalize column names, fix data types, handle year-specific quirks See <a href="../posts/2026-08-26-data-cleaning-decisions/index.qmd">When Data Cleaning Becomes Decision-Making</a>
+<strong>Clean</strong> — normalize column names, fix data types, handle year-specific quirks See <a href="../../posts/2026-08-26-data-cleaning-decisions/index.html">When Data Cleaning Becomes Decision-Making</a>
 </li>
 <li>
 <strong>Combine</strong> — merge all 24 yearly files into one dataset</li>
 <li>
-<strong>Standardize</strong> — reconcile country names (See <a href="../posts/2026-08-26-data-cleaning-decisions/index.qmd">When Data Cleaning Becomes Decision-Making</a>), assign ISO codes, validate</li>
+<strong>Standardize</strong> — reconcile country names (See <a href="../../posts/2026-08-26-data-cleaning-decisions/index.html">When Data Cleaning Becomes Decision-Making</a>), assign ISO codes, validate</li>
 </ol>
 </div>
 </div>

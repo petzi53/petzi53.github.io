@@ -33,15 +33,11 @@
     <lastmod>2026-06-06T13:18:03.000Z</lastmod>
   </url>
   <url>
-    <loc>https://peter-baumgartner.net/posts/2026-08-26-data-cleaning-decisions/index.html</loc>
-    <lastmod>2026-08-27T13:15:19.712Z</lastmod>
+    <loc>https://peter-baumgartner.net/posts/2023-04-23-welcome-quarto/index.html</loc>
+    <lastmod>2026-08-12T10:55:12.429Z</lastmod>
   </url>
   <url>
-    <loc>https://peter-baumgartner.net/posts/2023-05-05-how-to-delete-git-branches/index.html</loc>
-    <lastmod>2026-06-06T13:18:03.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://peter-baumgartner.net/contact.html</loc>
+    <loc>https://peter-baumgartner.net/posts/2024-07-27-how-to-use-the-world-inequality-database-wid/index.html</loc>
     <lastmod>2026-06-06T13:18:03.000Z</lastmod>
   </url>
   <url>
@@ -49,12 +45,20 @@
     <lastmod>2026-08-27T13:19:28.410Z</lastmod>
   </url>
   <url>
-    <loc>https://peter-baumgartner.net/posts/2024-07-27-how-to-use-the-world-inequality-database-wid/index.html</loc>
+    <loc>https://peter-baumgartner.net/contact.html</loc>
     <lastmod>2026-06-06T13:18:03.000Z</lastmod>
   </url>
   <url>
-    <loc>https://peter-baumgartner.net/posts/2023-04-23-welcome-quarto/index.html</loc>
-    <lastmod>2026-08-12T10:55:12.429Z</lastmod>
+    <loc>https://peter-baumgartner.net/posts/2023-05-05-how-to-delete-git-branches/index.html</loc>
+    <lastmod>2026-06-06T13:18:03.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://peter-baumgartner.net/posts/2026-08-26-data-cleaning-decisions/index.html</loc>
+    <lastmod>2026-08-27T13:15:19.712Z</lastmod>
+  </url>
+  <url>
+    <loc>https://peter-baumgartner.net/posts/2026-08-28-automation-vs-judgement/index.html</loc>
+    <lastmod>2026-08-28T16:39:09.443Z</lastmod>
   </url>
   <url>
     <loc>https://peter-baumgartner.net/posts/tutorial-quarto-blog/2024-07-22-creating-a-quarto-blog-from-scratch-using-rstudio/index.html</loc>
@@ -91,13 +95,5 @@
   <url>
     <loc>https://peter-baumgartner.net/privacy.html</loc>
     <lastmod>2026-06-06T13:18:03.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://peter-baumgartner.net/posts/2026-08-28-orchestration/index.html</loc>
-    <lastmod>2026-08-28T16:25:03.254Z</lastmod>
-  </url>
-  <url>
-    <loc>https://peter-baumgartner.net/posts/2026-08-28-automation-vs-judgement/index.html</loc>
-    <lastmod>2026-08-28T16:25:03.254Z</lastmod>
   </url>
 </urlset>
