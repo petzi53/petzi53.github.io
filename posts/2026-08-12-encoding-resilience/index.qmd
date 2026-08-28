@@ -8,7 +8,7 @@ date: "2026-08-14"
 date-modified: last-modified
 image: "encoding-problem.webp"
 image-alt: "The image features the repair of a digital 'glitch' effect. On the left side, you see a chaotic stream of glowing hexadecimal code, binary digits, and corrupted UTF-8 characters. As it moves to the right, the chaotic stream integrates into the word 'DATA', written in clean, minimalist white sans-serif typography. "
-categories: [how-to, encoding]
+categories: [R, reproducibility, encoding, data-cleaning, workflow, pressfreedom.data]
 draft: false
 ---
 

@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Peter Baumgartner">
+<meta name="dcterms.date" content="2026-08-28">
+<meta name="description" content="I spent months building a data pipeline for 24 years of press freedom data. It worked—for one update cycle. When the next year arrived, I had to choose between doing it all over manually or building something that could run itself. Here’s what I tried, what didn’t fit, and the pragmatic design I ended up with.">
+<title>Automation versus Judgment Calls – Thought Splinters</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.ico" rel="icon">
+<script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-c4aff173bdb29f86b01cc55e5a32ba7d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/iconify-3.0.0/iconify-icon.min.js"></script>
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-CLE95GVN04"></script><script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-CLE95GVN04', { 'anonymize_ip': true});
+</script><script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"express",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  ,
+"language":"en"
+  });
+});
+</script><script type="application/json" class="js-hypothesis-config">
+{
+  "theme": "classic",
+  "openSidebar": false,
+  "showHighlights": "whenSidebarOpen",
+  "enableExperimentalNewNoteButton": true,
+  "branding": {
+    "appBackgroundColor": "white",
+    "ctaBackgroundColor": "rgb(81, 118, 153)",
+    "ctaTextColor": "rgb(221, 228, 235)",
+    "selectionFontFamily": "helvetica, arial, sans serif"
+  }
+}
+</script><script async="" src="https://hypothes.is/embed.js"></script><script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script><script src="../../site_libs/quarto-diagram/mermaid.min.js"></script><script src="../../site_libs/quarto-diagram/mermaid-init.js"></script><link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../../glossary.css">
+<meta name="twitter:title" content="Automation versus Judgment Calls – Thought Splinters">
+<meta name="twitter:description" content="I spent months building a data pipeline for 24 years of press freedom data. It worked—for one update cycle. When the next year arrived, I had to choose between doing it all over manually or building something that could run itself. Here’s what I tried, what didn’t fit, and the pragmatic design I ended up with.">
+<meta name="twitter:image" content="https://peter-baumgartner.net/posts/2026-08-28-orchestration/data-pipeline.webp">
+<meta name="twitter:image:alt" content="a machine or assembly line with clearly labeled stages, conveyor belt aesthetic, clean and schematic]">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Thought Splinters</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../contact.html"> 
+<span class="menu-text">Contact</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">
+<li>
+    <a class="dropdown-item" href="../../quarto-blog.html">
+ <span class="dropdown-text">Create a Quarto Blog</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../zotero-obsidian-annotations.html">
+ <span class="dropdown-text">Zotero-Obsidian Annotations</span></a>
+  </li>  
+    </ul>
+</li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-links" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Links</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-links">
+<li>
+    <a class="dropdown-item" href="https://opensource.posit.co/">
+ <span class="dropdown-text">Posit Open Source</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://opensource.posit.co/blog">
+ <span class="dropdown-text">Posit Open Source Blog</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://opensource.posit.co/blog/?q=source%3Aquarto">
+ <span class="dropdown-text">Posit Quarto Blog</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://opensource.posit.co/software">
+ <span class="dropdown-text">Posit Packages</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://rweekly.org/">
+ <span class="dropdown-text">R Weekly</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://www.r-bloggers.com/">
+ <span class="dropdown-text">R Bloggers</span></a>
+  </li>  
+    </ul>
+</li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../archive.html"> 
+<span class="menu-text">Archive</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/petzi53/petzi53.github.io/"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:github" style="font-size: 1.25em;" aria-label="Icon github from fa6-brands Iconify.design set." title="GitHub repo of this site" mode="svg"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://social.anoxinon.de/@pbaumgartner" rel="me"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:mastodon" style="font-size: 1.25em;" aria-label="Icon mastodon from fa6-brands Iconify.design set." title="My Mastodon account" mode="svg"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://pbaumgartner.bsky.social"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:bluesky" style="font-size: 1.25em;" aria-label="Icon bluesky from fa6-brands Iconify.design set." title="My Bluesky account" mode="svg"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://peter.baumgartner.name"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:wordpress" style="font-size: 1.25em;" aria-label="Icon wordpress from fa6-brands Iconify.design set." title="Gedankensplitter: My German WordPress blog" mode="svg"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://scholar.google.com/citations?user=mKCNn9kAAAAJ&amp;hl=de"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:google-scholar" style="font-size: 1.25em;" aria-label="Icon google-scholar from fa6-brands Iconify.design set." title="My Google Scholar account" mode="svg"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://orcid.org/0000-0003-4526-8791"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:orcid" style="font-size: 1.25em;" aria-label="Icon orcid from fa6-brands Iconify.design set." title="My ORCID account: 0000-0003-4526-8791" mode="svg"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img" aria-label="RSS Feed">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+</div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Automation versus Judgment Calls</h1>
+            <p class="subtitle lead">Designing a Repeatable Data Pipeline — How I Learned to Find a Middle Ground Between an Automated Pipeline and a Manual Guided Procedure</p>
+                  <div>
+        <div class="description">
+          <p>I spent months building a data pipeline for 24 years of press freedom data. It worked—for one update cycle. When the next year arrived, I had to choose between doing it all over manually or building something that could run itself. Here’s what I tried, what didn’t fit, and the pragmatic design I ended up with.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">workflow</div>
+                <div class="quarto-category">reproducibility</div>
+                <div class="quarto-category">pressfreedom.data</div>
+                <div class="quarto-category">targets</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Peter Baumgartner </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">August 28, 2026</p>
+      </div>
+    </div>
+    
+      <div>
+      <div class="quarto-title-meta-heading">Modified</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">August 28, 2026</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="../../portrait-peter.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Peter Baumgartner"><img src="../../portrait-peter.png" class="img-fluid figure-img" alt="Peter Baumgartner"></a></p>
+<figcaption>Peter Baumgartner</figcaption></figure>
+</div>
+</div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="4"><h2 id="toc-title">On this page</h2>
+   
+  <ul>
+<li><a href="#annual-updates-that-sometimes-change-the-data-format" id="toc-annual-updates-that-sometimes-change-the-data-format" class="nav-link active" data-scroll-target="#annual-updates-that-sometimes-change-the-data-format">Annual updates that sometimes change the data format</a></li>
+  <li><a href="#automated-pipeline-versus-manual-guided-procedure" id="toc-automated-pipeline-versus-manual-guided-procedure" class="nav-link" data-scroll-target="#automated-pipeline-versus-manual-guided-procedure">Automated pipeline versus manual guided procedure</a></li>
+  <li><a href="#reaching-for-targets-and-what-i-learned-from-it" id="toc-reaching-for-targets-and-what-i-learned-from-it" class="nav-link" data-scroll-target="#reaching-for-targets-and-what-i-learned-from-it">Reaching for <code>{targets}</code> — and what I learned from it</a></li>
+  <li><a href="#the-other-temptation-automate-everything" id="toc-the-other-temptation-automate-everything" class="nav-link" data-scroll-target="#the-other-temptation-automate-everything">The other temptation: automate everything</a></li>
+  <li><a href="#what-i-actually-built" id="toc-what-i-actually-built" class="nav-link" data-scroll-target="#what-i-actually-built">What I actually built</a></li>
+  <li><a href="#how-the-five-phases-fit-together" id="toc-how-the-five-phases-fit-together" class="nav-link" data-scroll-target="#how-the-five-phases-fit-together">How the five phases fit together</a></li>
+  <li><a href="#asymmetric-error-handling" id="toc-asymmetric-error-handling" class="nav-link" data-scroll-target="#asymmetric-error-handling">Asymmetric error handling</a></li>
+  <li><a href="#how-the-conversation-shaped-the-design" id="toc-how-the-conversation-shaped-the-design" class="nav-link" data-scroll-target="#how-the-conversation-shaped-the-design">How the conversation shaped the design</a></li>
+  <li><a href="#lesson-learned" id="toc-lesson-learned" class="nav-link" data-scroll-target="#lesson-learned">Lesson learned</a></li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/petzi53/petzi53.github.io/edit/main/posts/2026-08-28-orchestration/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/petzi53/petzi53.github.io/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="annual-updates-that-sometimes-change-the-data-format" class="level2"><h2 class="anchored" data-anchor-id="annual-updates-that-sometimes-change-the-data-format">Annual updates that sometimes change the data format</h2>
+<p>I’ve been building <a href="https://cran.r-project.org/package=pressfreedom.data"><code>pressfreedom.data</code></a>, an R data package that collects Reporters Without Borders (<a href="https://rsf.org/en">RSF</a>) press freedom data from 2002 through 2026. There is no consolidated dataset available because RSF publishes its press freedom data annually as a separate CSV file. This was a major task for me, as I explained in <a href="../posts/2026-08-12-endocing-resilience/index.qmd">Encoding Resilience</a>, and <a href="../posts/2026-08-26-data-cleaning-decisions/index.qmd">When Data Cleaning Becomes Decision-Making</a>. It involved not only downloading raw CSVs with inconsistent column names, but I had to normalize 24 years of data into one unified structure, standardize over 200 country-name variants, and assigning <a href="https://www.iso.org/iso-3166-country-codes.html">ISO codes</a> — a sequence of decisions and transformations that took me several months of iteration to get it right.</p>
+<p>By late 2025, I had it finally working—the package compiled. The tests passed. The dataset was clean.</p>
+<p>But in the meantime, RSF released a new dataset in June 2026. I could download, inspect, and manually clean it, as I had done before. Then I thought: RSF will publish a new dataset again in 2027. When that happens, what do I do?</p>
+<p>The honest answer was: I’d do it all again. Manually. Re-read my own notes to remember what I’d done and why, almost certainly break something, and spend a day or two getting back to where I already was. That’s not a pipeline. That’s a recipe I’d memorized badly enough that I’d need to re-read the card every time I wanted to cook the dish.</p>
+<p>This post is about what I tried, what didn’t fit, and what I actually built.</p>
+</section><section id="automated-pipeline-versus-manual-guided-procedure" class="level2"><h2 class="anchored" data-anchor-id="automated-pipeline-versus-manual-guided-procedure">Automated pipeline versus manual guided procedure</h2>
+<div class="my-procedure">
+<div class="my-procedure-header">
+<p>Workflow process in {pressfreedom.data}</p>
+</div>
+<div class="my-procedure-container">
+<p>The work I’d done over those months had four natural phases:</p>
+<ol type="1">
+<li>
+<strong>Download</strong> — fetch the raw CSV from <a href="https://rsf.org/en/index">RSF’s website</a>: See <a href="../posts/2026-08-12-endocing-resilience/index.qmd">Encoding Resilience</a>
+</li>
+<li>
+<strong>Clean</strong> — normalize column names, fix data types, handle year-specific quirks See <a href="../posts/2026-08-26-data-cleaning-decisions/index.qmd">When Data Cleaning Becomes Decision-Making</a>
+</li>
+<li>
+<strong>Combine</strong> — merge all 24 yearly files into one dataset</li>
+<li>
+<strong>Standardize</strong> — reconcile country names (See <a href="../posts/2026-08-26-data-cleaning-decisions/index.qmd">When Data Cleaning Becomes Decision-Making</a>), assign ISO codes, validate</li>
+</ol>
+</div>
+</div>
+<p>But on my first try, I didn’t design a structured workflow to process and prepare raw data for analysis. Instead, I ran four separate R scripts in order by hand in RStudio, keeping notes as script comments and in a text file about what I needed to do differently for each year.</p>
+<p>That’s not an automated pipeline but a manual controlled procedure.</p>
+<p>The distinction matters because manually guided processes are time-sensitive. I can follow a procedure I documented yesterday. Six months from now I’ll probably skip a step, misread a note, or make a judgment call that quietly contradicts a decision from months earlier. The code might run without error and produce subtly wrong data, and I won’t notice until something downstream looks off.</p>
+<p>I needed to turn the manually guided procedure into a function — something I could call once that would do the right thing without relying on my memory and dispersed notes of what “right” was.</p>
+</section><section id="reaching-for-targets-and-what-i-learned-from-it" class="level2"><h2 class="anchored" data-anchor-id="reaching-for-targets-and-what-i-learned-from-it">Reaching for <code>{targets}</code> — and what I learned from it</h2>
+<p>The first tool I seriously considered was <a href="https://docs.ropensci.org/targets/"><code>{targets}</code></a>, an R package for workflow management. The idea is straightforward: you describe your analysis as a collection of <em>targets</em> — each one a named function call with a declared input. <a href="https://docs.ropensci.org/targets/">targets</a> figures out which targets are out of date and reruns only what’s needed. A target is cached when it succeeds; it only reruns if its upstream inputs change.</p>
+<p>Here’s what a minimal <a href="https://docs.ropensci.org/targets/">targets</a> pipeline for my problem would have looked like:</p>
+<div class="my-r-code">
+<div class="my-r-code-header">
+<div id="cnj-targets-pipeline-mockup" class="theorem conjecture">
+<p><span class="theorem-title"><strong>R Code 1</strong></span> : Minimal <a href="https://docs.ropensci.org/targets/">targets</a> pipeline for pressfreedom.data</p>
+</div>
+</div>
+<div class="my-r-code-container">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># _targets.R</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/targets/">targets</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_target.html">tar_target</a></span><span class="op">(</span><span class="va">raw_2026</span>, <span class="fu">download_rwb_csv</span><span class="op">(</span><span class="fl">2026</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_target.html">tar_target</a></span><span class="op">(</span><span class="va">clean_2026</span>, <span class="fu">clean_period_3</span><span class="op">(</span><span class="va">raw_2026</span>, year <span class="op">=</span> <span class="fl">2026</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_target.html">tar_target</a></span><span class="op">(</span><span class="va">combined</span>,   <span class="fu">combine_cleaned_periods</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_target.html">tar_target</a></span><span class="op">(</span><span class="va">final</span>,      <span class="fu">standardize_rwb_countries</span><span class="op">(</span><span class="va">combined</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<p>With this in place, running <code><a href="https://docs.ropensci.org/targets/reference/tar_make.html">targets::tar_make()</a></code> would execute only the targets that have changed. If I’d already downloaded and cleaned the 2026 data, re-running would skip those steps and jump straight to combining and standardizing. The pipeline is <em>self-documenting</em>: the dependency graph is explicit in the code.</p>
+<p>And that dependency graph — a <a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph">directed acyclic graph (DAG)</a> — is exactly what <a href="https://docs.ropensci.org/targets/">targets</a> is designed to manage. A DAG is a flowchart where each node is a step and arrows show what feeds into what, with no cycles (nothing feeds back into itself). The tool shines when a pipeline has genuine branching: parallel inputs that converge, shared intermediates used by multiple downstream steps, or conditional paths depending on what’s available.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div id="dag-example">
+<div>
+<pre class="mermaid mermaid-js" data-label="dag-example">graph LR
+    A[raw_2026.csv] --&gt; C[clean_2026]
+    B[raw_2025.csv] --&gt; D[clean_2025]
+    C --&gt; E[combined]
+    D --&gt; E
+    E --&gt; F[standardized]
+    E --&gt; G[summary_report]
+    F --&gt; H[package_data]
+</pre>
+</div>
+<p><strong>Figure 1: What a real DAG looks like: two input streams, shared intermediate, branching output</strong></p>
+</div>
+</div>
+</div>
+<p>I spent some time learning <a href="https://docs.ropensci.org/targets/">targets</a> before concluding it wasn’t the right fit for my problem. That time wasn’t wasted — I now have a much clearer picture of when <a href="https://docs.ropensci.org/targets/">targets</a> <em>is</em> the right choice.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>When <a href="https://docs.ropensci.org/targets/">targets</a> is the right choice
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="https://docs.ropensci.org/targets/">targets</a> pays off when your pipeline has one or more of these properties:</p>
+<ul>
+<li>
+<strong>Branching computation</strong> — multiple input sources that converge on shared intermediates, or one intermediate used by several downstream steps</li>
+<li>
+<strong>Expensive steps</strong> — if fitting a model takes 40 minutes, you want caching</li>
+<li>
+<strong>High iteration rate</strong> — running the pipeline daily or per code change, where skipping unchanged targets saves meaningful time</li>
+<li>
+<strong>Multiple contributors</strong> — the dependency graph serves as documentation for a team, not just yourself</li>
+<li>
+<strong>Reproducibility requirements</strong> — the graph makes repetitions replicable</li>
+</ul>
+<p>For my linear pipeline, which runs in less than 30 seconds and only once a year, these benefits do not apply.</p>
+</div>
+</div>
+<p>My pipeline turns out not to have a graph. It has a sequence:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div id="linear-pipeline">
+<div>
+<pre class="mermaid mermaid-js" data-label="linear-pipeline">graph LR
+    A[detect] --&gt; B[download] --&gt; C[clean] --&gt; D[combine] --&gt; E[standardize]
+</pre>
+</div>
+<p><strong>Figure 2: My actual pipeline: a strict linear sequence with no branching</strong></p>
+</div>
+</div>
+</div>
+<p>No branching. No parallel inputs. No shared intermediates used by multiple steps.</p>
+<p>The entire run takes less than 30 seconds, and I will use it once a year. Introducing <a href="https://docs.ropensci.org/targets/">targets</a> would have added complexity — a <code>_targets.R</code> file, a targets store, a different execution model — without any of the benefits that justify that complexity.</p>
+</section><section id="the-other-temptation-automate-everything" class="level2"><h2 class="anchored" data-anchor-id="the-other-temptation-automate-everything">The other temptation: automate everything</h2>
+<p>Having ruled out <a href="https://docs.ropensci.org/targets/">targets</a>, I briefly considered the opposite approach: writing a script that handled every decision automatically. Detect when RSF published new data, download it, clean it, push the commit.</p>
+<p>I discarded this version fast. RSF has changed their column names and methodology several times. A fully automated pipeline would be dangerous, either breaking silently on those changes or hiding them behind a “success” status that wasn’t actually warranted.</p>
+<div class="callout callout-style-default callout-important callout-empty-content callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Good automation removes busywork, but it shouldn’t remove judgment calls.
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+</section><section id="what-i-actually-built" class="level2"><h2 class="anchored" data-anchor-id="what-i-actually-built">What I actually built</h2>
+<p>The function I ended up with is <code>update_rwb_data()</code>. Its job: detect which years of RSF data are missing from the package, download them, clean them, recombine everything, and restandardize. What follows is a mockup of how my function for the yearly update works:</p>
+<div class="my-r-code">
+<div class="my-r-code-header">
+<div id="cnj-data-update-mockup" class="theorem conjecture">
+<p><span class="theorem-title"><strong>R Code 2</strong></span> : RWB Data Update Report (mockup)</p>
+</div>
+</div>
+<div class="my-r-code-container">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Run once per year when RSF publishes new rankings</span></span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">update_rwb_data</span><span class="op">(</span>auto_commit <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<pre><code>=== RWB Data Update Report ===
+
+Status: SUCCESS
+Years downloaded: 2026
+Years cleaned: 2026
+Rows before: 4,192
+Rows after: 4,382
+Row increase: 190
+Consolidation rules applied: 246
+Validation passed: true
+Git commit: (skipped)
+
+Messages:
+  - Detected 1 missing year(s): 2026
+  - Downloaded rwb2026.csv (190 rows)
+  - Cleaned year 2026 (period 3)
+  - Combined all periods: 4,382 rows
+  - Standardization complete: 191 unique countries
+  - All validation checks passed</code></pre>
+</div>
+</div>
+<p>That report is the function’s way of saying: here is what I did, here is what changed, here is whether the result looks plausible. One call per year.</p>
+<p>To show what the pipeline actually produces — the dataset itself — here’s what <code>rwb_standardized</code> looks like after all four phases have run:</p>
+<div class="my-r-code">
+<div class="my-r-code-header">
+<div id="cnj-what-pipeline-produces" class="theorem conjecture">
+<p><span class="theorem-title"><strong>R Code 3</strong></span> : The dataset that the pipeline produces</p>
+</div>
+</div>
+<div class="my-r-code-container">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/petzi53/pressfreedom.data">pressfreedom.data</a></span><span class="op">)</span></span>
+<span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">rwb_standardized</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 4,183
+Columns: 20
+$ year_n            &lt;dbl&gt; 2002, 2002, 2002, 2002, 2002, 2002, 2002, 2002, 2002…
+$ iso               &lt;chr&gt; "AFG", "DZA", "AGO", "ARG", "AUS", "AUT", "AZE", "BH…
+$ score             &lt;dbl&gt; 35.50, 31.00, 30.17, 12.00, 3.50, 7.50, 34.50, 23.00…
+$ rank              &lt;dbl&gt; 104, 95, 93, 42, 12, 27, 101, 67, 118, 124, 13, 21, …
+$ political_context &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ rank_pol          &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ economic_context  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ rank_eco          &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ legal_context     &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ rank_leg          &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ social_context    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ rank_soc          &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ safety            &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ rank_saf          &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ zone              &lt;chr&gt; "Asia-Pacific", "Middle East &amp; North Africa", "Afric…
+$ rank_n_1          &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ rank_evolution    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ score_n_1         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ score_evolution   &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ country_en        &lt;chr&gt; "Afghanistan", "Algeria", "Angola", "Argentina", "Au…</code></pre>
+</div>
+</div>
+</div>
+</div>
+<p>That dataset is the output of the whole pipeline — 24 years of press freedom rankings, normalized, combined, standardized. Everything in the <code>update_rwb_data()</code> function exists to keep that dataset up to date without having to recreate it from scratch each time.</p>
+</section><section id="how-the-five-phases-fit-together" class="level2"><h2 class="anchored" data-anchor-id="how-the-five-phases-fit-together">How the five phases fit together</h2>
+<div class="my-bullet">
+<div class="my-bullet-header">
+<p>The five internal phases of <code>update_rwb_data()</code></p>
+</div>
+<div class="my-bullet-container">
+<ol type="1">
+<li>
+<strong>Detect</strong> — check which years are missing from <code>data/cleaned/</code>; abort early if nothing is missing</li>
+<li>
+<strong>Download</strong> — fetch the new year’s CSV from RSF’s server; validate that it has the expected structure before writing it to disk</li>
+<li>
+<strong>Clean</strong> — normalize column names, convert data types, handle year-specific quirks; applies per-year override rules for cases where RSF renamed a column</li>
+<li>
+<strong>Combine</strong> — merge all cleaned years into one dataset; recalculate year-over-year evolution columns (which depend on the full history, not just the new year)</li>
+<li>
+<strong>Standardize</strong> — apply the country-consolidation mapping, assign ISO codes, validate the result</li>
+</ol>
+</div>
+</div>
+<p>Phases 4 and 5 always run, even if no new year was added. They take about three seconds and they’re fast enough that skipping them to save time would be a false economy — and risky, since their outputs depend on having consistent inputs.</p>
+</section><section id="asymmetric-error-handling" class="level2"><h2 class="anchored" data-anchor-id="asymmetric-error-handling">Asymmetric error handling</h2>
+<p>The design that took longest to get right wasn’t the happy path — it was what happens when something goes wrong. Here the LLM helped me a lot.</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Not all failures should behave the same way
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The function uses two different failure modes, deliberately:</p>
+<ul>
+<li><p><strong>Hard abort</strong> (download or cleaning failure): the pipeline stops immediately with an informative error message. A partial update — a new year downloaded but not cleaned, or cleaned but not combined — is worse than no update, because it looks complete when it isn’t.</p></li>
+<li><p><strong>Warning and continue</strong> (validation failure): if the row count is slightly off or a check produces an unexpected result, the function reports it and keeps going. Validation failures often mean “something unexpected happened, please look at this” — not “the data is corrupt, stop everything.” I want the output so I can inspect it, not a locked door.</p></li>
+</ul>
+<p>The distinguishing question: <em>can I trust the intermediate output if I let this continue?</em> If yes, warn. If no, abort.</p>
+</div>
+</div>
+<p>This distinction didn’t come to me immediately. My first instinct was to abort on anything unexpected. It seemed to me the safest option. Working through specific cases with the AI assistant made me realize that the word “unexpected” covers a wide range. A missing column in the raw CSV is a hard error. A row count that’s slightly higher or lower is not a reason to block the entire update procedure. It is important to know about this so that I can look it up and find out what the reason for this change is. It might be that RSF quietly dropped a territory or they added a new country. This is worth knowing about and evaluating, but it is not worth blocking the whole update process.</p>
+<p>The error messages themselves are part of the design. When a column name has changed — as RSF has done sometimes without notice in past years — the abort message names the year, the column it expected, and what it actually found. That takes a few lines to write and saves an hour of debugging when it triggers six months from now.</p>
+</section><section id="how-the-conversation-shaped-the-design" class="level2"><h2 class="anchored" data-anchor-id="how-the-conversation-shaped-the-design">How the conversation shaped the design</h2>
+<p>The design of <code>update_rwb_data()</code> came partly from working through it with an AI assistant — not because the AI generated the solution, but because the conversation forced me to articulate decisions I’d been leaving implicit.</p>
+<p>The asymmetric error handling popped up during the conversation with the AI assistant. At first I wanted to abort on anything unexpected. But the LLM walked me through specific cases: what if RSF adds a new territory? What if a country’s score is missing for one year? I realized: Some of those are errors; some are expected variation that I want to be told about. Spelling out the cases made the distinction visible.</p>
+<p>The function interface — a single function with named logical parameters — also emerged from the conversation. My first sketches had separate scripts for each phase. The AI asked what I’d want to do if the download succeeded but the cleaning failed. That question made clear I needed a single entry point with shared state, not four independent scripts with no coordination between them.</p>
+</section><section id="lesson-learned" class="level2"><h2 class="anchored" data-anchor-id="lesson-learned">Lesson learned</h2>
+<p>I built <code>update_rwb_data()</code> for one specific package, {<strong>pressfreedom.data</strong>}, but in retrospect I believe the reasoning behind it applies to other multi-step data pipelines that run on a fixed schedule:</p>
+<ul>
+<li>
+<strong>Don’t automate before you understand the failure modes.</strong> The automation design came after understanding where each step could break, not before.</li>
+<li>
+<strong>Match the tool to the problem.</strong> <a href="https://docs.ropensci.org/targets/">targets</a> is excellent for what it does; my pipeline didn’t have the properties that justify it. Spending time with the wrong tool isn’t wasted if it teaches you why it’s wrong.</li>
+<li>
+<strong>Leave room for judgment.</strong> The hardest part of designing automation is identifying which decisions can be scripted, and which need a human. If “who decides this is correct?” has no clear answer, it probably shouldn’t be automated.</li>
+<li>
+<strong>Error messages are part of the interface.</strong> This was one of the most impressive learnings for me. I haven’t used so many distinctive (failure) messages so far. Either I tried to fix the problem behind the scenes, in a way imperceptible to the user, or I reported a generic failure message, such as “cleaning failed”. A failure message that names the year, the expected column, and what it found is much better — especially when you’re reading it six months after you wrote the code.</li>
+</ul>
+
+
+</section><a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{baumgartner2026,
+  author = {Baumgartner, Peter},
+  title = {Automation Versus {Judgment} {Calls}},
+  date = {2026-08-28},
+  url = {https://peter-baumgartner.net/posts/2026-08-28-orchestration/},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-baumgartner2026" class="csl-entry quarto-appendix-citeas" role="listitem">
+Baumgartner, Peter. 2026. <span>“Automation Versus Judgment
+Calls.”</span> August 28. <a href="https://peter-baumgartner.net/posts/2026-08-28-orchestration/">https://peter-baumgartner.net/posts/2026-08-28-orchestration/</a>.
+</div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/peter-baumgartner\.net");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><script src="https://utteranc.es/client.js" repo="petzi53/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+      <ul class="footer-items list-unstyled">
+<li class="nav-item">
+ <a href="https://www.peter-baumgartner.net">Thought Splinters</a> © 2023-2026 by <a href="https://www.peter-baumgartner.net/about">Peter Baumgartner</a> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1">CC BY 4.0</a>
+  </li>  
+</ul>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+<li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+<p>About</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../../privacy.html">
+<p>Privacy</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../../disclaimer.html">
+<p>Disclaimer</p>
+</a>
+  </li>  
+</ul>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/petzi53/petzi53.github.io/edit/main/posts/2026-08-28-orchestration/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/petzi53/petzi53.github.io/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+<li class="nav-item">
+ Proudly powered by <a href="https://quarto.org/">Quarto</a>
+  </li>  
+</ul>
+</div>
+  </div>
+</footer><script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":true,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+</body></html>
