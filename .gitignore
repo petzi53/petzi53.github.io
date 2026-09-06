@@ -42,7 +42,7 @@ _archive/
 .httr-oauth
 
 # Posit AI local configuration
-.positai/
+.posit/
 
 # --- General Project Safety ---
 # Optional: Ignore all .csv files if you want to ensure raw data is never committed
