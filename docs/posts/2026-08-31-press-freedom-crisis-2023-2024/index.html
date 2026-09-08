@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Peter Baumgartner">
+<meta name="dcterms.date" content="2026-08-31">
+<meta name="description" content="A second sharp decline in press freedom, two years after the last one — but this time with complete sub-indicator data. Decomposition points to political hostility as the clear driver of the year-over-year drop. Regression tells a different story about what structurally matters most. Both are correct, and reconciling them is the point of this post.">
+<title>Journalism Under Political Pressure – Thought Splinters</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.ico" rel="icon">
+<script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-c4aff173bdb29f86b01cc55e5a32ba7d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/iconify-3.0.0/iconify-icon.min.js"></script>
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-CLE95GVN04"></script><script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-CLE95GVN04', { 'anonymize_ip': true});
+</script><script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"express",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  ,
+"language":"en"
+  });
+});
+</script><script type="application/json" class="js-hypothesis-config">
+{
+  "theme": "classic",
+  "openSidebar": false,
+  "showHighlights": "whenSidebarOpen",
+  "enableExperimentalNewNoteButton": true,
+  "branding": {
+    "appBackgroundColor": "white",
+    "ctaBackgroundColor": "rgb(81, 118, 153)",
+    "ctaTextColor": "rgb(221, 228, 235)",
+    "selectionFontFamily": "helvetica, arial, sans serif"
+  }
+}
+</script><script async="" src="https://hypothes.is/embed.js"></script><script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script><link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../../glossary.css">
+<meta name="twitter:title" content="Journalism Under Political Pressure – Thought Splinters">
+<meta name="twitter:description" content="A second sharp decline in press freedom, two years after the last one — but this time with complete sub-indicator data. Decomposition points to political hostility as the clear driver of the year-over-year drop. Regression tells a different story about what structurally matters most. Both are correct, and reconciling them is the point of this post.">
+<meta name="twitter:image" content="https://peter-baumgartner.net/posts/2026-08-31-press-freedom-crisis-2023-2024/press-freedom-sub-indicators-2023-2024.png">
+<meta name="twitter:image-height" content="856">
+<meta name="twitter:image-width" content="1094">
+<meta name="twitter:image:alt" content="A grouped bar chart titled 'Change in Press Freedom Sub-Indicators (2023 -> 2024).' It compares changes in five sub-indicators—Political, Economic, Legal, Social, and Safety—across seven global zones. Most sub-indicators show a negative change in score across most regions, except for 'Safety,' which shows a positive trend in most zones.">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Thought Splinters</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../contact.html"> 
+<span class="menu-text">Contact</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">
+<li>
+    <a class="dropdown-item" href="../../quarto-blog.html">
+ <span class="dropdown-text">Create a Quarto Blog</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../zotero-obsidian-annotations.html">
+ <span class="dropdown-text">Zotero-Obsidian Annotations</span></a>
+  </li>  
+    </ul>
+</li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-links" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Links</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-links">
+<li>
+    <a class="dropdown-item" href="https://opensource.posit.co/">
+ <span class="dropdown-text">Posit Open Source</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://opensource.posit.co/blog">
+ <span class="dropdown-text">Posit Open Source Blog</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://opensource.posit.co/blog/?q=source%3Aquarto">
+ <span class="dropdown-text">Posit Quarto Blog</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://opensource.posit.co/software">
+ <span class="dropdown-text">Posit Packages</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://rweekly.org/">
+ <span class="dropdown-text">R Weekly</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://www.r-bloggers.com/">
+ <span class="dropdown-text">R Bloggers</span></a>
+  </li>  
+    </ul>
+</li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../archive.html"> 
+<span class="menu-text">Archive</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/petzi53/petzi53.github.io/"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:github" style="font-size: 1.25em;" aria-label="Icon github from fa6-brands Iconify.design set." title="GitHub repo of this site" mode="svg"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://social.anoxinon.de/@pbaumgartner" rel="me"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:mastodon" style="font-size: 1.25em;" aria-label="Icon mastodon from fa6-brands Iconify.design set." title="My Mastodon account" mode="svg"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://pbaumgartner.bsky.social"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:bluesky" style="font-size: 1.25em;" aria-label="Icon bluesky from fa6-brands Iconify.design set." title="My Bluesky account" mode="svg"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://peter.baumgartner.name"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:wordpress" style="font-size: 1.25em;" aria-label="Icon wordpress from fa6-brands Iconify.design set." title="Gedankensplitter: My German WordPress blog" mode="svg"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://scholar.google.com/citations?user=mKCNn9kAAAAJ&amp;hl=de"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:google-scholar" style="font-size: 1.25em;" aria-label="Icon google-scholar from fa6-brands Iconify.design set." title="My Google Scholar account" mode="svg"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://orcid.org/0000-0003-4526-8791"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:orcid" style="font-size: 1.25em;" aria-label="Icon orcid from fa6-brands Iconify.design set." title="My ORCID account: 0000-0003-4526-8791" mode="svg"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img" aria-label="RSS Feed">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+</div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Journalism Under Political Pressure</h1>
+            <p class="subtitle lead">The 2023–2024 Press Freedom Decline: When Governments Attack the Press</p>
+                  <div>
+        <div class="description">
+          <p>A second sharp decline in press freedom, two years after the last one — but this time with complete sub-indicator data. Decomposition points to political hostility as the clear driver of the year-over-year drop. Regression tells a different story about what structurally matters most. Both are correct, and reconciling them is the point of this post.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">pressfreedom.data</div>
+                <div class="quarto-category">analysis</div>
+                <div class="quarto-category">journalism</div>
+                <div class="quarto-category">RSF</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Peter Baumgartner </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">August 31, 2026</p>
+      </div>
+    </div>
+    
+      <div>
+      <div class="quarto-title-meta-heading">Modified</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">August 30, 2026</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="../../portrait-peter.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Peter Baumgartner"><img src="../../portrait-peter.png" class="img-fluid figure-img" alt="Peter Baumgartner"></a></p>
+<figcaption>Peter Baumgartner</figcaption></figure>
+</div>
+</div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="4"><h2 id="toc-title">On this page</h2>
+   
+  <ul>
+<li><a href="#a-second-crisis-four-years-apart-with-better-data-this-time" id="toc-a-second-crisis-four-years-apart-with-better-data-this-time" class="nav-link active" data-scroll-target="#a-second-crisis-four-years-apart-with-better-data-this-time">A second crisis, four years apart, with better data this time</a></li>
+  <li><a href="#decomposing-the-20232024-drop" id="toc-decomposing-the-20232024-drop" class="nav-link" data-scroll-target="#decomposing-the-20232024-drop">Decomposing the 2023→2024 drop</a></li>
+  <li><a href="#what-matters-structurally-is-a-different-question" id="toc-what-matters-structurally-is-a-different-question" class="nav-link" data-scroll-target="#what-matters-structurally-is-a-different-question">What matters structurally is a different question</a></li>
+  <li><a href="#event-versus-structure" id="toc-event-versus-structure" class="nav-link" data-scroll-target="#event-versus-structure">Event versus structure</a></li>
+  <li><a href="#regional-patterns-worth-noting" id="toc-regional-patterns-worth-noting" class="nav-link" data-scroll-target="#regional-patterns-worth-noting">Regional patterns worth noting</a></li>
+  <li><a href="#two-crises-two-different-shapes" id="toc-two-crises-two-different-shapes" class="nav-link" data-scroll-target="#two-crises-two-different-shapes">Two crises, two different shapes</a></li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/petzi53/petzi53.github.io/edit/main/posts/2026-08-31-press-freedom-crisis-2023-2024/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/petzi53/petzi53.github.io/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="a-second-crisis-four-years-apart-with-better-data-this-time" class="level2"><h2 class="anchored" data-anchor-id="a-second-crisis-four-years-apart-with-better-data-this-time">A second crisis, four years apart, with better data this time</h2>
+<p><a href="../../posts/2026-08-30-press-freedom-crisis-2021-2022/index.html">The last post</a> covered the sharpest single-year decline in the <code>pressfreedom.data</code> series, 2021→2022, and admitted a limitation: RSF’s data for that year has no sub-indicator breakdown, so I could describe <em>where</em> the crisis hit but not measure <em>which dimension</em> drove it. That post’s crisis was, by RSF’s own account, about information chaos and geopolitical conflict.</p>
+<p>Two years later, another sharp decline shows up in the same trend line — and this time the five sub-indicators (political, economic, legal, social, and safety) are all there for 2022 through 2026. That changes what kind of question I can ask. Instead of inferring mechanisms from qualitative reporting, I can decompose the change directly: which of the five measured dimensions actually moved?</p>
+</section><section id="decomposing-the-20232024-drop" class="level2"><h2 class="anchored" data-anchor-id="decomposing-the-20232024-drop">Decomposing the 2023→2024 drop</h2>
+<p>For each zone and the world, I take the mean of each sub-indicator in 2023 and again in 2024, then look at the year-over-year change.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/petzi53/pressfreedom.data">pressfreedom.data</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">rwb_standardized</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">decomp_data</span> <span class="op">&lt;-</span> <span class="va">rwb_standardized</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">year_n</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2023</span>, <span class="fl">2024</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">year_n</span>, <span class="va">zone</span>, <span class="va">political_context</span>, <span class="va">economic_context</span>,</span>
+<span>         <span class="va">legal_context</span>, <span class="va">social_context</span>, <span class="va">safety</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">year_n</span>, <span class="va">zone</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">mean</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">world_decomp</span> <span class="op">&lt;-</span> <span class="va">decomp_data</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">year_n</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="op">-</span><span class="va">zone</span>, <span class="va">mean</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>zone <span class="op">=</span> <span class="st">"World"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">decomp_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html">bind_rows</a></span><span class="op">(</span><span class="va">decomp_data</span>, <span class="va">world_decomp</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">change_data</span> <span class="op">&lt;-</span> <span class="va">decomp_data</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">year_n</span>, <span class="va">zone</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"indicator"</span>, values_to <span class="op">=</span> <span class="st">"value"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">year_n</span>, values_from <span class="op">=</span> <span class="va">value</span>, names_prefix <span class="op">=</span> <span class="st">"year_"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>change <span class="op">=</span> <span class="va">year_2024</span> <span class="op">-</span> <span class="va">year_2023</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    indicator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">indicator</span>,</span>
+<span>      levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"political_context"</span>, <span class="st">"economic_context"</span>, <span class="st">"legal_context"</span>,</span>
+<span>                 <span class="st">"social_context"</span>, <span class="st">"safety"</span><span class="op">)</span>,</span>
+<span>      labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Political"</span>, <span class="st">"Economic"</span>, <span class="st">"Legal"</span>, <span class="st">"Social"</span>, <span class="st">"Safety"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    zone <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">zone</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"World"</span>, <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">zone</span><span class="op">[</span><span class="va">zone</span> <span class="op">!=</span> <span class="st">"World"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">change_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">indicator</span>, y <span class="op">=</span> <span class="va">change</span>, fill <span class="op">=</span> <span class="va">zone</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"dodge"</span>, color <span class="op">=</span> <span class="st">"white"</span>, linewidth <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, color <span class="op">=</span> <span class="st">"gray30"</span>, linewidth <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span></span>
+<span>    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>      <span class="st">"World"</span> <span class="op">=</span> <span class="st">"#000000"</span>, <span class="st">"Africa"</span> <span class="op">=</span> <span class="st">"#E69F00"</span>, <span class="st">"Americas"</span> <span class="op">=</span> <span class="st">"#56B4E9"</span>,</span>
+<span>      <span class="st">"Asia-Pacific"</span> <span class="op">=</span> <span class="st">"#009E73"</span>, <span class="st">"EU &amp; Balkans"</span> <span class="op">=</span> <span class="st">"#F0E442"</span>,</span>
+<span>      <span class="st">"Middle East &amp; North Africa"</span> <span class="op">=</span> <span class="st">"#D55E00"</span>,</span>
+<span>      <span class="st">"Eastern Europe &amp; Central Asia"</span> <span class="op">=</span> <span class="st">"#CC79A7"</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Change in Press Freedom Sub-Indicators (2023 -&gt; 2024)"</span>,</span>
+<span>    x <span class="op">=</span> <span class="st">"Sub-Indicator"</span>, y <span class="op">=</span> <span class="st">"Change in score"</span>, fill <span class="op">=</span> <span class="st">"Zone"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span>, legend.box <span class="op">=</span> <span class="st">"vertical"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-decomposition" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-decomposition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/fig-decomposition-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;1: Change in press freedom sub-indicators, 2023→2024, by zone. Political context shows the steepest and most consistent decline; safety is the only dimension with net improvements in most zones."><img src="index_files/figure-html/fig-decomposition-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-decomposition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Change in press freedom sub-indicators, 2023→2024, by zone. Political context shows the steepest and most consistent decline; safety is the only dimension with net improvements in most zones.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>The pattern is unambiguous in a way the 2021–2022 map never quite was: <strong>political context fell furthest, in nearly every zone.</strong> The world average political score dropped 8.4 points — more than double the drop in any other dimension. Eastern Europe &amp; Central Asia (−11.5) and the Middle East &amp; North Africa (−10.1) show the steepest political declines; even the EU &amp; Balkans, the most stable zone throughout this series, lost 3.5 points.</p>
+<p><strong>Safety moves in the opposite direction.</strong> The world average actually rose slightly (+1.6), driven by improvements in the Americas (+5.6) and EU &amp; Balkans (+3.3). Africa and Eastern Europe &amp; Central Asia also improved modestly. Only the Middle East &amp; North Africa (−1.4) and Asia-Pacific (−0.2) saw safety decline, and only slightly. Economic, legal, and social context show smaller, more mixed changes across zones — none approaching the size of the political decline.</p>
+<p>Three named developments in RSF’s reporting for this period line up with the political-context finding: a wave of government hostility toward the press in countries not usually flagged as authoritarian, 2024’s status as the largest global election year on record (elections tend to sharpen pressure on journalists before and after the vote), and continued spread of “foreign agent” style legislation from Russia into neighboring states. None of that is a substitute for the decomposition above, but it’s consistent with it.</p>
+<p>A few individual countries illustrate the pattern concretely. Argentina’s rank fell from 40th to 66th (score down 10.3 points) following its change in government; the United States fell from 45th to 55th (score down 4.6); Italy fell from 41st to 46th (score down 2.2). None of these are conflict zones or authoritarian states — they’re established democracies where RSF’s political-context indicator specifically registered deterioration.</p>
+</section><section id="what-matters-structurally-is-a-different-question" class="level2"><h2 class="anchored" data-anchor-id="what-matters-structurally-is-a-different-question">What matters structurally is a different question</h2>
+<p>Decomposition answers “what changed the most this year?” A separate question is “which dimension matters most to the overall score, structurally, across many country-years?” That’s a regression question, not a year-over-year one.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://broom.tidymodels.org/">broom</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">reg_data</span> <span class="op">&lt;-</span> <span class="va">rwb_standardized</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">year_n</span> <span class="op">&gt;=</span> <span class="fl">2022</span>, <span class="va">year_n</span> <span class="op">&lt;=</span> <span class="fl">2026</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">score</span>, <span class="va">political_context</span>, <span class="va">economic_context</span>, <span class="va">legal_context</span>,</span>
+<span>         <span class="va">social_context</span>, <span class="va">safety</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">reg_std</span> <span class="op">&lt;-</span> <span class="va">reg_data</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">model_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">score</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">reg_std</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">coef_tidy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">model_std</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">term</span> <span class="op">!=</span> <span class="st">"(Intercept)"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    term <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">term</span>,</span>
+<span>      levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"political_context"</span>, <span class="st">"economic_context"</span>, <span class="st">"legal_context"</span>,</span>
+<span>                 <span class="st">"social_context"</span>, <span class="st">"safety"</span><span class="op">)</span>,</span>
+<span>      labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Political"</span>, <span class="st">"Economic"</span>, <span class="st">"Legal"</span>, <span class="st">"Social"</span>, <span class="st">"Safety"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">estimate</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">coef_tidy</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">estimate</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op">(</span><span class="va">term</span>, <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">estimate</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"#56B4E9"</span>, color <span class="op">=</span> <span class="st">"white"</span>, linewidth <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html">geom_errorbar</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="va">estimate</span> <span class="op">-</span> <span class="va">std.error</span>, xmax <span class="op">=</span> <span class="va">estimate</span> <span class="op">+</span> <span class="va">std.error</span><span class="op">)</span>,</span>
+<span>                width <span class="op">=</span> <span class="fl">0.2</span>, color <span class="op">=</span> <span class="st">"gray40"</span>, linewidth <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Standardized Regression Coefficients (2022-2026)"</span>,</span>
+<span>    x <span class="op">=</span> <span class="st">"Standardized coefficient"</span>, y <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    caption <span class="op">=</span> <span class="st">"Error bars show ±1 standard error"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-regression" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-regression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/fig-regression-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;2: Standardized regression coefficients from a model of overall score on the five sub-indicators, using all country-years from 2022–2026 with complete data (n = 900). Safety has the largest coefficient, followed by political context."><img src="index_files/figure-html/fig-regression-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-regression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Standardized regression coefficients from a model of overall score on the five sub-indicators, using all country-years from 2022–2026 with complete data (n = 900). Safety has the largest coefficient, followed by political context.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Using all country-years from 2022–2026 with complete data (n = 900), safety has the largest standardized coefficient (β = 0.272), followed by political context (β = 0.220), with social and legal context close behind (β ≈ 0.215 each) and economic context lowest (β = 0.172). Looking at partial R² — the unique variance each dimension explains after controlling for the other four — the gap widens further: safety alone accounts for 3.2% of the model’s variance, more than the other four dimensions combined (political context contributes 0.6%, the smallest three roughly 0.55–0.73% each).</p>
+<p>I want to flag something about this regression before drawing conclusions from it: the model’s overall R² is essentially 1 (0.99998). That’s not a sign of an unusually strong relationship — it’s a sign that RSF’s overall score is very close to a deterministic function of these five sub-indicators. In other words, this regression is largely recovering RSF’s own aggregation formula, not discovering an independent causal relationship. The relative sizes of the coefficients still tell us something useful — how heavily RSF’s own methodology weights safety relative to the other dimensions — but “safety matters most structurally” should be read as “RSF’s formula weights safety most heavily,” not as an external validation of safety’s importance.</p>
+</section><section id="event-versus-structure" class="level2"><h2 class="anchored" data-anchor-id="event-versus-structure">Event versus structure</h2>
+<p>Put the two results side by side and there’s an apparent tension: political context is the dimension that <em>changed</em> the most in 2023–2024, but safety is the dimension the aggregation formula weights <em>most heavily</em> overall. Both are true, and they’re not actually in conflict — they’re answering different questions.</p>
+<p>Political context had an unusually large, one-year move relative to its typical year-to-year variation. That’s what makes 2023–2024 a <em>political</em> crisis in the descriptive sense: this is where the year-over-year change was concentrated. Safety, meanwhile, carries more weight in RSF’s formula for computing the score in the first place, but it didn’t move much this particular year — so its structural weight didn’t translate into much <em>change</em>. A dimension can be structurally important and still contribute little to a given year’s swing, if it simply doesn’t move that year.</p>
+<p>Practically, I’d draw two different implications from that: short-term monitoring should track political developments, because that’s where year-to-year crises are showing up; but a country’s long-term score depends more on maintaining safety for journalists than on any other single dimension, even in years when safety isn’t in the news.</p>
+<p>This framework also explains something that might otherwise look like an inconsistency across posts in this series. In <a href="../../posts/2026-08-29-press-freedom-decline-overview/index.html">the overview post</a>, I noted that RSF’s 2026 Index singled out the <em>legal</em> indicator as the sharpest mover of the year — deteriorating in over 60% of countries, driven by the criminalization of journalism through national security and defamation law. Here, for 2023–2024, it’s <em>political</em> context that moved the most. These aren’t competing claims about which dimension “really” matters; they’re the same event-versus-structure logic applied to two different years. The dimension that dominates a given year’s <em>change</em> — political in 2023–2024, legal in 2025–2026 — shifts with whatever’s driving that year’s news. Safety’s <em>structural</em> weight in the aggregation formula doesn’t shift nearly as much, because it reflects how RSF’s scoring method combines the five indicators generally, not what happened in any single year.</p>
+</section><section id="regional-patterns-worth-noting" class="level2"><h2 class="anchored" data-anchor-id="regional-patterns-worth-noting">Regional patterns worth noting</h2>
+<ul>
+<li>
+<strong>EU &amp; Balkans</strong> stayed the most stable zone across both political context and safety — consistent with its position throughout this whole series.</li>
+<li>
+<strong>Americas</strong> had a real political decline but partially offsetting safety gains, which is visible directly in the decomposition chart above.</li>
+<li>
+<strong>Asia-Pacific</strong> and <strong>Eastern Europe &amp; Central Asia</strong> show the least favorable combination: political decline <em>and</em> safety decline in the same direction, rather than one offsetting the other.</li>
+<li>
+<strong>Middle East &amp; North Africa</strong> declined across nearly every dimension, extending an already low baseline rather than showing a distinct new pattern.</li>
+</ul></section><section id="two-crises-two-different-shapes" class="level2"><h2 class="anchored" data-anchor-id="two-crises-two-different-shapes">Two crises, two different shapes</h2>
+<p>Lining this post up against the last one, the contrast is fairly stark. 2021–2022 was, by RSF’s own account, about information chaos and geopolitical conflict, spread across several distinct mechanisms that a single aggregate score obscured — and I could only reconstruct it qualitatively, because the sub-indicators weren’t published that year. 2023–2024 is more directly measurable: political context moved further and more consistently than anything else, in a year when RSF itself pointed to direct government hostility toward the press, an unusually large global election cycle, and continued economic strain on independent media.</p>
+<p>I don’t think either crisis is a template for whatever comes next. The value of having <code>pressfreedom.data</code> maintained and queryable isn’t that it predicts the next decline — it’s that when the next one happens, I’ll be able to ask exactly this kind of question again, with whatever data RSF actually publishes that year, instead of starting from scratch.</p>
+<p>If you’d like to check any of these numbers yourself, the <a href="https://pbaumgartner-pressfreedom.share.connect.posit.cloud/">Shiny app</a> has the full country-level data and lets you rerun this kind of comparison for any pair of years.</p>
+
+
+</section><a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{baumgartner2026,
+  author = {Baumgartner, Peter},
+  title = {Journalism {Under} {Political} {Pressure}},
+  date = {2026-08-31},
+  url = {https://peter-baumgartner.net/posts/2026-08-31-press-freedom-crisis-2023-2024/},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-baumgartner2026" class="csl-entry quarto-appendix-citeas" role="listitem">
+Baumgartner, Peter. 2026. <span>“Journalism Under Political
+Pressure.”</span> August 31. <a href="https://peter-baumgartner.net/posts/2026-08-31-press-freedom-crisis-2023-2024/">https://peter-baumgartner.net/posts/2026-08-31-press-freedom-crisis-2023-2024/</a>.
+</div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/peter-baumgartner\.net");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><script src="https://utteranc.es/client.js" repo="petzi53/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+      <ul class="footer-items list-unstyled">
+<li class="nav-item">
+ <a href="https://www.peter-baumgartner.net">Thought Splinters</a> © 2023-2026 by <a href="https://www.peter-baumgartner.net/about">Peter Baumgartner</a> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1">CC BY 4.0</a>
+  </li>  
+</ul>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+<li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+<p>About</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../../privacy.html">
+<p>Privacy</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../../disclaimer.html">
+<p>Disclaimer</p>
+</a>
+  </li>  
+</ul>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/petzi53/petzi53.github.io/edit/main/posts/2026-08-31-press-freedom-crisis-2023-2024/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/petzi53/petzi53.github.io/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+<li class="nav-item">
+ Proudly powered by <a href="https://quarto.org/">Quarto</a>
+  </li>  
+</ul>
+</div>
+  </div>
+</footer><script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":true,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+</body></html>
